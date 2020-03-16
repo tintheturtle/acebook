@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import dotenv from 'dotenv'
 
 const func = name => {
   return `Hello ${name}`
@@ -8,6 +9,7 @@ const func = name => {
 console.log(func("Tin"))
 
 const app = express()
+dotenv.config()
 
 // Bodyparser middleware
 app.use(
@@ -17,7 +19,7 @@ app.use(
   );
   app.use(bodyParser.json());
   // DB Config
- const uri = "mongodb+srv://Tin-user-44132:klC9hzPccAK17Zn2@acebook-ogevm.mongodb.net/test?retryWrites=true&w=majority";
+ const uri = process.env.MONGO_URI
 
 // Connect to MongoDB
 mongoose
