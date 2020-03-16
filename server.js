@@ -1,11 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
-const bodyParser = require('body-parser')
+import bodyParser from 'body-parser'
 
 const func = name => {
   return `Hello ${name}`
 }
-
 console.log(func("Tin"))
 
 const app = express()
