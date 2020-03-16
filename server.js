@@ -1,6 +1,12 @@
-const express = require('express') 
-const mongoose = require('mongoose') 
+import express from 'express'
+import mongoose from 'mongoose'
 const bodyParser = require('body-parser')
+
+const func = name => {
+  return `Hello ${name}`
+}
+
+console.log(func("Tin"))
 
 const app = express()
 
