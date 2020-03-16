@@ -1,5 +1,5 @@
 import Validator from 'validator'
-import isEmpty from 'isEmpty'
+import isEmpty from 'is-empty'
 
 const validateLoginInput = (data) => {
     let errors = {}

@@ -1,4 +1,4 @@
-import express, { router } from 'express'
+import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
@@ -7,7 +7,9 @@ import validateLoginInput from '../../validation/login'
 
 import User from '../../models/User'
 
-router.post("register", (req, res) => {
+var router = express.Router()
+
+router.post("/register", (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body)
 
     // Valid inputs
@@ -39,5 +41,57 @@ router.post("register", (req, res) => {
             })
         }
     })
-
 })
+
+router.post("/login", (req, res) => {
+    const { errors, isValid } = validateLoginInput(req.body)
+
+    // Validation check
+    if (!isValid) {
+        return res.status(400).json(errors)
+    }
+
+    const email = req.body.email
+    const password = req.body.password
+
+    // Find user by email
+    User.findOne({ email })
+        .then(user => {
+            // Checks if user exists
+            if(!user) {
+                return resizeTo.status(404).json({ emailnotfound: "Email not found"})
+            }
+
+            console.log(user)
+
+            bcrypt.compare(password, user.password)
+            .then(isMatch => {
+                if (isMatch) {
+                    // Create JWT payload if user matched
+                    const payload = {
+                        id: user.id,
+                        name: user.name
+                    }
+
+                    jwt.sign(
+                        payload,
+                        process.env.secretOrkey,
+                        {
+                            expiresIn: 31556926
+                        },
+                        (err, token) => {
+                            res.json({
+                                success: true,
+                                token: "Bearer " + token
+                            })
+                        }
+                    )
+                }
+                else {
+                    return res.status(400).json({ passwordincorrect: "Password incorrect"})
+                }
+        })
+    })
+})
+
+export default router
