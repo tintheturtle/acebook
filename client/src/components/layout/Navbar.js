@@ -5,7 +5,7 @@ class Navbar extends Component {
     render() {
         return (
             <div clsasName="navbar-fixed">
-                <nav className="z-depth-o">
+                <nav className="z-depth-o" style={{ backgroundColor: "white"}}>
                     <div className="nav-wrapper-white">
                         <Link
                             to="/"
@@ -14,7 +14,7 @@ class Navbar extends Component {
                             }}
                             className="col s5 brand-logo center black-text"
                         >
-                            <i className="material-icons"> Code </i>
+                            <i className="material-icons"> code </i>
                             MERN
                         </Link>
                     </div>
