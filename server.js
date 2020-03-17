@@ -7,7 +7,7 @@ import passport from 'passport'
 import users from './routes/api/users'
 
 const func = name => {
-  return `Welcome Back ${name}`
+  return `Welcome back ${name}`
 }
 console.log(func("Tin"))
 
