@@ -7,7 +7,7 @@ const validateRegisterInput = (data) => {
     data.name = !isEmpty(data.name) ? data.name : ""
     data.email = !isEmpty(data.name) ? data.email : ""
     data.password = !isEmpty(data.password) ? data.password : ""
-    data.password2 = !isEmpty(data.password2) ? data.passwordConfirmation : ""
+    data.password2 = !isEmpty(data.password2) ? data.password2 : ""
 
     // Name Checks
     if (Validator.isEmpty(data.name)) {

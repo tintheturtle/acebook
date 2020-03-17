@@ -37,6 +37,7 @@ class Register extends Component {
     }
 
     onSubmit = e => {
+        console.log('here')
         e.preventDefault()
 
         const newUser = {
@@ -45,6 +46,7 @@ class Register extends Component {
             password: this.state.password,
             password2: this.state.password2
         }
+
 
         this.props.registerUser(newUser, this.props.history); 
     }

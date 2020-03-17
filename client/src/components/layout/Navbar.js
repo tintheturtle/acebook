@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 class Navbar extends Component {
     render() {
         return (
-            <div clsasName="navbar-fixed">
+            <div className="navbar-fixed">
                 <nav className="z-depth-o" style={{ backgroundColor: "white"}}>
                     <div className="nav-wrapper-white">
                         <Link

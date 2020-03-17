@@ -1,6 +1,6 @@
 import axios from 'axios'
 import setAuthToken from '../utils/setAuthToken'
-import jwt_decode from 'jwt-decode'
+import decode from 'jwt-decode'
 
 import {
     GET_ERRORS,
@@ -25,14 +25,16 @@ export const loginUser = userData => dispatch => {
         .then(res => {
             const { token } = res.data
             localStorage.setItem('jwtToken', token)
-            const decoded = jwt_decode(token)
+            setAuthToken(token)
+            const decoded = decode(token)
             dispatch(setCurrentUser(decoded))
         })
         .catch(err => 
             dispatch({
                 type: GET_ERRORS,
-                payload: err.response.data
-            }))
+                payload: err.res.data
+            })
+        )
 }
 
 export const setCurrentUser = decoded => {
