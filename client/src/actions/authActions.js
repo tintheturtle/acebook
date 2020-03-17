@@ -1,5 +1,5 @@
 import axios from 'axios'
-import setAuthToken from '../utils./setAuthToken'
+import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 
 import {
@@ -37,12 +37,19 @@ export const loginUser = userData => dispatch => {
 
 export const setCurrentUser = decoded => {
     return {
+        type: SET_CURRENT_USER,
+        payload: decoded
+    }
+}
+
+export const setUserLoading = () => {
+    return {
         type: USER_LOADING
     }
 }
 
 export const logoutUser = () => dispatch => {
-    localStorage.removeItem(jwtToken)
+    localStorage.removeItem('jwtToken')
     setAuthToken(false)
     dispatch(setCurrentUser({}))
 }

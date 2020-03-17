@@ -5,7 +5,7 @@ import {
 } from '../actions/types'
 
 const initialState = {
-    isAuthenticated = false,
+    isAuthenticated: false,
     user: {},
     loading: false,
 }
