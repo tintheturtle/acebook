@@ -2,8 +2,8 @@ import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-import validateRegisterInput from '../../validation/register'
-import validateLoginInput from '../../validation/login'
+import validateRegisterInput from '../../utils/validation/register'
+import validateLoginInput from '../../utils/validation/login'
 
 import User from '../../models/User'
 
@@ -56,7 +56,8 @@ router.post("/login", async (req, res) => {
     const password = req.body.password
 
     const users  = await User.find({})
-    console.log(users[0])
+    console.log(users)
+    console.log('')
 
 
     // Find user by email
@@ -70,9 +71,15 @@ router.post("/login", async (req, res) => {
             switch (user.ACE) {
                 case 'little':
                     console.log('find me a big!')
+                    users.forEach((user) => {
+                        console.log(user.email)
+                    })
                     break
                 case 'big':
                     console.log('find me a little!')
+                    users.forEach((user) => {
+                        console.log(user.email)
+                    })
                     break
             }
 
