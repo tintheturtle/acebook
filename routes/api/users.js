@@ -26,7 +26,8 @@ router.post("/register", (req, res) => {
             const newUser = new User({
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                ACE: req.body.ACE
             })
             
             // Hash password 
@@ -43,7 +44,7 @@ router.post("/register", (req, res) => {
     })
 })
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body)
 
     // Validation check
@@ -54,6 +55,10 @@ router.post("/login", (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
+    const users  = await User.find({})
+    console.log(users[0])
+
+
     // Find user by email
     User.findOne({ email })
         .then(user => {
@@ -62,7 +67,17 @@ router.post("/login", (req, res) => {
                 return resizeTo.status(404).json({ emailnotfound: "Email not found"})
             }
 
-            console.log(user)
+            switch (user.ACE) {
+                case 'little':
+                    console.log('find me a big!')
+                    break
+                case 'big':
+                    console.log('find me a little!')
+                    break
+            }
+
+            console.log(user.ACE)
+            console.log('')
 
             bcrypt.compare(password, user.password)
             .then(isMatch => {
