@@ -10,29 +10,30 @@ const sorensonDice = (stringOne, stringTwo) => {
         return pairs
     }
 
-    const stringSimilarity = (stringOne, stringTwo) => {
+    const stringSimilarity = (first, second) => {
         let similarities = []
         let dictObject = {}
-        const length = stringTwo.length
+        const length = second.length
+        let tempObject
 
         for(let i = 0; i < length; i++) {
-            dictObject[stringTwo[i]] = true
+            dictObject[second[i]] = true
         }
 
         for(let i = 0; i < length; i++) {
-            v = stringOne[i]
-            if (v in dictObject) {
-                dictObject.push(v)
+            tempObject = first[i]
+            if (tempObject in dictObject) {
+                similarities.push(tempObject)
             }
         }
 
-        return dictObject
+        return similarities
     }
 
     const splitStringOne = splitPairs(stringOne)
     const splitStringTwo = splitPairs(stringTwo)
 
-    const similarityscore = 2 * stringSimilarity(splitStringOne, splitStringTwo)
+    const similarityscore = 2 * stringSimilarity(splitStringOne, splitStringTwo).length
     const stringLengths = splitStringOne.length + splitStringTwo.length
     return similarityscore / stringLengths
 

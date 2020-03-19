@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken'
 import validateRegisterInput from '../../utils/validation/register'
 import validateLoginInput from '../../utils/validation/login'
 
+import stringComparison from '../../utils/Comparisons/StringSimilarity'
+
 import User from '../../models/User'
 
 var router = express.Router()
@@ -71,20 +73,19 @@ router.post("/login", async (req, res) => {
             switch (user.ACE) {
                 case 'little':
                     console.log('find me a big!')
-                    users.forEach((user) => {
-                        console.log(user.email)
+                    users.forEach((other) => {
+                        console.log(other.email)
                     })
                     break
                 case 'big':
                     console.log('find me a little!')
-                    users.forEach((user) => {
-                        console.log(user.email)
+                    users.forEach((other) => {
+                        if (other.ACE === 'little') {
+                            console.log(stringComparison(user.name, other.name))
+                        }
                     })
                     break
             }
-
-            console.log(user.ACE)
-            console.log('')
 
             bcrypt.compare(password, user.password)
             .then(isMatch => {
