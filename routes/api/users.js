@@ -80,9 +80,22 @@ router.post("/login", async (req, res) => {
                     switch (user.ACE) {
                         case 'little':
                             console.log('find me a big!')
-                            users.forEach((other) => {
-                                console.log(other.email)
-                            })
+                            for (let i = user.lastUserCount; i < users.length; i++) {
+                                let other = users[i].toObject()
+                                if (other.ACE === 'big') {
+                                    const percentage  = stringComparison(other.description, user.description)
+                                    console.log(percentage)
+                                    if (percentage > 0.5){
+                                        delete other.matches
+                                        console.log(other)
+                                        user.matches.push(other)
+                                    }
+                                    
+                                }
+                                console.log('here')
+                            }
+
+                            user.lastUserCount = users.length
                             break
                         case 'big':
                             console.log('find me a little!')
@@ -90,9 +103,14 @@ router.post("/login", async (req, res) => {
                             for (let i = user.lastUserCount; i < users.length; i++) {
                                 let other = users[i].toObject()
                                 if (other.ACE === 'little') {
-                                    delete other.matches
-                                    console.log(other)
-                                    user.matches.push(other)
+                                    const percentage  = stringComparison(user.description, other.description)
+                                    console.log(percentage)
+                                    if (percentage > 0.5){
+                                        delete other.matches
+                                        console.log(other)
+                                        user.matches.push(other)
+                                    }
+                                    
                                 }
                                 console.log('here')
                             }
