@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import validateRegisterInput from '../../utils/validation/register'
 import validateLoginInput from '../../utils/validation/login'
 
-import stringComparison from '../../utils/Comparisons/StringSimilarity'
+import stringComparison from '../../utils/comparisons/StringSimilarity'
 
 import User from '../../models/User'
 
@@ -80,42 +80,39 @@ router.post("/login", async (req, res) => {
                     switch (user.ACE) {
                         case 'little':
                             console.log('find me a big!')
-                            for (let i = user.lastUserCount; i < users.length; i++) {
-                                let other = users[i].toObject()
-                                if (other.ACE === 'big') {
-                                    const percentage  = stringComparison(other.description, user.description)
-                                    console.log(percentage)
-                                    if (percentage > 0.5){
-                                        delete other.matches
-                                        console.log(other)
-                                        user.matches.push(other)
+                            if (!user.paired) {
+                                for (let i = 0; i < users.length; i++) {
+                                    let other = users[i].toObject()
+                                    if (other.ACE === 'big' && !other.paired) {
+                                        const percentage  = stringComparison(user.description, other.description)
+                                        if (percentage > 0.5){
+                                            delete other.matches
+                                            other.percentage = percentage
+                                            user.matches.push(other)
+                                        }
+                                        
                                     }
-                                    
                                 }
-                                console.log('here')
+                                user.lastUserCount = users.length
                             }
-
                             user.lastUserCount = users.length
                             break
                         case 'big':
                             console.log('find me a little!')
-
-                            for (let i = user.lastUserCount; i < users.length; i++) {
-                                let other = users[i].toObject()
-                                if (other.ACE === 'little') {
-                                    const percentage  = stringComparison(user.description, other.description)
-                                    console.log(percentage)
-                                    if (percentage > 0.5){
-                                        delete other.matches
-                                        console.log(other)
-                                        user.matches.push(other)
+                            if (!user.paired) {
+                                for (let i = 0; i < users.length; i++) {
+                                    let other = users[i].toObject()
+                                    if (other.ACE === 'little' && !other.paired) {
+                                        const percentage  = stringComparison(user.description, other.description)
+                                        if (percentage > 0.5){
+                                            delete other.matches
+                                            other.percentage = percentage
+                                            user.matches.push(other)
+                                        }
                                     }
-                                    
                                 }
-                                console.log('here')
+                                user.lastUserCount = users.length
                             }
-
-                            user.lastUserCount = users.length
                             break
                     }
                  
@@ -136,8 +133,6 @@ router.post("/login", async (req, res) => {
                         )
                     })
                     .catch(err => console.log(err))
-
-                    
                 }
                 else {
                     return res.status(400).json({ passwordincorrect: "Password incorrect"})

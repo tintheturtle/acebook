@@ -2,7 +2,22 @@ import mongoose from 'mongoose'
 import { Schema } from 'mongoose'
 
 const ACESchema = new Schema({
-
+    paired: { 
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    lastUserCount: {
+      type: Number,
+      default: 0
+    },
+    characteristics: {
+      type: String,
+      required: true
+    }
 })
 
 const UserSchema = new Schema({
@@ -25,6 +40,10 @@ const UserSchema = new Schema({
     ACE: {
       type: String,
       required: true
+    },
+    paired: {
+      type: Boolean,
+      default: false
     },
     description: {
       type: String,
