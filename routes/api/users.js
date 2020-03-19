@@ -74,14 +74,14 @@ router.post("/login", async (req, res) => {
                     // Create JWT payload if user matched
                     const payload = {
                         id: user.id,
-                        name: user.name
+                        name: user.email
                     }
 
                     switch (user.ACE) {
                         case 'little':
                             console.log('find me a big!')
                             if (!user.paired) {
-                                for (let i = 0; i < users.length; i++) {
+                                for (let i = user.lastUserCount; i < users.length; i++) {
                                     let other = users[i].toObject()
                                     if (other.ACE === 'big' && !other.paired) {
                                         const percentage  = stringComparison(user.description, other.description)
@@ -100,7 +100,7 @@ router.post("/login", async (req, res) => {
                         case 'big':
                             console.log('find me a little!')
                             if (!user.paired) {
-                                for (let i = 0; i < users.length; i++) {
+                                for (let i = user.lastUserCount; i < users.length; i++) {
                                     let other = users[i].toObject()
                                     if (other.ACE === 'little' && !other.paired) {
                                         const percentage  = stringComparison(user.description, other.description)
@@ -139,6 +139,19 @@ router.post("/login", async (req, res) => {
                 }
         })
     })
+})
+
+router.post("/dashboard", (req, res) => {
+
+    const email = req.body.name
+    User.findOne({ email })
+        .then((user) => {
+            console.log(user)
+            return res.json({
+                success: true
+            })
+        })
+        .catch(err => console.log(err))
 })
 
 export default router
