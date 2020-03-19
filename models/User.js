@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
 import { Schema } from 'mongoose'
 
+const ACESchema = new Schema({
+
+})
+
 const UserSchema = new Schema({
     name: {
       type: String,
@@ -28,6 +32,9 @@ const UserSchema = new Schema({
     matches: {
       type: Array,
       default: []
+    },
+    lastUserCount: {
+      type: Number
     }
   });
 

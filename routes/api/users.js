@@ -86,18 +86,23 @@ router.post("/login", async (req, res) => {
                             break
                         case 'big':
                             console.log('find me a little!')
-                            users.forEach((other) => {
+
+                            for (let i = user.lastUserCount; i < users.length; i++) {
+                                let other = users[i].toObject()
                                 if (other.ACE === 'little') {
                                     delete other.matches
+                                    console.log(other)
                                     user.matches.push(other)
                                 }
-                            })
+                                console.log('here')
+                            }
+
+                            user.lastUserCount = users.length
                             break
                     }
                  
                     user.save()
                     .then(() => {
-                        console.log(user)
                         jwt.sign(
                             payload,
                             process.env.secretOrKey,
