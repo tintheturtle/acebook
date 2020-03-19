@@ -29,7 +29,8 @@ router.post("/register", (req, res) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
-                ACE: req.body.ACE
+                ACE: req.body.ACE,
+                description: req.body.description
             })
             
             // Hash password 
@@ -58,9 +59,6 @@ router.post("/login", async (req, res) => {
     const password = req.body.password
 
     const users  = await User.find({})
-    console.log(users)
-    console.log('')
-
 
     // Find user by email
     User.findOne({ email })
@@ -68,23 +66,6 @@ router.post("/login", async (req, res) => {
             // Checks if user exists
             if(!user) {
                 return resizeTo.status(404).json({ emailnotfound: "Email not found"})
-            }
-
-            switch (user.ACE) {
-                case 'little':
-                    console.log('find me a big!')
-                    users.forEach((other) => {
-                        console.log(other.email)
-                    })
-                    break
-                case 'big':
-                    console.log('find me a little!')
-                    users.forEach((other) => {
-                        if (other.ACE === 'little') {
-                            console.log(stringComparison(user.name, other.name))
-                        }
-                    })
-                    break
             }
 
             bcrypt.compare(password, user.password)
@@ -96,19 +77,44 @@ router.post("/login", async (req, res) => {
                         name: user.name
                     }
 
-                    jwt.sign(
-                        payload,
-                        process.env.secretOrKey,
-                        {
-                            expiresIn: 31556926
-                        },
-                        (err, token) => {
-                            res.json({
-                                success: true,
-                                token: "Bearer " + token
+                    switch (user.ACE) {
+                        case 'little':
+                            console.log('find me a big!')
+                            users.forEach((other) => {
+                                console.log(other.email)
                             })
-                        }
-                    )
+                            break
+                        case 'big':
+                            console.log('find me a little!')
+                            users.forEach((other) => {
+                                if (other.ACE === 'little') {
+                                    delete other.matches
+                                    user.matches.push(other)
+                                }
+                            })
+                            break
+                    }
+                 
+                    user.save()
+                    .then(() => {
+                        console.log(user)
+                        jwt.sign(
+                            payload,
+                            process.env.secretOrKey,
+                            {
+                                expiresIn: 31556926
+                            },
+                            (err, token) => {
+                                res.json({
+                                    success: true,
+                                    token: "Bearer " + token
+                                })
+                            }
+                        )
+                    })
+                    .catch(err => console.log(err))
+
+                    
                 }
                 else {
                     return res.status(400).json({ passwordincorrect: "Password incorrect"})

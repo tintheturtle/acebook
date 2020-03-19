@@ -24,7 +24,10 @@ const UserSchema = new Schema({
     },
     description: {
       type: String,
-      required: true
+    },
+    matches: {
+      type: Array,
+      default: []
     }
   });
 
