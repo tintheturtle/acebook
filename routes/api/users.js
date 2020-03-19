@@ -2,8 +2,10 @@ import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-import validateRegisterInput from '../../validation/register'
-import validateLoginInput from '../../validation/login'
+import validateRegisterInput from '../../utils/validation/register'
+import validateLoginInput from '../../utils/validation/login'
+
+import stringComparison from '../../utils/comparisons/StringSimilarity'
 
 import User from '../../models/User'
 
@@ -26,7 +28,9 @@ router.post("/register", (req, res) => {
             const newUser = new User({
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                ACE: req.body.ACE,
+                description: req.body.description
             })
             
             // Hash password 
@@ -43,7 +47,7 @@ router.post("/register", (req, res) => {
     })
 })
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body)
 
     // Validation check
@@ -54,6 +58,8 @@ router.post("/login", (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
+    const users  = await User.find({})
+
     // Find user by email
     User.findOne({ email })
         .then(user => {
@@ -61,8 +67,6 @@ router.post("/login", (req, res) => {
             if(!user) {
                 return resizeTo.status(404).json({ emailnotfound: "Email not found"})
             }
-
-            console.log(user)
 
             bcrypt.compare(password, user.password)
             .then(isMatch => {
@@ -73,19 +77,62 @@ router.post("/login", (req, res) => {
                         name: user.name
                     }
 
-                    jwt.sign(
-                        payload,
-                        process.env.secretOrKey,
-                        {
-                            expiresIn: 31556926
-                        },
-                        (err, token) => {
-                            res.json({
-                                success: true,
-                                token: "Bearer " + token
-                            })
-                        }
-                    )
+                    switch (user.ACE) {
+                        case 'little':
+                            console.log('find me a big!')
+                            if (!user.paired) {
+                                for (let i = 0; i < users.length; i++) {
+                                    let other = users[i].toObject()
+                                    if (other.ACE === 'big' && !other.paired) {
+                                        const percentage  = stringComparison(user.description, other.description)
+                                        if (percentage > 0.5){
+                                            delete other.matches
+                                            other.percentage = percentage
+                                            user.matches.push(other)
+                                        }
+                                        
+                                    }
+                                }
+                                user.lastUserCount = users.length
+                            }
+                            user.lastUserCount = users.length
+                            break
+                        case 'big':
+                            console.log('find me a little!')
+                            if (!user.paired) {
+                                for (let i = 0; i < users.length; i++) {
+                                    let other = users[i].toObject()
+                                    if (other.ACE === 'little' && !other.paired) {
+                                        const percentage  = stringComparison(user.description, other.description)
+                                        if (percentage > 0.5){
+                                            delete other.matches
+                                            other.percentage = percentage
+                                            user.matches.push(other)
+                                        }
+                                    }
+                                }
+                                user.lastUserCount = users.length
+                            }
+                            break
+                    }
+                 
+                    user.save()
+                    .then(() => {
+                        jwt.sign(
+                            payload,
+                            process.env.secretOrKey,
+                            {
+                                expiresIn: 31556926
+                            },
+                            (err, token) => {
+                                res.json({
+                                    success: true,
+                                    token: "Bearer " + token
+                                })
+                            }
+                        )
+                    })
+                    .catch(err => console.log(err))
                 }
                 else {
                     return res.status(400).json({ passwordincorrect: "Password incorrect"})
