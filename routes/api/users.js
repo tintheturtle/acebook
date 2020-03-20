@@ -74,18 +74,18 @@ router.post("/login", async (req, res) => {
                     // Create JWT payload if user matched
                     const payload = {
                         id: user.id,
-                        name: user.name
+                        name: user.email
                     }
 
                     switch (user.ACE) {
                         case 'little':
                             console.log('find me a big!')
                             if (!user.paired) {
-                                for (let i = 0; i < users.length; i++) {
+                                for (let i = user.lastUserCount; i < users.length; i++) {
                                     let other = users[i].toObject()
                                     if (other.ACE === 'big' && !other.paired) {
                                         const percentage  = stringComparison(user.description, other.description)
-                                        if (percentage > 0.5){
+                                        if (percentage > 0.2){
                                             delete other.matches
                                             other.percentage = percentage
                                             user.matches.push(other)
@@ -100,12 +100,13 @@ router.post("/login", async (req, res) => {
                         case 'big':
                             console.log('find me a little!')
                             if (!user.paired) {
-                                for (let i = 0; i < users.length; i++) {
+                                for (let i = user.lastUserCount; i < users.length; i++) {
                                     let other = users[i].toObject()
                                     if (other.ACE === 'little' && !other.paired) {
                                         const percentage  = stringComparison(user.description, other.description)
                                         if (percentage > 0.5){
                                             delete other.matches
+                                            delete other.password
                                             other.percentage = percentage
                                             user.matches.push(other)
                                         }
@@ -118,6 +119,10 @@ router.post("/login", async (req, res) => {
                  
                     user.save()
                     .then(() => {
+
+                        let profile = user.toObject()
+                        delete profile.password
+
                         jwt.sign(
                             payload,
                             process.env.secretOrKey,
@@ -127,7 +132,8 @@ router.post("/login", async (req, res) => {
                             (err, token) => {
                                 res.json({
                                     success: true,
-                                    token: "Bearer " + token
+                                    token: "Bearer " + token,
+                                    profile: profile
                                 })
                             }
                         )

@@ -10,9 +10,9 @@ const initialState = {
     loading: false,
 }
 
-export default function(state = initialState, action) {
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_CURRENT_USER: 
+        case SET_CURRENT_USER:    
             return {
                 ...state,
                 isAuthenticated: !isEmpty(action.payload),
@@ -27,3 +27,5 @@ export default function(state = initialState, action) {
             return state
     }
 }
+
+export default authReducer

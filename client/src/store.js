@@ -1,20 +1,40 @@
 
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import rootReducer from './reducers'
 
 const initialState = {}
 
 const middleware = [thunk]
 
-const store = createStore(
-    rootReducer,
-    initialState,
-    compose(
-        applyMiddleware(...middleware),
-        window.__REDUX_DEVTOOLS_EXTENSION__
-        ? window.__REDUX_DEVTOOLS_EXTENSION__()
-        : f => f    )
-)
+const persistConfig = {
+    // Root
+    key: 'root',
+    // Storage Method (React Native)
+    storage: storage,
+    // Whitelist (Save Specific Reducers)
+    whitelist: [
+      'auth',
+    ]
+  }
 
-export default store
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = createStore(
+    persistedReducer,
+    initialState,
+    applyMiddleware(
+      ...middleware,
+    ),
+  )
+
+let persistor = persistStore(store)
+
+export {
+    store,
+    persistor,
+  }
+
