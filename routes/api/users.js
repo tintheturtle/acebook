@@ -85,7 +85,7 @@ router.post("/login", async (req, res) => {
                                     let other = users[i].toObject()
                                     if (other.ACE === 'big' && !other.paired) {
                                         const percentage  = stringComparison(user.description, other.description)
-                                        if (percentage > 0.5){
+                                        if (percentage > 0.2){
                                             delete other.matches
                                             other.percentage = percentage
                                             user.matches.push(other)

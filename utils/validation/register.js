@@ -37,6 +37,11 @@ const validateRegisterInput = (data) => {
     }
 
     // ACE Application Checks
+    if (Validator.isEmpty(data.description)) {
+        errors.description = "Please describe yourself";
+    }
+
+    // ACE Application Checks
     if (Validator.isEmpty(data.ACE)) {
         errors.ACE = "Must declare status as big or little";
     }
