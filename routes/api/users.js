@@ -127,7 +127,8 @@ router.post("/login", async (req, res) => {
                             (err, token) => {
                                 res.json({
                                     success: true,
-                                    token: "Bearer " + token
+                                    token: "Bearer " + token,
+                                    profile: user
                                 })
                             }
                         )
@@ -139,19 +140,6 @@ router.post("/login", async (req, res) => {
                 }
         })
     })
-})
-
-router.post("/dashboard", (req, res) => {
-
-    const email = req.body.name
-    User.findOne({ email })
-        .then((user) => {
-            console.log(user)
-            return res.json({
-                success: true
-            })
-        })
-        .catch(err => console.log(err))
 })
 
 export default router

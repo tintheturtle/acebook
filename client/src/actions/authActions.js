@@ -24,10 +24,12 @@ export const loginUser = userData => dispatch => {
         .post('/api/users/login', userData)
         .then(res => {
             const { token } = res.data
+            const { profile } = res.data
+            console.log(profile)
             localStorage.setItem('jwtToken', token)
             setAuthToken(token)
             const decoded = decode(token)
-            dispatch(setCurrentUser(decoded))
+            dispatch(setCurrentUser(profile))
         })
         .catch(err => 
             dispatch({
