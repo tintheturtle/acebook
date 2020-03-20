@@ -37,7 +37,6 @@ class Register extends Component {
     }
 
     onSubmit = e => {
-        console.log('here')
         e.preventDefault()
 
         const newUser = {

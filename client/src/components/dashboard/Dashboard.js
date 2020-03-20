@@ -35,12 +35,6 @@ class Dashboard extends Component {
                     </button>
                 </div>
             </div>
-            {/* <div className="row">
-                <div>
-                    Hullo
-                    {user.matches}
-                </div>
-            </div> */}
         </div>
         )
     }
