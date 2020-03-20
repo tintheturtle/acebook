@@ -10,11 +10,13 @@
 }
 
 .card-div {
-    padding: 30px;
+    padding: 20px;
 }
 
 .card-info {
     text-align: center;
+    padding: 30px;
+    border: 1px solid grey;
 }
 
 .match-image {
