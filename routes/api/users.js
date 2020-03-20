@@ -106,6 +106,7 @@ router.post("/login", async (req, res) => {
                                         const percentage  = stringComparison(user.description, other.description)
                                         if (percentage > 0.5){
                                             delete other.matches
+                                            delete other.password
                                             other.percentage = percentage
                                             user.matches.push(other)
                                         }
@@ -118,6 +119,10 @@ router.post("/login", async (req, res) => {
                  
                     user.save()
                     .then(() => {
+
+                        let profile = user.toObject()
+                        delete profile.password
+
                         jwt.sign(
                             payload,
                             process.env.secretOrKey,
@@ -125,11 +130,10 @@ router.post("/login", async (req, res) => {
                                 expiresIn: 31556926
                             },
                             (err, token) => {
-                                
                                 res.json({
                                     success: true,
                                     token: "Bearer " + token,
-                                    profile: user
+                                    profile: profile
                                 })
                             }
                         )

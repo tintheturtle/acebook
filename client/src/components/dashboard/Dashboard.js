@@ -41,7 +41,7 @@ class Dashboard extends Component {
                 <div>
                 { user.matches.map((data, indx) => (
                     // <p> Little: {data.name} </p>
-                    <Card data={data} />
+                    <Card data={data} key={indx}/>
                 ))}
                 </div>
             </div>
