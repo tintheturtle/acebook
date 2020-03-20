@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
+import Card from '../Card'
 import { logoutUser } from '../../actions/authActions'
 
 class Dashboard extends Component {
@@ -10,6 +12,8 @@ class Dashboard extends Component {
     }
     render() {
         const { user } = this.props.auth
+        console.log(user)
+
     return (
         <div style={{ height: "75vh" }} className="container valign-wrapper">
             <div className="row">
@@ -33,6 +37,12 @@ class Dashboard extends Component {
                     >
                     Logout
                     </button>
+                </div>
+                <div>
+                { user.matches.map((data, indx) => (
+                    // <p> Little: {data.name} </p>
+                    <Card data={data} />
+                ))}
                 </div>
             </div>
         </div>
