@@ -13,6 +13,8 @@ class Register extends Component {
             email: "",
             password: "",
             password2: "",
+            description: "",
+            ACE: "",
             errors: {}
         }
     }
@@ -43,7 +45,9 @@ class Register extends Component {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            password2: this.state.password2
+            password2: this.state.password2,
+            description: this.state.description,
+            ACE: this.state.ACE
         }
 
 
@@ -125,6 +129,34 @@ class Register extends Component {
                                 />
                                 <label htmlFor="password2">Confirm Password</label>
                                 <span className="red-text">{errors.password2}</span>
+                            </div>
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.description}
+                                    error={errors.description}
+                                    id="description"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.description
+                                    })}
+                                />
+                                <label htmlFor="description"> Describe Yourself </label>
+                                <span className="red-text">{errors.description}</span>
+                            </div>
+                            <div className="col s12 input-field">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.ACE}
+                                    error={errors.ACE}
+                                    id="ACE"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.ACE
+                                    })}
+                                />
+                                <label htmlFor="ACE"> Type </label>
+                                <span className="red-text">{errors.ACE}</span>
                             </div>
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <button
