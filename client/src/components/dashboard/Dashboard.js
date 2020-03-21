@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Card from '../Card'
+import CardProfile from '../CardProfile'
 import { logoutUser } from '../../actions/authActions'
 
 import '../../styles/Dashboard.css'
@@ -43,7 +43,7 @@ class Dashboard extends Component {
             <div className="row">
                 <div className="card-container">
                     { user.matches.map((data, indx) => (
-                        <Card data={data} key={indx}/>
+                        <CardProfile data={data} key={indx}/>
                     ))}
                 </div>        
             </div>

@@ -25,3 +25,8 @@
     border-radius: 50%;
     align-self: center;
 }
+
+.message-button:hover {
+    color: blue;
+    background-color: purple
+}
