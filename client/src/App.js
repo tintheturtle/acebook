@@ -14,6 +14,7 @@ import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import PrivateRoute from "./components/private-route/PrivateRoute"
 import Dashboard from "./components/dashboard/Dashboard"
+import Messages from './components/Messages'
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -45,6 +46,7 @@ function App() {
               {/* <Route exact path="/ACE" component={ACE}/> */}
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute exact path="/messages" component={Messages} />
               </Switch>
             </div>
           </Router> 
