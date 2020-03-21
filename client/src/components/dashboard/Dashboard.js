@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Card from '../Card'
+import CardProfile from '../CardProfile'
 import { logoutUser } from '../../actions/authActions'
+
+import '../../styles/Dashboard.css'
 
 class Dashboard extends Component {
     onLogoutClick = e => {
@@ -14,8 +16,8 @@ class Dashboard extends Component {
         const { user } = this.props.auth
 
     return (
-        <div style={{ height: "75vh" }} className="container valign-wrapper">
-            <div className="row">
+        <div style={{ height: "75vh" }} className="container">
+            <div id="dashboard-header" className="row">
                 <div className="col s12 center-align">
                     <h4>
                     <b>Hey there,</b> {user.name.split(" ")[0]}
@@ -37,12 +39,13 @@ class Dashboard extends Component {
                     Logout
                     </button>
                 </div>
-                <div>
-                { user.matches.map((data, indx) => (
-                    // <p> Little: {data.name} </p>
-                    <Card data={data} key={indx}/>
-                ))}
-                </div>
+            </div>
+            <div className="row">
+                <div className="card-container">
+                    { user.matches.map((data, indx) => (
+                        <CardProfile data={data} key={indx}/>
+                    ))}
+                </div>        
             </div>
         </div>
         )
