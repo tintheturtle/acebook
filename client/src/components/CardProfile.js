@@ -1,19 +1,25 @@
 import React  from 'react'
-import ProfileImage from '../images/profile.png'
-import 'whatwg-fetch'
-import openSocket from 'socket.io-client'
 import { useHistory } from 'react-router-dom'
+import { connect, useDispatch } from 'react-redux'
 
+import { sendMessageTo } from '../actions/messageActions'
+import { SEND_MESSAGE_TO } from '../actions/types'
+
+import ProfileImage from '../images/profile.png'
 import '../styles/CardProfile.css'
-
-const socket = openSocket('http://localhost:8000')
 
 const CardProfile = ({data}) => {
 
+
     let history = useHistory()
 
+    const dispatch = useDispatch()
+ 
     const onSend = () => {
-        socket.emit('example_message', 'demo')
+        dispatch({
+            type: SEND_MESSAGE_TO,
+            payload: data
+        })
         let path = '/messages'
         history.push(path)
     }
@@ -37,4 +43,8 @@ const CardProfile = ({data}) => {
     )
 }
 
-export default CardProfile
+const mapStateToProps = state => ({
+    message: state.messaging
+})
+
+export default connect(mapStateToProps,{ sendMessageTo })(CardProfile)
