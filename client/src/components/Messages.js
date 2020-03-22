@@ -1,34 +1,57 @@
 import React, { Component } from 'react'
 import openSocket from 'socket.io-client'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import classnames from "classnames"
 import 'whatwg-fetch'
 
 
 const socket = openSocket('http://localhost:8000')
 
 class Messages extends Component {
-    
-    onMessage = (e) => {
-        socket.emit('example_message', 'demo')
-        
-
+    constructor() {
+        super()
+        this.state = {
+            message: ""
+        }
     }
 
-
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value })
+    }
+    
+    onMessage = (e) => {
+        socket.emit('example_message', `${this.state.message}`)
+    }
     render() {
-        console.log(this.props.location.state)
 
+        const { user } = this.props.auth
+        const { other } = this.props.message
         return (
             <div style={{ height: "75vh" }} className="container">
                 <div id="dashboard-header" className="row">
                     <div className="col s12 center-align">
                         <h4>
-                        <b>Hey there,</b> 
+                        <b>You are messaging: </b>  {other.name.split(" ")[0]}
                         <p className="flow-text grey-text text-darken-1">
                             You are logged into a full-stack{" "}
                             <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
                         </p>
                         </h4>
-                        <button
+                    </div>
+                </div>
+                <div>
+                <div className="input-field col s12">
+                                <input
+                                onChange={this.onChange}
+                                value={this.state.message}
+                                id="message"
+                                type="text"
+                                className={classnames("")}
+                                />
+                                <label htmlFor="password">Message</label>
+                </div>
+                <button
                         style={{
                             width: "150px",
                             borderRadius: "3px",
@@ -40,7 +63,6 @@ class Messages extends Component {
                         >
                         Message
                         </button>
-                    </div>
                 </div>
             </div>
         )
@@ -48,4 +70,11 @@ class Messages extends Component {
     
 }
 
-export default Messages
+Messages.propTypes = {
+    auth: PropTypes.object.isRequired
+  }
+  const mapStateToProps = state => ({
+    auth: state.auth,
+    message: state.message
+  })
+export default connect(mapStateToProps)(Messages)
