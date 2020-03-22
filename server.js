@@ -59,7 +59,13 @@ io.on('connection', (socket) => {
     });
 
     // Push to frontend for updates
-    socket.broadcast.emit('push', ({name, content}))
+
+    const pushedMessage = {
+      name: name,
+      content: content
+    }
+
+    socket.broadcast.emit('push', pushedMessage)
     
   })
 

@@ -1,5 +1,5 @@
 #chat {
-    max-height: calc(100vh - 128px);
+    max-height: calc(50vh - 128px);
     overflow: scroll;
     padding: 16px;
   }

@@ -29,7 +29,7 @@ class Messages extends Component {
             console.log(this.state.chat)
             this.setState((state) => ({
               chat: [...state.chat, ...msg.reverse()]
-            }))
+            }), this.scrollToBottom)
           })
 
 
@@ -37,10 +37,8 @@ class Messages extends Component {
             console.log(this.state)
             this.setState((state) => ({
                 chat: [...state.chat, pushedMessage]
-            }))
+            }), this.scrollToBottom)
         })
-
-        console.log(this.state)
     
         
     }
@@ -50,19 +48,10 @@ class Messages extends Component {
         this.setState({ [e.target.id]: e.target.value })
         console.log(this.state.content)
     }
+    
 
     onSubmit = e => {
         e.preventDefault()
-
-        
-        try {
-            // this.socket.emit('test', {name: this.state.name, content: this.state.content })
-        
-            // const message = this.state.name + ': ' + this.state.content
-            // this.setState((state) => ({
-            //     chat: [...state.chat, message]
-            // }))
-
             this.setState((state) => {
                 console.log(state);
                 console.log('this', this.socket);
@@ -80,16 +69,13 @@ class Messages extends Component {
                   }],
                   content: '',
                 };
-              })
-            
-        
-        }
-        catch {
-            console.log('Whoops something went wrong.')
-        }
-
-
+              }, this.scrollToBottom)
     }
+
+    scrollToBottom() {
+        const chat = document.getElementById('chat');
+        chat.scrollTop = chat.scrollHeight;
+      }
 
     render() {
 
