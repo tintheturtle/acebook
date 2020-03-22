@@ -14,7 +14,7 @@ class Messages extends Component {
         super(props)
         this.state = {
             message: '',
-            chat: ['message one', 'message two'],
+            chat: [],
             content: '',
             name: this.props.auth.user.email
         }
@@ -25,12 +25,18 @@ class Messages extends Component {
 
         this.socket = io.connect('http://localhost:8000')
 
-
-        this.socket.on('push', ({ name, content }) => {
-            const message = name + ': ' + content
-            console.log(content)
+        this.socket.on('init', (msg) => {
+            console.log(this.state.chat)
             this.setState((state) => ({
-                chat: [...state.chat, message]
+              chat: [...state.chat, ...msg.reverse()]
+            }))
+          })
+
+
+        this.socket.on('push', (pushedMessage) => {
+            console.log(this.state)
+            this.setState((state) => ({
+                chat: [...state.chat, pushedMessage]
             }))
         })
 
@@ -50,17 +56,36 @@ class Messages extends Component {
 
         
         try {
-            this.socket.emit('test', {name: this.state.name, content: this.state.content })
+            // this.socket.emit('test', {name: this.state.name, content: this.state.content })
         
-            const message = this.state.name + ': ' + this.state.content
-            this.setState((state) => ({
-                chat: [...state.chat, message]
-            }))
+            // const message = this.state.name + ': ' + this.state.content
+            // this.setState((state) => ({
+            //     chat: [...state.chat, message]
+            // }))
+
+            this.setState((state) => {
+                console.log(state);
+                console.log('this', this.socket);
+                // Send the new message to the server.
+                this.socket.emit('test', {
+                  name: this.state.name,
+                  content: this.state.content,
+                });
+          
+                // Update the chat with the user's message and remove the current message.
+                return {
+                  chat: [...this.state.chat, {
+                    name: this.state.name,
+                    content: this.state.content,
+                  }],
+                  content: '',
+                };
+              })
             
         
         }
         catch {
-            console.log('here')
+            console.log('Whoops something went wrong.')
         }
 
 
@@ -86,7 +111,7 @@ class Messages extends Component {
                         {this.state.chat.map((data, index) => {
                             return (
                                 <div key={index}>
-                                    <p> {data} </p>
+                                    <p> {data.name} : {data.content} </p> 
                                 </div>
                             )
                         })}

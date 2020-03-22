@@ -44,20 +44,13 @@ io.on('connection', (socket) => {
     socket.emit('init', messages);
   });
 
+  // Socketing receiving messages from frontend
   socket.on('test', ({name, content}) => {
 
-    console.log(name, content)
-    
-    socket.broadcast.emit('push', ({name, content}))
-    
-  })
-
-  // Listen to connected users for a new message.
-  socket.on('message', () => {
     // Create a message with the content and the name of the user.
     const message = new Message({
-      content: msg.content,
-      name: msg.name,
+      content: content,
+      name: name,
     });
 
     // Save the message to the database.
@@ -65,6 +58,14 @@ io.on('connection', (socket) => {
       if (err) return console.error(err);
     });
 
+    // Push to frontend for updates
+    socket.broadcast.emit('push', ({name, content}))
+    
+  })
+
+  // Listen to connected users for a new message.
+  socket.on('message', () => {
+    
     // Notify all other users about a new message.
     socket.broadcast.emit('push', msg);
   });
