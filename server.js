@@ -6,6 +6,8 @@ import passport from 'passport'
 
 import users from './routes/api/users'
 
+import Message from './models/Message'
+
 const func = name => {
   return `Welcome back ${name}`
 }
@@ -31,18 +33,43 @@ const io = require('socket.io')(http)
 
 const connectedUsers = {}
 
-io.on('connection', function(socket){
-      console.log('a user connected')
+io.on('connection', (socket) => {
+    console.log('a user has connected')
 
-    socket.on('messages', ({ username, othername}) => {
-      console.log(username, othername)
-    }) 
+  // Get the last 10 messages from the database.
+  Message.find().sort({createdAt: -1}).limit(10).exec((err, messages) => {
+    if (err) return console.error(err);
 
+    // Send the last messages to the user.
+    socket.emit('init', messages);
+  });
 
-    socket.on('disconnect', function(){
-      console.log('User Disconnected')
-    })
-})
+  socket.on('test', ({name, content}) => {
+
+    console.log(name, content)
+    
+    socket.broadcast.emit('push', ({name, content}))
+    
+  })
+
+  // Listen to connected users for a new message.
+  socket.on('message', () => {
+    // Create a message with the content and the name of the user.
+    const message = new Message({
+      content: msg.content,
+      name: msg.name,
+    });
+
+    // Save the message to the database.
+    message.save((err) => {
+      if (err) return console.error(err);
+    });
+
+    // Notify all other users about a new message.
+    socket.broadcast.emit('push', msg);
+  });
+});
+
 io.listen(8000)
 
 

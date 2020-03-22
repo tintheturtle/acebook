@@ -1,79 +1,127 @@
 import React, { Component } from 'react'
-import openSocket from 'socket.io-client'
+import io from 'socket.io-client'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classnames from "classnames"
 import 'whatwg-fetch'
 
+import '../styles/Message.css'
 
-const socket = openSocket('http://localhost:8000')
+
 
 class Messages extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            message: ""
+            message: '',
+            chat: ['message one', 'message two'],
+            content: '',
+            name: this.props.auth.user.email
         }
+
     }
+
+    componentDidMount() {
+
+        this.socket = io.connect('http://localhost:8000')
+
+
+        this.socket.on('push', ({ name, content }) => {
+            const message = name + ': ' + content
+            console.log(content)
+            this.setState((state) => ({
+                chat: [...state.chat, message]
+            }))
+        })
+
+        console.log(this.state)
+    
+        
+    }
+    
 
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value })
+        console.log(this.state.content)
     }
-    
-    onMessage = (e) => {
 
-        const { user } = this.props.auth
-        const { other } = this.props.message
+    onSubmit = e => {
+        e.preventDefault()
 
-        const username = user.name
-        const othername = other.name
+        
+        try {
+            this.socket.emit('test', {name: this.state.name, content: this.state.content })
+        
+            const message = this.state.name + ': ' + this.state.content
+            this.setState((state) => ({
+                chat: [...state.chat, message]
+            }))
+            
+        
+        }
+        catch {
+            console.log('here')
+        }
 
-        socket.emit('messaging', { username, othername  })
 
     }
+
     render() {
 
-        console.log(this.state)
-
-        const { user } = this.props.auth
         const { other } = this.props.message
         return (
             <div style={{ height: "75vh" }} className="container">
                 <div id="dashboard-header" className="row">
                     <div className="col s12 center-align">
                         <h4>
-                        <b>You are messaging: </b>  {other.name.split(" ")[0]}
-                        <p className="flow-text grey-text text-darken-1">
-                            Who is a {other.ACE} and whose email is {other.email}
-                        </p>
+                            <b>You are messaging: </b>  {other.name.split(" ")[0]}
+                            <p className="flow-text grey-text text-darken-1">
+                                Who is a <b>{other.ACE}</b> and whose email is <b>{other.email}</b>
+                            </p>
                         </h4>
                     </div>
                 </div>
                 <div>
-                <div className="input-field col s12">
-                                <input
-                                onChange={this.onChange}
-                                value={this.state.message}
-                                id="message"
-                                type="text"
-                                className={classnames("")}
-                                />
-                                <label htmlFor="password">Message</label>
-                </div>
-                <button
-                        style={{
-                            width: "150px",
-                            borderRadius: "3px",
-                            letterSpacing: "1.5px",
-                            marginTop: "1rem"
-                        }}
-                        onClick={this.onMessage}
-                        className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                        >
-                        Message
-                        </button>
+                    <div id="chat" elevation={3}>
+                        {this.state.chat.map((data, index) => {
+                            return (
+                                <div key={index}>
+                                    <p> {data} </p>
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                    <form onSubmit={this.onSubmit}>
+                        <div className="input-field col s12">
+                                        <input
+                                            onChange={this.onChange}
+                                            value={this.state.content}
+                                            id="content"
+                                            type="text"
+                                            className={classnames("")}
+                                        />
+                                        <label htmlFor="test">Message</label>
+                        </div>
+                        <div>
+                                <button
+                                        style={{
+                                            width: "150px",
+                                            borderRadius: "3px",
+                                            letterSpacing: "1.5px",
+                                            marginTop: "1rem"
+                                        }}
+                                        type="submit"
+                                        className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                    >
+                                    Message
+                                </button>
+                        </div>
+                    </form>
+                    
                 </div>
             </div>
+
         )
     }
     
