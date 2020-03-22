@@ -21,9 +21,19 @@ class Messages extends Component {
     }
     
     onMessage = (e) => {
-        socket.emit('example_message', `${this.state.message}`)
+
+        const { user } = this.props.auth
+        const { other } = this.props.message
+
+        const username = user.name
+        const othername = other.name
+
+        socket.emit('messaging', { username, othername  })
+
     }
     render() {
+
+        console.log(this.state)
 
         const { user } = this.props.auth
         const { other } = this.props.message
@@ -34,8 +44,7 @@ class Messages extends Component {
                         <h4>
                         <b>You are messaging: </b>  {other.name.split(" ")[0]}
                         <p className="flow-text grey-text text-darken-1">
-                            You are logged into a full-stack{" "}
-                            <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
+                            Who is a {other.ACE} and whose email is {other.email}
                         </p>
                         </h4>
                     </div>

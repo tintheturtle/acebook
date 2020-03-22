@@ -20,22 +20,30 @@ app.use(
       extended: false
     })
   );
-  app.use(bodyParser.json());
-  // DB Config
- const uri = process.env.MONGO_URI
+app.use(bodyParser.json())
 
- const http = require('http').Server(app);
- const io = require('socket.io')(http)
- io.on('connection', function(socket){
-   console.log('a user connected')
-   socket.on('disconnect', function(){
-     console.log('User Disconnected')
-   })
-   socket.on('example_message', function(msg){
-     console.log('message: ' + msg)
-   })
- })
- io.listen(8000)
+// DB Config
+const uri = process.env.MONGO_URI
+
+// Socket.io Config
+const http = require('http').Server(app);
+const io = require('socket.io')(http)
+
+const connectedUsers = {}
+
+io.on('connection', function(socket){
+      console.log('a user connected')
+
+    socket.on('messages', ({ username, othername}) => {
+      console.log(username, othername)
+    }) 
+
+
+    socket.on('disconnect', function(){
+      console.log('User Disconnected')
+    })
+})
+io.listen(8000)
 
 
 // Connect to MongoDB
