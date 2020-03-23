@@ -9,6 +9,10 @@ const MessageSchema = new Schema({
     list: [{
         content: String,
         name: String,
+        time: {
+            type: Date,
+            default: Date.now()
+        }
     }]
     }, 
     {

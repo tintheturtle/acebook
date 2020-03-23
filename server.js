@@ -64,8 +64,9 @@ io.on('connection', (socket) => {
         uniqueCode: uniqid(),
         people: [from, to],
         list: [{
-          content: 'Server!',
-          name: from
+          content: 'Hello!',
+          name: from,
+          time: Date.now()
         }]
       })
       await newMessages.save((err) => {
@@ -92,7 +93,8 @@ io.on('connection', (socket) => {
     Message.findOne({ uniqueCode: messageID }).exec(async (err, message) => {
       message.list.push({
         name: name,
-        content: content
+        content: content,
+        time: Date.now()
       })
 
       // Save the message to the database.
@@ -104,7 +106,8 @@ io.on('connection', (socket) => {
     // Push to frontend for updates
     const pushedMessage = {
       name: name,
-      content: content
+      content: content,
+      time: Date.now()
     }
 
     const sendTo = connectedUsers[receiver]
