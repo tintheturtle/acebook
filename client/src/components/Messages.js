@@ -19,28 +19,29 @@ class Messages extends Component {
             name: this.props.auth.user.email
         }
 
+        this.socket = io('http://localhost:8000', 
+            { query:  
+                {
+                    from: this.state.name,
+                    to: this.props.message.other.email
+                }
+            }
+        )
     }
 
     componentDidMount() {
-
-        this.socket = io.connect('http://localhost:8000')
-
         this.socket.on('init', (msg) => {
             console.log(this.state.chat)
             this.setState((state) => ({
-              chat: [...state.chat, ...msg.reverse()]
+              chat: [...state.chat, ...msg.list.reverse()]
             }), this.scrollToBottom)
           })
-
-
         this.socket.on('push', (pushedMessage) => {
             console.log(this.state)
             this.setState((state) => ({
                 chat: [...state.chat, pushedMessage]
             }), this.scrollToBottom)
-        })
-    
-        
+        }) 
     }
     
 
@@ -97,7 +98,7 @@ class Messages extends Component {
                         {this.state.chat.map((data, index) => {
                             return (
                                 <div key={index}>
-                                    <p> {data.name} : {data.content} </p> 
+                                    <p> <b>{data.name}</b> : {data.content} </p> 
                                 </div>
                             )
                         })}

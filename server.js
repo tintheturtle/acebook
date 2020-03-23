@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import passport from 'passport'
+import uniqid from 'uniqid'
 
 import users from './routes/api/users'
 
@@ -36,13 +37,39 @@ const connectedUsers = {}
 io.on('connection', (socket) => {
     console.log('a user has connected')
 
+  let from = socket.handshake.query['from']
+  let to = socket.handshake.query['to']
+  console.log('from: ' + from)
+  console.log('to: ' + to)
+  console.log()
+
   // Get the last 10 messages from the database.
-  Message.find().sort({createdAt: -1}).limit(10).exec((err, messages) => {
-    if (err) return console.error(err);
+  Message.findOne({ people: [from, to]}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+    let emitted = false
+    if (!messages) {
+      const newMessages = new Message({
+        uniqueCode: uniqid(),
+        people: [from, to],
+        list: [{
+          content: 'Hello!',
+          name: from
+        }]
+      })
+      console.log('here')
+      await newMessages.save((err) => {
+        if (err) return console.error(err)
+      })
+      socket.emit('init', newMessages)
+      emitted = true
+    }
+    
+    if (err) return console.error(err)
 
     // Send the last messages to the user.
-    socket.emit('init', messages);
-  });
+    if (!emitted) {
+      socket.emit('init', messages)
+    }
+  })
 
   // Socketing receiving messages from frontend
   socket.on('test', ({name, content}) => {
@@ -55,7 +82,7 @@ io.on('connection', (socket) => {
 
     // Save the message to the database.
     message.save((err) => {
-      if (err) return console.error(err);
+      if (err) return console.error(err)
     });
 
     // Push to frontend for updates
@@ -69,12 +96,6 @@ io.on('connection', (socket) => {
     
   })
 
-  // Listen to connected users for a new message.
-  socket.on('message', () => {
-    
-    // Notify all other users about a new message.
-    socket.broadcast.emit('push', msg);
-  });
 });
 
 io.listen(8000)
