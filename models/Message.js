@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { Schema } from 'mongoose'
+import moment from 'moment'
 
 const MessageSchema = new Schema({
     uniqueCode: String,
@@ -10,8 +11,8 @@ const MessageSchema = new Schema({
         content: String,
         name: String,
         time: {
-            type: Date,
-            default: Date.now()
+            type: String,
+            default: moment().format('LT')
         }
     }]
     }, 
