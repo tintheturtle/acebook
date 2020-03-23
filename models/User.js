@@ -53,7 +53,8 @@ const UserSchema = new Schema({
       default: []
     },
     lastUserCount: {
-      type: Number
+      type: Number,
+      default: 0
     }
   });
 

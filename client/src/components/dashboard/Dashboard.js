@@ -13,6 +13,8 @@ class Dashboard extends Component {
         this.props.logoutUser()
     }
     render() {
+        console.log(this.props)
+
         const { user } = this.props.auth
 
     return (

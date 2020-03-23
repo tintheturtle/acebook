@@ -8,6 +8,7 @@ import validateLoginInput from '../../utils/validation/login'
 import stringComparison from '../../utils/comparisons/StringSimilarity'
 
 import User from '../../models/User'
+import Message from '../../models/Message'
 
 var router = express.Router()
 
