@@ -128,6 +128,7 @@ class Messages extends Component {
                         </div>
                         <div>
                                 <button
+                                        disabled={!this.state.content}
                                         style={{
                                             width: "150px",
                                             borderRadius: "3px",
