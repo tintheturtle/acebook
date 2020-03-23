@@ -32,18 +32,23 @@ class Messages extends Component {
 
     componentDidMount() {
         this.socket.on('init', (msg) => {
+            console.log(this.socket.id)
+
             this.setState((state) => ({
               chat: [...state.chat, ...msg.list],
               messageID: msg.uniqueCode
             }), this.scrollToBottom)
           })
 
-        this.socket.on('private', (pushedMessage) => {
+        this.socket.on('private_chat', (pushedMessage) => {
             this.setState((state) => ({
                 chat: [...state.chat, pushedMessage],
-                messageID: this.state.messageID
             }), this.scrollToBottom)
         }) 
+    }
+
+    componentWillUnmount() {
+        this.socket.close();
     }
     
 
@@ -60,7 +65,7 @@ class Messages extends Component {
                   name: this.state.name,
                   content: this.state.content,
                   messageID: this.state.messageID,
-                  to: this.props.message.other.email,
+                  receiver: this.props.message.other.email,
                   from: this.state.name
                 });
           

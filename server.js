@@ -35,15 +35,10 @@ const io = require('socket.io')(http)
 const connectedUsers = {}
 
 io.on('connection', (socket) => {
-    console.log('a user has connected')
 
   let from = socket.handshake.query['from']
   let to = socket.handshake.query['to']
-  console.log('from: ' + from)
-  console.log('to: ' + to)
-  console.log()
 
-  // Add to unique dictionary of users the socket
   if (from in connectedUsers){
 
   }
@@ -51,12 +46,21 @@ io.on('connection', (socket) => {
     // Add key pair value of email and socket ==> email: socket
     socket.name = from
     connectedUsers[socket.name] = socket
+    console.log(`${from} has the id of ${socket.id}`)
+    console.log('and is added to connectedUsers')
   }
+
+  socket.on('disconnect', () => {
+    console.log(`Socket ${socket.id} disconnected.`)
+    delete connectedUsers[from]
+  })
+
 
 
   // Get the last 10 messages from the database.
   Message.findOne({ people: { $all : [from, to] }}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
     let emitted = false
+    // if first time chatting, create a new message schema 
     if (!messages) {
       const newMessages = new Message({
         uniqueCode: uniqid(),
@@ -69,10 +73,12 @@ io.on('connection', (socket) => {
       await newMessages.save((err) => {
         if (err) return console.error(err)
       })
+      // Emit the new schema
       socket.emit('init', newMessages)
       emitted = true
     }
     
+    // Log any errors
     if (err) return console.error(err)
 
     // Send the last messages to the user.
@@ -82,7 +88,7 @@ io.on('connection', (socket) => {
   })
 
   // Socketing receiving messages from frontend
-  socket.on('test', ({name, content, messageID, to }) => {
+  socket.on('test', ({name, content, messageID, receiver }) => {
 
     // Create a message with the content and the name of the user.
     Message.findOne({ uniqueCode: messageID }).exec(async (err, message) => {
@@ -102,9 +108,17 @@ io.on('connection', (socket) => {
       name: name,
       content: content
     }
+
+    console.log(receiver)
+
     console.log(Object.keys(connectedUsers))
-    connectedUsers[to].emit('private', pushedMessage)
+    console.log(socket.id)
+    console.log(connectedUsers[receiver].id)
+
+    connectedUsers[receiver].emit('private_chat', pushedMessage)
   })
+
+
 })
 
 io.listen(8000)
