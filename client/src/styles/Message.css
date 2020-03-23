@@ -3,6 +3,14 @@
     overflow: scroll;
     padding: 16px;
   }
+
+#message-header {
+  padding: 100px 100px 20px 100px;
+}
+
+.message-header-row {
+  margin-bottom: 0px;
+}
   
   .name {
     color: rgba(0, 0, 0, 0.54);
@@ -20,4 +28,11 @@
   flex-grow: 1;
   text-align: right;
   color: grey
+}
+
+.match-image {
+  width: 150px;
+  margin: 0px;
+  border-radius: 50%;
+  align-self: center;
 }

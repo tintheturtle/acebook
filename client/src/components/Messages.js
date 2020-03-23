@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import moment from 'moment'
 import 'whatwg-fetch'
 
+import ProfileImage from '../images/profile.png'
 import '../styles/Message.css'
 
 
@@ -90,8 +91,9 @@ class Messages extends Component {
         const { other } = this.props.message
         return (
             <div style={{ height: "75vh" }} className="container">
-                <div id="dashboard-header" className="row">
+                <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align">
+                        <img src={ProfileImage} className="match-image" alt="profile" />
                         <h4>
                             <b>You are messaging: </b>  {other.name.split(" ")[0]}
                             <p className="flow-text grey-text text-darken-1">
