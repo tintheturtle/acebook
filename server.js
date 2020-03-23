@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import passport from 'passport'
 import uniqid from 'uniqid'
+import moment from 'moment'
 
 import users from './routes/api/users'
 
@@ -66,7 +67,7 @@ io.on('connection', (socket) => {
         list: [{
           content: 'Hello!',
           name: from,
-          time: Date.now()
+          time: moment().format('LT')
         }]
       })
       await newMessages.save((err) => {
@@ -94,7 +95,7 @@ io.on('connection', (socket) => {
       message.list.push({
         name: name,
         content: content,
-        time: Date.now()
+        time: moment().format('LT')
       })
 
       // Save the message to the database.
@@ -107,7 +108,7 @@ io.on('connection', (socket) => {
     const pushedMessage = {
       name: name,
       content: content,
-      time: Date.now()
+      time: moment().format('LT')
     }
 
     const sendTo = connectedUsers[receiver]

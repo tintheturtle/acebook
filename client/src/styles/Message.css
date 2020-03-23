@@ -11,3 +11,13 @@
   .content {
     margin-bottom: 8px;
   }
+
+.chat-class {
+  display: flex
+}
+
+.chat-time-stamp {
+  flex-grow: 1;
+  text-align: right;
+  color: grey
+}

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import io from 'socket.io-client'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import classnames from "classnames"
+import classnames from 'classnames'
+import moment from 'moment'
 import 'whatwg-fetch'
 
 import '../styles/Message.css'
@@ -32,8 +33,6 @@ class Messages extends Component {
 
     componentDidMount() {
         this.socket.on('init', (msg) => {
-            console.log(this.socket.id)
-
             this.setState((state) => ({
               chat: [...state.chat, ...msg.list],
               messageID: msg.uniqueCode
@@ -74,6 +73,7 @@ class Messages extends Component {
                   chat: [...this.state.chat, {
                     name: this.state.name,
                     content: this.state.content,
+                    time: moment().format('LT')
                   }],
                   content: '',
                 };
@@ -103,9 +103,11 @@ class Messages extends Component {
                 <div>
                     <div id="chat" elevation={3}>
                         {this.state.chat.map((data, index) => {
+
                             return (
-                                <div key={index}>
-                                    <p> <b>{data.name}</b> : {data.content} </p> 
+                                <div className="chat-class" key={index}>
+                                    <p className="chat-content"> <b>{data.name}</b> : {data.content} </p> 
+                                    <p className="chat-time-stamp"> { data.time }</p>
                                 </div>
                             )
                         })}
