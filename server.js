@@ -43,6 +43,17 @@ io.on('connection', (socket) => {
   console.log('to: ' + to)
   console.log()
 
+  // Add to unique dictionary of users the socket
+  if (from in connectedUsers){
+
+  }
+  else {
+    // Add key pair value of email and socket ==> email: socket
+    socket.name = from
+    connectedUsers[socket.name] = socket
+  }
+
+
   // Get the last 10 messages from the database.
   Message.findOne({ people: { $all : [from, to] }}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
     let emitted = false
@@ -71,7 +82,7 @@ io.on('connection', (socket) => {
   })
 
   // Socketing receiving messages from frontend
-  socket.on('test', ({name, content, messageID }) => {
+  socket.on('test', ({name, content, messageID, to }) => {
 
     // Create a message with the content and the name of the user.
     Message.findOne({ uniqueCode: messageID }).exec(async (err, message) => {
@@ -86,19 +97,15 @@ io.on('connection', (socket) => {
       })
     })
 
-    
-
     // Push to frontend for updates
-
     const pushedMessage = {
       name: name,
       content: content
     }
-
-    socket.broadcast.emit(messageID, pushedMessage)
+    console.log(Object.keys(connectedUsers))
+    connectedUsers[to].emit('private', pushedMessage)
   })
-
-});
+})
 
 io.listen(8000)
 

@@ -38,10 +38,10 @@ class Messages extends Component {
             }), this.scrollToBottom)
           })
 
-        this.socket.on(this.state.messageID, (pushedMessage) => {
-            console.log(this.state)
+        this.socket.on('private', (pushedMessage) => {
             this.setState((state) => ({
-                chat: [...state.chat, pushedMessage]
+                chat: [...state.chat, pushedMessage],
+                messageID: this.state.messageID
             }), this.scrollToBottom)
         }) 
     }
@@ -49,20 +49,19 @@ class Messages extends Component {
 
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value })
-        console.log(this.state.content)
     }
     
 
     onSubmit = e => {
         e.preventDefault()
             this.setState((state) => {
-                console.log(state);
-                console.log('this', this.socket);
                 // Send the new message to the server.
                 this.socket.emit('test', {
                   name: this.state.name,
                   content: this.state.content,
-                  messageID: this.state.messageID
+                  messageID: this.state.messageID,
+                  to: this.props.message.other.email,
+                  from: this.state.name
                 });
           
                 // Update the chat with the user's message and remove the current message.
