@@ -16,7 +16,8 @@ class Messages extends Component {
             message: '',
             chat: [],
             content: '',
-            name: this.props.auth.user.email
+            name: this.props.auth.user.email,
+            messageID: ''
         }
 
         this.socket = io('http://localhost:8000', 
@@ -31,12 +32,13 @@ class Messages extends Component {
 
     componentDidMount() {
         this.socket.on('init', (msg) => {
-            console.log(this.state.chat)
             this.setState((state) => ({
-              chat: [...state.chat, ...msg.list.reverse()]
+              chat: [...state.chat, ...msg.list],
+              messageID: msg.uniqueCode
             }), this.scrollToBottom)
           })
-        this.socket.on('push', (pushedMessage) => {
+
+        this.socket.on(this.state.messageID, (pushedMessage) => {
             console.log(this.state)
             this.setState((state) => ({
                 chat: [...state.chat, pushedMessage]
@@ -60,6 +62,7 @@ class Messages extends Component {
                 this.socket.emit('test', {
                   name: this.state.name,
                   content: this.state.content,
+                  messageID: this.state.messageID
                 });
           
                 // Update the chat with the user's message and remove the current message.

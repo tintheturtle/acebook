@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import { Schema } from 'mongoose'
 
 const MessageSchema = new Schema({
+    uniqueCode: String,
     people: {
         type: Array,
     },

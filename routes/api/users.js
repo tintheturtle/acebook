@@ -148,38 +148,4 @@ router.post("/login", async (req, res) => {
     })
 })
 
-router.post("/messages", async (req, res) => {
-
-    const { from } = req.body.from
-    const { to } = req.body.to
-
-    Message.findOne({ people: [from, to]}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
-        let emitted = false
-        if (!messages) {
-          const newMessages = new Message({
-            uniqueCode: uniqid(),
-            people: [from, to],
-            list: [{
-              content: 'Hello!',
-              name: from
-            }]
-          })
-          console.log('here')
-          await newMessages.save((err) => {
-            if (err) return console.error(err)
-          })
-          socket.emit('init', newMessages)
-          return {
-              messageCode: newMessages.uniqueCode
-          }
-        }
-        else {
-            return {
-                messageCode: messages.uniqueCode
-            }
-        }
-
-    })
-})
-
 export default router

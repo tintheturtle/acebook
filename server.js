@@ -44,18 +44,17 @@ io.on('connection', (socket) => {
   console.log()
 
   // Get the last 10 messages from the database.
-  Message.findOne({ people: [from, to]}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+  Message.findOne({ people: { $all : [from, to] }}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
     let emitted = false
     if (!messages) {
       const newMessages = new Message({
         uniqueCode: uniqid(),
         people: [from, to],
         list: [{
-          content: 'Hello!',
+          content: 'Server!',
           name: from
         }]
       })
-      console.log('here')
       await newMessages.save((err) => {
         if (err) return console.error(err)
       })
@@ -72,18 +71,22 @@ io.on('connection', (socket) => {
   })
 
   // Socketing receiving messages from frontend
-  socket.on('test', ({name, content}) => {
+  socket.on('test', ({name, content, messageID }) => {
 
     // Create a message with the content and the name of the user.
-    const message = new Message({
-      content: content,
-      name: name,
-    });
+    Message.findOne({ uniqueCode: messageID }).exec(async (err, message) => {
+      message.list.push({
+        name: name,
+        content: content
+      })
 
-    // Save the message to the database.
-    message.save((err) => {
-      if (err) return console.error(err)
-    });
+      // Save the message to the database.
+      await message.save((err) => {
+        if (err) return console.error(err)
+      })
+    })
+
+    
 
     // Push to frontend for updates
 
@@ -92,8 +95,7 @@ io.on('connection', (socket) => {
       content: content
     }
 
-    socket.broadcast.emit('push', pushedMessage)
-    
+    socket.broadcast.emit(messageID, pushedMessage)
   })
 
 });
