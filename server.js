@@ -46,8 +46,6 @@ io.on('connection', (socket) => {
     // Add key pair value of email and socket ==> email: socket
     socket.name = from
     connectedUsers[socket.name] = socket
-    console.log(`${from} has the id of ${socket.id}`)
-    console.log('and is added to connectedUsers')
   }
 
   socket.on('disconnect', () => {
@@ -109,13 +107,12 @@ io.on('connection', (socket) => {
       content: content
     }
 
-    console.log(receiver)
+    const sendTo = connectedUsers[receiver]
 
-    console.log(Object.keys(connectedUsers))
-    console.log(socket.id)
-    console.log(connectedUsers[receiver].id)
+    if (sendTo) {
+      sendTo.emit('private_chat', pushedMessage)
+    }
 
-    connectedUsers[receiver].emit('private_chat', pushedMessage)
   })
 
 
