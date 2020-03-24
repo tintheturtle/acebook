@@ -2,9 +2,20 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { getUsers } from '../actions/listActions'
 
-class UserList extends Component {
 
+class List extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            list: []
+        }
+    }
+
+    componentDidMount() {
+        console.log(getUsers())
+    }
     
 
     render() {
@@ -32,10 +43,10 @@ class UserList extends Component {
     }
 }
 
-UserList.propTypes = {
-    auth: PropTypes.object.isRequired
+List.propTypes = {
+    auth: PropTypes.object.isRequired,
   }
   const mapStateToProps = state => ({
     auth: state.auth
   })
-export default connect(mapStateToProps)(UserList)
+export default connect(mapStateToProps)(List)
