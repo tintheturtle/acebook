@@ -15,6 +15,7 @@ import Register from './components/auth/Register'
 import PrivateRoute from "./components/private-route/PrivateRoute"
 import Dashboard from "./components/dashboard/Dashboard"
 import Messages from './components/Messages'
+import List from './components/List'
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -47,6 +48,7 @@ function App() {
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/messages" component={Messages} />
+                <PrivateRoute exact path="/list" component={List} />
               </Switch>
             </div>
           </Router> 

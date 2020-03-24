@@ -8,7 +8,6 @@ import validateLoginInput from '../../utils/validation/login'
 import stringComparison from '../../utils/comparisons/StringSimilarity'
 
 import User from '../../models/User'
-import Message from '../../models/Message'
 
 var router = express.Router()
 
@@ -147,5 +146,37 @@ router.post("/login", async (req, res) => {
         })
     })
 })
+
+router.get("/list",  (req, res) => {
+
+    User.find()
+        .then(users => {
+
+            // Initialize new array to add users
+            let userList = []
+
+            users.forEach(user => {
+                // Turn user into object to delete fields
+                let userObj = user.toObject()
+                delete userObj.password
+                delete userObj.lastUserCount
+                delete userObj.matches
+
+                // Push user into array to return
+                userList.push(userObj)
+            })
+
+            // Return array of users
+            res.json({
+                userList
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+
+})
+
 
 export default router
