@@ -42,9 +42,13 @@ class List extends Component {
                 </div>
                 <div className="row">
                     <div className="card-container">
-                        { this.state.list.map((data, indx) => (
-                            <CardProfile data={data} key={indx}/>
-                        ))}
+                        { this.state.list.map((data, indx) => {
+                            if (data.email !== user.email) {
+                                return (
+                                    <CardProfile data={data} key={indx}/>
+                                )
+                            }
+                        })}
                     </div>
                 </div>
             </div>
