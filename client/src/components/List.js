@@ -14,7 +14,7 @@ class List extends Component {
     }
 
     componentDidMount() {
-        console.log(getUsers())
+        console.log(getUsers('here'))
     }
     
 
