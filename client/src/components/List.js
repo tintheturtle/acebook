@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { getUsers } from '../actions/listActions'
+import CardProfile from './CardProfile'
 
 
 class List extends Component {
@@ -13,8 +14,12 @@ class List extends Component {
         }
     }
 
-    componentDidMount() {
-        console.log(getUsers('here'))
+    async componentDidMount() {
+        await getUsers().then(data => {
+            this.setState({
+                list: data.userList
+            })
+        })
     }
     
 
@@ -36,7 +41,11 @@ class List extends Component {
                     </div>
                 </div>
                 <div className="row">
-     
+                    <div className="card-container">
+                        { this.state.list.map((data, indx) => (
+                            <CardProfile data={data} key={indx}/>
+                        ))}
+                    </div>
                 </div>
             </div>
         )

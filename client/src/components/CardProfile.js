@@ -30,7 +30,10 @@ const CardProfile = ({data}) => {
                 <img src={ProfileImage} className="match-image" alt="profile" />
                 <p className="match-name match-info"> {data.name} </p>
                 <p className="match-email match-info"> {data.email} </p> 
-                <p className="match-percentage match-info"> {(data.percentage.toPrecision(4) * 100).toString().substring(0,5)}% match</p>
+                <p className="match-percentage match-info"> {
+                    (data.percentage) ?
+                    ((data.percentage.toPrecision(4) * 100).toString().substring(0,5) + '% match') : "" }
+                    </p>
                 <button 
                     className="btn btn-med waves-effect waves-light hoverable light-blue accent-3"
                     onClick={() => onSend()}

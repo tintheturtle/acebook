@@ -1,11 +1,10 @@
 import axios from 'axios'
 
-export const getUsers = (userData) => {
-    axios
-        .get('/api/users/list', userData)
-        .then(res => console.log(res))
+export const getUsers = () => {
+    return axios
+        .get('/api/users/list')
+        .then(res => res.data)
         .catch(err => {
-            console.log('did not go through')
             console.log(err)
     })
 }
