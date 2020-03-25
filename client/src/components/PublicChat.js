@@ -32,7 +32,7 @@ class PublicChat extends Component {
             }), this.scrollToBottom)
           })
         
-        this.socket.on('public_chat', (pushedMessage) => {
+        this.socket.on('public_chat_send', (pushedMessage) => {
             this.setState((state) => ({
                 chat: [...state.chat, pushedMessage],
             }), this.scrollToBottom)
