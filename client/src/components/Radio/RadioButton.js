@@ -4,7 +4,7 @@ import "./RadioButton.scss";
 const RadioButton = (props) => {
     return (
         <div className="RadioButton">
-            <input id={props.id} onChange={props.changed} value={props.value} type="radio" checked={props.isSelected} />
+            <input className="input-radio" id={props.id} onChange={props.changed} value={props.value} error={props.error} type="radio" checked={props.isSelected} />
             <label htmlFor={props.id}>{props.label}</label>
         </div>
     )

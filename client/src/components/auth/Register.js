@@ -18,7 +18,7 @@ class Register extends Component {
             description: "",
             ACE: "",
             errors: {},
-            paymentMethod: "COD"
+            introversion: ""
         }
     }
 
@@ -60,9 +60,16 @@ class Register extends Component {
     radioChangeHandler = (event) => {
 
         this.setState({
-            paymentMethod: event.target.value
+            introversion: event.target.value
         });
     }
+
+    aceChangeHandler = (event) => {
+        this.setState({
+            ACE: event.target.value
+        });
+    }
+    
 
 
     render() {
@@ -78,7 +85,7 @@ class Register extends Component {
                         </Link>
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                <b>Register</b> below
+                                <b>Register below</b> 
                             </h4>
                             <p className="grey-text text-darken-1">
                                 Already have an account? <Link to="/login">Log in</Link>
@@ -156,19 +163,52 @@ class Register extends Component {
                                 <span className="red-text">{errors.description}</span>
                             </div>
                             <div className="col s12 input-field">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.ACE}
-                                    error={errors.ACE}
-                                    id="ACE"
-                                    type="text"
-                                    className={classnames("", {
-                                        invalid: errors.ACE
-                                    })}
-                                />
-                                <label htmlFor="ACE"> Type </label>
+                                <p className="" style={{ color: '#9e9e9e'}}>
+                                    Type
+                                </p>
+                                <div className="radio-btn-container" style={{ display: "flex", textAlign: 'center' }}>
+                                    <RadioButton 
+                                        changed={ this.aceChangeHandler } 
+                                        id="3" 
+                                        error={errors.ACE}
+                                        isSelected={ this.state.ACE === "big" } 
+                                        label="Big" 
+                                        value="big" 
+                                    />
+                                    <RadioButton 
+                                        changed={ this.aceChangeHandler } 
+                                        id="4" 
+                                        error={errors.ACE}
+                                        isSelected={ this.state.ACE === "little" } 
+                                        label="Little" 
+                                        value="little" 
+                                    />
+                                </div>
                                 <span className="red-text">{errors.ACE}</span>
+
                             </div>
+                            <div className="col s12 input-field">
+                                <p className="" style={{ color: '#9e9e9e'}}>
+                                    Introvert/Extrovert
+                                </p>
+                                <div className="radio-btn-container" style={{ display: "flex", textAlign: 'center' }}>
+                                    <RadioButton 
+                                        changed={ this.radioChangeHandler } 
+                                        id="1" 
+                                        isSelected={ this.state.introversion === "Introvert" } 
+                                        label="Introvert" 
+                                        value="Introvert" 
+                                    />
+                                    <RadioButton 
+                                        changed={ this.radioChangeHandler } 
+                                        id="2" 
+                                        isSelected={ this.state.introversion === "Extrovert" } 
+                                        label="Extrovert" 
+                                        value="Extrovert" 
+                                    />
+                                </div>
+                            </div>
+                            
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <button
                                 style={{
@@ -183,31 +223,6 @@ class Register extends Component {
                                 Sign up
                                 </button>
                             </div>
-                            <div className="col s12 input-field" style={{ display: "flex" }}>
-
-                                <RadioButton 
-                                    changed={ this.radioChangeHandler } 
-                                    id="1" 
-                                    isSelected={ this.state.paymentMethod === "QuickPay" } 
-                                    label="QuickPay" 
-                                    value="QuickPay" 
-                                />
-
-                                <RadioButton 
-                                    changed={ this.radioChangeHandler } 
-                                    id="2" 
-                                    isSelected={ this.state.paymentMethod === "COD" } 
-                                    label="Cash On Delivery" 
-                                    value="COD" 
-                                />
-
-                                
-
-                            </div>
-
-                            <h4 style={{ marginTop: "50px" }}>
-                                The selected radio button value is => { this.state.paymentMethod }
-                            </h4>
                             
                         </form>
                     </div>
