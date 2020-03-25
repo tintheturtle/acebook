@@ -10,8 +10,7 @@ import ProfileImage from '../images/profile.png'
 import '../styles/Message.css'
 
 
-
-class Messages extends Component {
+class PublicChat extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,29 +18,21 @@ class Messages extends Component {
             chat: [],
             content: '',
             name: this.props.auth.user.email,
-            messageID: ''
         }
 
-        this.socket = io('http://localhost:8000', 
-            { query:  
-                {
-                    from: this.state.name,
-                    to: this.props.message.other.email
-                }
-            }
-        )
+        this.socket = io('http://localhost:8000')
     }
 
     componentDidMount() {
-        this.socket.emit('private_init')
-        this.socket.on('init', (msg) => {
+        this.socket.emit('public_init')
+
+        this.socket.on('public_message', (msg) => {
             this.setState((state) => ({
               chat: [...state.chat, ...msg.list],
-              messageID: msg.uniqueCode
             }), this.scrollToBottom)
           })
-
-        this.socket.on('private_chat', (pushedMessage) => {
+        
+        this.socket.on('public_chat_send', (pushedMessage) => {
             this.setState((state) => ({
                 chat: [...state.chat, pushedMessage],
             }), this.scrollToBottom)
@@ -62,11 +53,10 @@ class Messages extends Component {
         e.preventDefault()
             this.setState((state) => {
                 // Send the new message to the server.
-                this.socket.emit('private', {
+                this.socket.emit('public', {
                   name: this.state.name,
                   content: this.state.content,
                   messageID: this.state.messageID,
-                  receiver: this.props.message.other.email,
                   from: this.state.name
                 });
           
@@ -89,24 +79,19 @@ class Messages extends Component {
 
     render() {
 
-        const { other } = this.props.message
         return (
             <div style={{ height: "75vh" }} className="container">
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align">
                         <img src={ProfileImage} className="match-image" alt="profile" />
                         <h4>
-                            <b>You are messaging: </b>  {other.name.split(" ")[0]}
-                            <p className="flow-text grey-text text-darken-1">
-                                Who is a <b>{other.ACE}</b> and whose email is <b>{other.email}</b>
-                            </p>
+                            <b> Welcome to the Public Chat! </b> 
                         </h4>
                     </div>
                 </div>
                 <div>
                     <div id="chat" elevation={3}>
                         {this.state.chat.map((data, index) => {
-
                             return (
                                 <div className="chat-class" key={index}>
                                     <p className="chat-content"> <b>{data.name}</b> : {data.content} </p> 
@@ -152,11 +137,11 @@ class Messages extends Component {
     
 }
 
-Messages.propTypes = {
+PublicChat.propTypes = {
     auth: PropTypes.object.isRequired
   }
   const mapStateToProps = state => ({
     auth: state.auth,
     message: state.message
   })
-export default connect(mapStateToProps)(Messages)
+export default connect(mapStateToProps)(PublicChat)

@@ -33,13 +33,31 @@ const uri = process.env.MONGO_URI
 const http = require('http').Server(app);
 const io = require('socket.io')(http)
 
+// Collection of sockets of connected users
 const connectedUsers = {}
 
+// const newMessage = new Message({
+//     uniqueCode: uniqid(),
+//     people: ['public'],
+//     list: [{
+//       content: 'Hello, welcome to the public chat!',
+//       name: 'Family Chair',
+//       time: moment().format('LT')
+//     }]
+// })
+
+// newMessage.save().then(
+//   console.log('Public Group Chat Initialized')
+// )
+
+// Socket IO Connection
 io.on('connection', (socket) => {
 
+  // Retrieve sender and receiver info
   let from = socket.handshake.query['from']
   let to = socket.handshake.query['to']
 
+  // Check if in connected user dictionary
   if (from in connectedUsers){
 
   }
@@ -49,46 +67,80 @@ io.on('connection', (socket) => {
     connectedUsers[socket.name] = socket
   }
 
+  // Remove disconnected users from socket list
   socket.on('disconnect', () => {
     console.log(`Socket ${socket.id} disconnected.`)
     delete connectedUsers[from]
   })
 
 
-
-  // Get the last 10 messages from the database.
-  Message.findOne({ people: { $all : [from, to] }}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
-    let emitted = false
-    // if first time chatting, create a new message schema 
-    if (!messages) {
-      const newMessages = new Message({
-        uniqueCode: uniqid(),
-        people: [from, to],
-        list: [{
-          content: 'Hello!',
-          name: from,
-          time: moment().format('LT')
-        }]
-      })
-      await newMessages.save((err) => {
-        if (err) return console.error(err)
-      })
-      // Emit the new schema
-      socket.emit('init', newMessages)
-      emitted = true
-    }
-    
-    // Log any errors
-    if (err) return console.error(err)
-
-    // Send the last messages to the user.
-    if (!emitted) {
-      socket.emit('init', messages)
-    }
+  socket.on('public_init', () => {
+    Message.findOne({ people: ['public'] }).sort({createdAt: -1}).limit(10).exec( (err, messages) => {
+      socket.emit('public_message', messages)
+    })
   })
 
+  socket.on('public', ({name, content }) => {
+    // Create a message with the content and the name of the user.
+    Message.findOne({ people: ['public'] }).exec(async (err, message) => {
+      message.list.push({
+        name: name,
+        content: content,
+        time: moment().format('LT')
+      })
+
+      // Save the message to the database.
+      await message.save((err) => {
+        if (err) return console.error(err)
+      })
+    })
+
+    // Push to frontend for updates
+    const pushedMessage = {
+      name: name,
+      content: content,
+      time: moment().format('LT')
+    }
+
+    socket.broadcast.emit('public_chat_send', pushedMessage)
+  })
+
+  socket.on('private_init', () => {
+    // Get the last 10 messages from the database.
+    Message.findOne({ people: { $all : [from, to] }}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+      let emitted = false
+      // if first time chatting, create a new message schema 
+      if (!messages) {
+        const newMessages = new Message({
+          uniqueCode: uniqid(),
+          people: [from, to],
+          list: [{
+            content: 'Hello!',
+            name: from,
+            time: moment().format('LT')
+          }]
+        })
+        await newMessages.save((err) => {
+          if (err) return console.error(err)
+        })
+        // Emit the new schema
+        socket.emit('init', newMessages)
+        emitted = true
+      }
+      
+      // Log any errors
+      if (err) return console.error(err)
+
+      // Send the last messages to the user.
+      if (!emitted) {
+        socket.emit('init', messages)
+      }
+    })
+  })
+  
+
   // Socketing receiving messages from frontend
-  socket.on('test', ({name, content, messageID, receiver }) => {
+  socket.on('private', ({name, content, messageID, receiver }) => {
 
     // Create a message with the content and the name of the user.
     Message.findOne({ uniqueCode: messageID }).exec(async (err, message) => {
@@ -111,13 +163,20 @@ io.on('connection', (socket) => {
       time: moment().format('LT')
     }
 
+    // Retrieve socket to receiver 
     const sendTo = connectedUsers[receiver]
 
+    // Emit private message to frontend 
     if (sendTo) {
       sendTo.emit('private_chat', pushedMessage)
     }
 
   })
+
+
+
+
+
 
 
 })

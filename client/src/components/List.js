@@ -48,6 +48,7 @@ class List extends Component {
                                     <CardProfile data={data} key={indx}/>
                                 )
                             }
+                            return ""
                         })}
                     </div>
                 </div>
