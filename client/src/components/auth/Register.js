@@ -5,6 +5,8 @@ import { connect } from "react-redux"
 import { registerUser } from "../../actions/authActions"
 import classnames from "classnames"
 
+import RadioButton from '../Radio/RadioButton'
+
 class Register extends Component {
     constructor() {
         super()
@@ -15,7 +17,8 @@ class Register extends Component {
             password2: "",
             description: "",
             ACE: "",
-            errors: {}
+            errors: {},
+            paymentMethod: "COD"
         }
     }
 
@@ -53,6 +56,14 @@ class Register extends Component {
 
         this.props.registerUser(newUser, this.props.history); 
     }
+
+    radioChangeHandler = (event) => {
+
+        this.setState({
+            paymentMethod: event.target.value
+        });
+    }
+
 
     render() {
         const { errors } = this.state
@@ -172,6 +183,32 @@ class Register extends Component {
                                 Sign up
                                 </button>
                             </div>
+                            <div className="col s12 input-field" style={{ display: "flex" }}>
+
+                                <RadioButton 
+                                    changed={ this.radioChangeHandler } 
+                                    id="1" 
+                                    isSelected={ this.state.paymentMethod === "QuickPay" } 
+                                    label="QuickPay" 
+                                    value="QuickPay" 
+                                />
+
+                                <RadioButton 
+                                    changed={ this.radioChangeHandler } 
+                                    id="2" 
+                                    isSelected={ this.state.paymentMethod === "COD" } 
+                                    label="Cash On Delivery" 
+                                    value="COD" 
+                                />
+
+                                
+
+                            </div>
+
+                            <h4 style={{ marginTop: "50px" }}>
+                                The selected radio button value is => { this.state.paymentMethod }
+                            </h4>
+                            
                         </form>
                     </div>
                 </div>
