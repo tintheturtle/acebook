@@ -21,7 +21,8 @@
   }
 
 .chat-class {
-  display: flex
+  display: flex;
+  padding: 5px 0px;
 }
 
 .chat-time-stamp {

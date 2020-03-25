@@ -35,7 +35,7 @@ const CardProfile = ({data}) => {
                     ((data.percentage.toPrecision(4) * 100).toString().substring(0,5) + '% match') : "" }
                     </p>
                 <button 
-                    className="btn btn-med waves-effect waves-light hoverable light-blue accent-3"
+                    className="message-btn btn btn-med waves-effect waves-light hoverable light-blue accent-3"
                     onClick={() => onSend()}
                     >
                     Message!
