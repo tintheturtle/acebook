@@ -20,7 +20,7 @@ class FileUpload extends Component {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
         axios
-            .post("http://localhost:8000/upload", data, { 
+            .post("/api/upload", data, { 
                 // receive two    parameter endpoint url ,form data
             })
             .then(res => { 
@@ -38,7 +38,15 @@ class FileUpload extends Component {
                             <b> Welcome to the Upload Test! </b> 
                         </h4>
                     </div>
-                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
+                    <input type="file" name="file" onChange={this.onChangeHandler}/>
+                    <button 
+                        type="button" 
+                        className="btn btn-success btn-block" 
+                        onClick={this.onClickHandler}
+                        style={{ marginTop: '20px'}}
+                    >
+                        Upload
+                    </button> 
                 </div>
             </div>
         )
