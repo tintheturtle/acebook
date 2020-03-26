@@ -9,24 +9,27 @@ class FileUpload extends Component {
         super(props);
           this.state = {
             selectedFile: null,
-            url: ''
+            url: '',
+            errors: ''
           }
       }
 
     // Max select number of files 
-    maxSelectFile=(event)=>{
+    maxSelectFile = (event) => {
         let files = event.target.files
             if (files.length > 1) { 
                const msg = 'Only 1 image can be uploaded at a time.'
                event.target.value = null 
-               console.log(msg)
+               this.setState({
+                   errors: msg
+               })
               return false;
           }
         return true;
     }
 
     // File type validation
-    checkMimeType=(event)=>{
+    checkMimeType = (event) => {
         let files = event.target.files 
         let err = ''
         const types = ['image/png', 'image/jpeg']
@@ -36,14 +39,16 @@ class FileUpload extends Component {
       
        if (err !== '') { 
             event.target.value = null
-            console.log(err)
+            this.setState({
+                errors: err
+            })
             return false; 
         }
        return true;
     }
 
     // File size checker
-    checkFileSize=(event)=>{
+    checkFileSize= (event) => {
         let files = event.target.files
         let size = 15000 
         let err = ""; 
@@ -52,7 +57,9 @@ class FileUpload extends Component {
         }
         if (err !== '') {
             event.target.value = null
-            console.log(err)
+            this.setState({
+                errors: err
+            })
             return false
         }  
         return true;  
@@ -62,6 +69,9 @@ class FileUpload extends Component {
     onChangeHandler = event => {
             // Retrieve file
             var files = event.target.files
+            this.setState({
+                errors: ''
+            })
             if(this.maxSelectFile(event) && this.checkMimeType(event) && this.checkFileSize(event)){ 
                 this.setState({
                 selectedFile: files[0],
@@ -75,34 +85,36 @@ class FileUpload extends Component {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
         axios
-            .post("/api/upload", data, { 
-            })
+            .post("/api/upload", data)
             .then(res => { 
-                console.log(res.statusText)
+                console.log(res.data.path)
+                this.setState({
+                    url: '',
+                    selectedFile: null
+                })
         })
     }
     
     render() {
         return (
-            <div style={{ height: "75vh" }} className="container">
+            <div>
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align" style={{ paddingBottom: '50px' }}>
                         <img src={
                             this.state.url ? this.state.url : ProfileImage 
                             } className="match-image" alt="profile" />
-                        <h4>
-                            <b> Welcome to the Upload Test! </b> 
-                        </h4>
                     </div>
                     <input className="input"  style={{}} type="file" name="file" onChange={this.onChangeHandler}/>
                     <button 
                         type="button" 
                         className="btn btn-success btn-block" 
                         onClick={this.onClickHandler}
-                        style={{ marginTop: '20px'}}
+                        style={{ marginTop: '20px', marginBottom: '20px'}}
+                        disabled={this.state.errors}
                     >
                         Upload
                     </button> 
+                    <span className="red-text" style={{ }}>{this.state.errors}</span>
                 </div>
             </div>
         )
