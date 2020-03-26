@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
         } else if (err) {
             return res.status(500).json(err)
         }
-    console.log(res)
+    console.log('Went through')
    return res.status(200).send(req.file)
 
  })
