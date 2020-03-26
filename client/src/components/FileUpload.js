@@ -1,11 +1,32 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 
 class FileUpload extends Component {
+    constructor(props) {
+        super(props);
+          this.state = {
+            selectedFile: null
+          }
+      }
 
-    onChangeHandler=event=>{
+    onChangeHandler = event => {
+        this.setState({
+          selectedFile: event.target.files[0],
+          loaded: 0,
+        })
+    }
 
-        console.log(event.target.files[0])
-    
+    onClickHandler = () => {
+        const data = new FormData()
+        data.append('file', this.state.selectedFile)
+        axios
+            .post("http://localhost:8000/upload", data, { 
+                // receive two    parameter endpoint url ,form data
+            })
+            .then(res => { 
+                // then print response status
+                console.log(res.statusText)
+                })
     }
     
     render() {
@@ -17,7 +38,7 @@ class FileUpload extends Component {
                             <b> Welcome to the Upload Test! </b> 
                         </h4>
                     </div>
-                    <input type="file" name="file" onChange={this.onChangeHandler}/>
+                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
                 </div>
             </div>
         )
