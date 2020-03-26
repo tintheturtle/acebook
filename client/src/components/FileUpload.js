@@ -8,7 +8,8 @@ class FileUpload extends Component {
     constructor(props) {
         super(props);
           this.state = {
-            selectedFile: null
+            selectedFile: null,
+            url: ''
           }
       }
 
@@ -63,7 +64,8 @@ class FileUpload extends Component {
             var files = event.target.files
             if(this.maxSelectFile(event) && this.checkMimeType(event) && this.checkFileSize(event)){ 
                 this.setState({
-                selectedFile: files[0]
+                selectedFile: files[0],
+                url: URL.createObjectURL(files[0])
             })
         }
     }
@@ -85,7 +87,9 @@ class FileUpload extends Component {
             <div style={{ height: "75vh" }} className="container">
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align" style={{ paddingBottom: '50px' }}>
-                        <img src={ProfileImage} className="match-image" alt="profile" />
+                        <img src={
+                            this.state.url ? this.state.url : ProfileImage 
+                            } className="match-image" alt="profile" />
                         <h4>
                             <b> Welcome to the Upload Test! </b> 
                         </h4>
