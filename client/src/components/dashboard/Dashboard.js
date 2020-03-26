@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import CardProfile from '../CardProfile'
 import { logoutUser } from '../../actions/authActions'
+import ProfileImage from '../../images/profile.png'
 
 import '../../styles/Dashboard.css'
 
@@ -12,6 +13,11 @@ class Dashboard extends Component {
         e.preventDefault()
         this.props.logoutUser()
     }
+
+    onUploadClick = e => {
+        this.props.history.push('/upload')
+    }
+
     render() {
         console.log(this.props)
 
@@ -21,6 +27,9 @@ class Dashboard extends Component {
         <div style={{ height: "75vh" }} className="container">
             <div id="dashboard-header" className="row">
                 <div className="col s12 center-align">
+                    <img src={
+                            this.props.auth.url ? this.props.auth.url  : ProfileImage 
+                            } className="match-image" alt="profile" />
                     <h4>
                     <b>Hey there,</b> {user.name.split(" ")[0]}
                     <p className="flow-text grey-text text-darken-1">
@@ -29,16 +38,28 @@ class Dashboard extends Component {
                     </p>
                     </h4>
                     <button
-                    style={{
-                        width: "150px",
-                        borderRadius: "3px",
-                        letterSpacing: "1.5px",
-                        marginTop: "1rem"
-                    }}
-                    onClick={this.onLogoutClick}
-                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                        style={{
+                            width: "150px",
+                            borderRadius: "3px",
+                            letterSpacing: "1.5px",
+                            marginTop: "1rem"
+                        }}
+                        onClick={this.onLogoutClick}
+                        className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                     >
                     Logout
+                    </button>
+                    <button
+                        style={{
+                            width: "150px",
+                            borderRadius: "3px",
+                            letterSpacing: "1.5px",
+                            marginTop: "1rem"
+                        }}
+                        onClick={this.onUploadClick}
+                        className="btn btn-large waves-effect waves-light hoverable red accent-3"
+                    >
+                    Upload
                     </button>
                 </div>
             </div>

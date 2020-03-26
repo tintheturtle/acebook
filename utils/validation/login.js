@@ -4,6 +4,11 @@ import isEmpty from 'is-empty'
 const validateLoginInput = (data) => {
     let errors = {}
 
+    console.log(data)
+
+    data.email = !isEmpty(data.email) ? data.email : ""
+    data.password = !isEmpty(data.password) ? data.password : ""
+
     // Email checks
     if (Validator.isEmpty(data.email)) {
         errors.email = "Email field is required";

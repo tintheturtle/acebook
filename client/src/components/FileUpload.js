@@ -87,11 +87,11 @@ class FileUpload extends Component {
         axios
             .post("/api/upload", data)
             .then(res => { 
-                console.log(res.data.path)
                 this.setState({
                     url: '',
                     selectedFile: null
                 })
+                this.props.history.push('/dashboard')
         })
     }
     

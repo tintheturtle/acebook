@@ -3,13 +3,15 @@ import isEmpty from 'is-empty'
 
 const validateRegisterInput = (data) => {
     let errors = {}
+
+    console.log(data.description)
     
     data.name = !isEmpty(data.name) ? data.name : ""
     data.email = !isEmpty(data.email) ? data.email : ""
     data.password = !isEmpty(data.password) ? data.password : ""
     data.password2 = !isEmpty(data.password2) ? data.password2 : ""
     data.ACE = !isEmpty(data.ACE) ? data.ACE : ""
-    data.description = !isEmpty(data.description) ? data.discription : ""
+    data.description = !isEmpty(data.description) ? data.description : ""
     data.introversion = !isEmpty(data.introversion) ? data.introversion : ""
 
     // Name Checks

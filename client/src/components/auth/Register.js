@@ -60,6 +60,8 @@ class Register extends Component {
             introversion: this.state.introversion
         }
 
+        console.log(newUser)
+
 
         this.props.registerUser(newUser, this.props.history); 
     }
