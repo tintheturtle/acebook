@@ -5,7 +5,9 @@ import express from 'express'
 var router = express.Router()
 
 router.get('/', (req, res) =>{
-    console.log("Hello Family")
+    res.json({
+        family: true,
+    })
 })
 
 export default router
