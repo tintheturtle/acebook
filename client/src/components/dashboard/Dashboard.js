@@ -25,7 +25,7 @@ class Dashboard extends Component {
     render() {
         const { user } = this.props.auth
     return (
-        <div style={{ height: "75vh" }} className="container">
+        <div className="container">
             <div id="dashboard-header" className="row">
                 <div className="col s12 center-align">
                     <img src={
