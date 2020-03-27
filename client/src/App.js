@@ -18,6 +18,7 @@ import Messages from './components/Messages'
 import List from './components/List'
 import PublicChat from './components/PublicChat'
 import FileUpload from './components/FileUpload'
+import Family from './components/family/Family'
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -53,6 +54,7 @@ function App() {
                 <PrivateRoute exact path="/list" component={List} />
                 <PrivateRoute exact path="/public-chat" component={PublicChat}/>
                 <PrivateRoute exact path="/upload" component={FileUpload} />
+                <PrivateRoute exact path="/family" component={Family} />
               </Switch>
             </div>
           </Router> 
