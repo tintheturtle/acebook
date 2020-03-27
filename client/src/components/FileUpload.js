@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import axios from 'axios'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import classnames from 'classnames'
 
 import ProfileImage from '../images/profile.png'
+import RadioButton from '../components/Radio/RadioButton'
+
 import '../styles/Message.css'
 
 class FileUpload extends Component {
@@ -10,6 +15,7 @@ class FileUpload extends Component {
           this.state = {
             selectedFile: null,
             url: '',
+            purpose: 'profilePicture',
             errors: ''
           }
       }
@@ -94,16 +100,77 @@ class FileUpload extends Component {
                 this.props.history.push('/dashboard')
         })
     }
+
+    radioChangeHandler = (event) => {
+        this.setState({
+            purpose: event.target.value
+        });
+    }
     
     render() {
+        const { user } = this.props.auth
+
         return (
             <div>
                 <div id="message-header" className="message-header-row row">
-                    <div className="col s12 center-align" style={{ paddingBottom: '50px' }}>
+                    <div className="col s12 center-align">
                         <img src={
                             this.state.url ? this.state.url : ProfileImage 
                             } className="match-image" alt="profile" />
+                        <h4>
+                            <p className="flow-text grey-text text-darken-1">
+                                Image Upload Preview
+                            </p>
+                        </h4>
                     </div>
+                    <div className="col s12 input-field">
+                            <p className="" style={{ color: '#9e9e9e', textAlign: 'center'}}>
+                                Image Upload Purpose
+                            </p>
+                            <div className="radio-btn-container" style={{ display: "flex", textAlign: 'center', margin: 'auto' }}>
+                                <RadioButton 
+                                        changed={ this.radioChangeHandler } 
+                                        id="1" 
+                                        isSelected={ this.state.purpose === "profilePicture" } 
+                                        label="Profile Picture" 
+                                        value="profilePicture" 
+                                />
+                                <RadioButton 
+                                        changed={ this.radioChangeHandler } 
+                                        id="2" 
+                                        isSelected={ this.state.purpose === "points" } 
+                                        label="ACE Points" 
+                                        value="points" 
+                                />
+                                <RadioButton 
+                                        changed={ this.radioChangeHandler } 
+                                        id="3" 
+                                        isSelected={ this.state.purpose === "other" } 
+                                        label="Other" 
+                                        value="other" 
+                                />
+                                <RadioButton 
+                                        changed={ this.radioChangeHandler } 
+                                        id="4" 
+                                        isSelected={ this.state.purpose === "misc" } 
+                                        label="Miscellaneous" 
+                                        value="misc" 
+                                />
+                            </div>
+                    </div>
+                    {
+                        this.state.purpose === 'points' ? 
+                        <div className="input-field col s12" style={{ marginTop: '0'}}>
+                            <input
+                                onChange={this.onChange}
+                                value={this.state.content}
+                                id="content"
+                                type="text"
+                                className={classnames("")}
+                            />
+                            <label htmlFor="test">Caption</label>
+                        </div> : ''
+                    }
                     <input className="input"  style={{}} type="file" name="file" onChange={this.onChangeHandler}/>
                     <button 
                         type="button" 
@@ -121,4 +188,10 @@ class FileUpload extends Component {
     }
 }
 
-export default FileUpload
+FileUpload.propTypes = {
+    auth: PropTypes.object.isRequired
+  }
+  const mapStateToProps = state => ({
+    auth: state.auth
+  })
+  export default connect(mapStateToProps)(FileUpload)

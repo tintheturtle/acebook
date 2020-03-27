@@ -19,10 +19,7 @@ class Dashboard extends Component {
     }
 
     render() {
-        console.log(this.props)
-
         const { user } = this.props.auth
-
     return (
         <div style={{ height: "75vh" }} className="container">
             <div id="dashboard-header" className="row">
