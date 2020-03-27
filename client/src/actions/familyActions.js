@@ -4,12 +4,11 @@ import {
     GET_ERRORS
 } from './types'
 
-export const getFamily = email => dispatch => {
-    axios
+export const getFamily = email => async dispatch => {
+    await axios
         .get('/api/family', email)
         .then(res => {
             const { family } = res.data
-            console.log(family)
             dispatch({
                 type: GET_FAMILY,
                 payload: family
