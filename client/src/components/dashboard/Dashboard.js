@@ -25,7 +25,7 @@ class Dashboard extends Component {
             <div id="dashboard-header" className="row">
                 <div className="col s12 center-align">
                     <img src={
-                            this.props.auth.url ? this.props.auth.url  : ProfileImage 
+                            this.props.auth.user.headshotURL ? this.props.auth.user.headshotURL  : ProfileImage 
                             } className="match-image" alt="profile" />
                     <h4>
                     <b>Hey there,</b> {user.name.split(" ")[0]}

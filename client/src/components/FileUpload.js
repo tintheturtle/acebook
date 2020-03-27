@@ -16,6 +16,7 @@ class FileUpload extends Component {
             selectedFile: null,
             url: '',
             purpose: 'profilePicture',
+            caption: '',
             errors: ''
           }
       }
@@ -86,11 +87,19 @@ class FileUpload extends Component {
         }
     }
 
+    onCaptionChange = e => {
+        this.setState({ [e.target.id]: e.target.value })
+    }
+
     // Submission handler and makes request to server
     onClickHandler = () => {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
         data.append('purpose', this.state.purpose)
+        data.append('email', this.props.auth.user.email)
+        if (this.state.purpose === 'points') {
+            data.append('caption', this.state.caption)
+        }
         axios
             .post("/api/upload", data)
             .then(res => { 
@@ -145,9 +154,9 @@ class FileUpload extends Component {
                                 <RadioButton 
                                         changed={ this.radioChangeHandler } 
                                         id="3" 
-                                        isSelected={ this.state.purpose === "other" } 
-                                        label="Other" 
-                                        value="other" 
+                                        isSelected={ this.state.purpose === "spotlight" } 
+                                        label="Spotlight" 
+                                        value="spotlight" 
                                 />
                                 <RadioButton 
                                         changed={ this.radioChangeHandler } 
@@ -162,9 +171,9 @@ class FileUpload extends Component {
                         this.state.purpose === 'points' ? 
                         <div className="input-field col s12" style={{ marginTop: '0'}}>
                             <input
-                                onChange={this.onChange}
-                                value={this.state.content}
-                                id="content"
+                                onChange={this.onCaptionChange}
+                                value={this.state.caption}
+                                id="caption"
                                 type="text"
                                 className={classnames("")}
                             />

@@ -86,7 +86,7 @@ io.on('connection', (socket) => {
 
 
   socket.on('public_init', () => {
-    Message.findOne({ people: ['public'] }).sort({createdAt: -1}).limit(10).exec( (err, messages) => {
+    Message.findOne({ people: ['client/public'] }).sort({createdAt: -1}).limit(10).exec( (err, messages) => {
       socket.emit('public_message', messages)
     })
   })
