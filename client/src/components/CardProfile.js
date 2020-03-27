@@ -10,6 +10,7 @@ import '../styles/CardProfile.css'
 
 const CardProfile = ({data}) => {
 
+    console.log(process.env.PUBLIC_URL)
 
     let history = useHistory()
 
@@ -27,7 +28,9 @@ const CardProfile = ({data}) => {
     return (
         <div className="card-div">
             <div className="card-info">
-                <img src={ProfileImage} className="match-image" alt="profile" />
+                <img src={
+                            data.headshotURL ? data.headshotURL  : ProfileImage 
+                            } className="match-image" alt="profile" />
                 <p className="match-name match-info"> {data.name} </p>
                 <p className="match-email match-info"> {data.email} </p> 
                 <p className="match-percentage match-info"> {
