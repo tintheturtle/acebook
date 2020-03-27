@@ -14,7 +14,7 @@ import Landing from './components/layout/Landing'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import PrivateRoute from "./components/private-route/PrivateRoute"
-import AdminRoute from "./components/private-route/AdminRoute"
+import AdminRoute from "./components/admin/AdminRoute"
 import Dashboard from "./components/dashboard/Dashboard"
 import Messages from './components/Messages'
 import List from './components/List'
