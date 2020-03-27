@@ -5,8 +5,10 @@ import dotenv from 'dotenv'
 import passport from 'passport'
 import uniqid from 'uniqid'
 import moment from 'moment'
+import cors from 'cors'
 
 import users from './routes/api/users'
+import upload from './routes/api/upload'
 
 import Message from './models/Message'
 
@@ -26,6 +28,8 @@ app.use(
   );
 app.use(bodyParser.json())
 
+app.use(cors())
+
 // DB Config
 const uri = process.env.MONGO_URI
 
@@ -36,19 +40,28 @@ const io = require('socket.io')(http)
 // Collection of sockets of connected users
 const connectedUsers = {}
 
-// const newMessage = new Message({
-//     uniqueCode: uniqid(),
-//     people: ['public'],
-//     list: [{
-//       content: 'Hello, welcome to the public chat!',
-//       name: 'Family Chair',
-//       time: moment().format('LT')
-//     }]
-// })
+// Initialize public group chat
+Message.findOne({ people: ['public']}).then( (msg) => {
+  if (!msg) {
+    const newMessage = new Message({
+      uniqueCode: uniqid(),
+      people: ['public'],
+      list: [{
+        content: 'Hello, welcome to the public chat!',
+        name: 'Family Chair',
+        time: moment().format('LT')
+      }]
+    })
+    
+    newMessage.save().then(
+      console.log('Public Group Chat Initialized')
+    )
+  }
+  else {
+    console.log('Public Group Chat already initialized')
+  }
+})
 
-// newMessage.save().then(
-//   console.log('Public Group Chat Initialized')
-// )
 
 // Socket IO Connection
 io.on('connection', (socket) => {
@@ -75,7 +88,7 @@ io.on('connection', (socket) => {
 
 
   socket.on('public_init', () => {
-    Message.findOne({ people: ['public'] }).sort({createdAt: -1}).limit(10).exec( (err, messages) => {
+    Message.findOne({ people: ['client/public'] }).sort({createdAt: -1}).limit(10).exec( (err, messages) => {
       socket.emit('public_message', messages)
     })
   })
@@ -172,13 +185,6 @@ io.on('connection', (socket) => {
     }
 
   })
-
-
-
-
-
-
-
 })
 
 io.listen(8000)
@@ -202,6 +208,7 @@ require("./config/passport")(passport)
 
 // Routes
 app.use("/api/users", users)
+app.use("/api/upload", upload)
 
 const port = process.env.PORT || 5000
 

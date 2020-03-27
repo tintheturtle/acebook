@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { registerUser } from "../../actions/authActions"
 import classnames from "classnames"
+import _ from 'lodash'
 
 import RadioButton from '../Radio/RadioButton'
 
@@ -44,8 +45,10 @@ class Register extends Component {
     onSubmit = e => {
         e.preventDefault()
 
-        const concatDesc = this.state.description + ' ' + this.state.introversion
-        console.log(concatDesc)
+        let concatDesc = ''
+        if (this.state.description && this.state.introversion) {
+            concatDesc = this.state.introversion + ' ' + this.state.description
+        }
 
         const newUser = {
             name: this.state.name,
@@ -53,8 +56,11 @@ class Register extends Component {
             password: this.state.password,
             password2: this.state.password2,
             description: concatDesc,
-            ACE: this.state.ACE
+            ACE: this.state.ACE,
+            introversion: this.state.introversion
         }
+
+        console.log(newUser)
 
 
         this.props.registerUser(newUser, this.props.history); 
@@ -73,7 +79,6 @@ class Register extends Component {
         });
     }
     
-
 
     render() {
         const { errors } = this.state
@@ -188,7 +193,6 @@ class Register extends Component {
                                     />
                                 </div>
                                 <span className="red-text">{errors.ACE}</span>
-
                             </div>
                             <div className="col s12 input-field">
                                 <p className="" style={{ color: '#9e9e9e'}}>
@@ -210,23 +214,32 @@ class Register extends Component {
                                         value="Extrovert" 
                                     />
                                 </div>
+                                <span className="red-text">{errors.introversion}</span>
                             </div>
-                            
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem"
-                                }}
-                                type="submit"
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                    style={{
+                                        width: "150px",
+                                        borderRadius: "3px",
+                                        letterSpacing: "1.5px",
+                                        marginTop: "1rem",
+                                        marginBottom: '1rem'
+                                    }}
+                                    type="submit"
+                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                                 >
                                 Sign up
                                 </button>
+                                
                             </div>
-                            
+                            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                                { 
+                                    !_.isEmpty(this.state.errors) ?  
+                                        <span className="red-text" style={{ paddingTop: '20px'}}>One or more fields above has an error</span> 
+                                        : 
+                                        ''
+                                }
+                            </div>       
                         </form>
                     </div>
                 </div>

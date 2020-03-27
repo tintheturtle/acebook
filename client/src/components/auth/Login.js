@@ -118,6 +118,9 @@ class Login extends Component {
                                     Login
                                 </button>
                             </div>
+                            <span className="red-text">
+                                  {errors.notFound}
+                                </span>
                         </form>
                     </div>
                 </div>

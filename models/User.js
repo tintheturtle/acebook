@@ -55,6 +55,10 @@ const UserSchema = new Schema({
     lastUserCount: {
       type: Number,
       default: 0
+    },
+    headshotURL: {
+      type: String,
+      default: ''
     }
   });
 
