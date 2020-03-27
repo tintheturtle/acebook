@@ -39,7 +39,7 @@ class Dashboard extends Component {
                             width: "150px",
                             borderRadius: "3px",
                             letterSpacing: "1.5px",
-                            marginTop: "1rem"
+                            margin: "1rem"
                         }}
                         onClick={this.onLogoutClick}
                         className="btn btn-large waves-effect waves-light hoverable blue accent-3"
@@ -51,7 +51,7 @@ class Dashboard extends Component {
                             width: "150px",
                             borderRadius: "3px",
                             letterSpacing: "1.5px",
-                            marginTop: "1rem"
+                            margin: "1rem"
                         }}
                         onClick={this.onUploadClick}
                         className="btn btn-large waves-effect waves-light hoverable red accent-3"
