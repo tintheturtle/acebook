@@ -133,6 +133,8 @@ router.post("/login", async (req, res) => {
                                 user.lastUserCount = users.length
                             }
                             break
+                        case 'eboard':
+                            break
                     }
                  
                     user.save()

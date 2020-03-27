@@ -17,14 +17,24 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        if (this.props.auth.user.ACE === 'eboard') {
+            this.props.history.push("/admin")
+        }
         // If logged in and user navigates to Register page, should redirect them to dashboard
-        if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/dashboard");
+        else if (this.props.auth.isAuthenticated) {
+          this.props.history.push("/dashboard")
         }
     }
 
     componentWillReceiveProps(nextProps) {
-            if (nextProps.auth.isAuthenticated) {
+        console.log(nextProps.auth.user.ACE === 'eboard')
+            if (nextProps.auth.user.ACE === 'eboard') {
+                console.log('here')
+                this.props.history.push("/admin")
+            }
+            else if (nextProps.auth.isAuthenticated) {
+                console.log('also here')
+
                 this.props.history.push("/dashboard"); // push user to dashboard when they login
             }
             if (nextProps.errors) {
