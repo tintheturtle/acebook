@@ -1,5 +1,8 @@
 import express from 'express'
+
+
 import Family from '../../models/Family'
+import validateFamilyInput from '../../utils/validation/createFamily'
 
 var router = express.Router()
 
@@ -25,6 +28,28 @@ router.post('/', async (req, res) =>{
         .catch(err => {
             console.log(err)
         })
+})
+
+router.post('/create', async(req,res) => {
+    const { errors, isValid } = validateFamilyInput(req.body)
+
+    // Valid inputs
+    if (!isValid) {
+        return res.status(400).json(errors)
+    }
+
+    const { email } = req.body.email
+    const { name } = req.body.name
+
+    console.log(email)
+
+    const newFamily = new Family({
+        members: email,
+        name: name
+    })
+    await newFamily.save().then()
+
+
 })
 
 export default router
