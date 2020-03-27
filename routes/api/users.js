@@ -82,37 +82,54 @@ router.post("/login", async (req, res) => {
                         case 'little':
                             console.log('find me a big!')
                             if (!user.paired) {
-                                for (let i = user.lastUserCount; i < users.length; i++) {
-                                    let other = users[i].toObject()
-                                    if (other.ACE === 'big' && !other.paired) {
-                                        const percentage  = stringComparison(user.description, other.description)
-                                        if (percentage > 0.2){
-                                            delete other.matches
-                                            other.percentage = percentage
-                                            user.matches.push(other)
+                                // Checks to see if there are any new users and updates the info of previous matches
+                                if (user.lastUserCount < users.length){
+                                    // Looping through list of users
+                                    for (let i = 0; i < users.length; i++) {
+                                        // Turns matches into object 
+                                        let other = users[i].toObject()
+                                        // Checks whether or match is the opposite type and is not paired
+                                        if (other.ACE === 'big' && !other.paired) {
+                                            // Get percentage match using algorithm
+                                            const percentage  = stringComparison(user.description, other.description)
+                                            if (percentage > 0.2){
+                                                // Delete other matches to prevent too much data in one user
+                                                delete other.matches
+                                                other.percentage = percentage
+                                                user.matches.push(other)
+                                            }
+                                            
                                         }
-                                        
                                     }
                                 }
+                                // Update latest count
                                 user.lastUserCount = users.length
                             }
-                            user.lastUserCount = users.length
                             break
                         case 'big':
                             console.log('find me a little!')
                             if (!user.paired) {
-                                for (let i = user.lastUserCount; i < users.length; i++) {
-                                    let other = users[i].toObject()
-                                    if (other.ACE === 'little' && !other.paired) {
-                                        const percentage  = stringComparison(user.description, other.description)
-                                        if (percentage > 0.5){
-                                            delete other.matches
-                                            delete other.password
-                                            other.percentage = percentage
-                                            user.matches.push(other)
+                                // Checks to see if there are any new users and updates the info of previous matches
+                                if (user.lastUserCount < users.length){
+                                    // Looping through list of users
+                                    for (let i = 0; i < users.length; i++) {
+                                        // Turns matches into object 
+                                        let other = users[i].toObject()
+                                        // Checks whether or match is the opposite type and is not paired
+                                        if (other.ACE === 'little' && !other.paired) {
+                                            // Get percentage match using algorithm
+                                            const percentage  = stringComparison(user.description, other.description)
+                                            if (percentage > 0.2){
+                                                // Delete other matches to prevent too much data in one user
+                                                delete other.matches
+                                                other.percentage = percentage
+                                                user.matches.push(other)
+                                            }
+                                            
                                         }
                                     }
                                 }
+                                // Update latest count
                                 user.lastUserCount = users.length
                             }
                             break
