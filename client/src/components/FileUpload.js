@@ -90,6 +90,7 @@ class FileUpload extends Component {
     onClickHandler = () => {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
+        data.append('purpose', this.state.purpose)
         axios
             .post("/api/upload", data)
             .then(res => { 
@@ -108,7 +109,6 @@ class FileUpload extends Component {
     }
     
     render() {
-        const { user } = this.props.auth
 
         return (
             <div>

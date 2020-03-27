@@ -12,17 +12,15 @@ var storage = multer.diskStorage({
   }
 })
 
-var upload = multer({ storage: storage }).single('file')
+var upload = multer({ storage: storage })
 
-router.post('/', (req, res) => {
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json(err)
-        } else if (err) {
-            return res.status(500).json(err)
-        }
-        return res.status(200).send(req.file)
-    })
+router.post('/', upload.single('file'), (req, res) => {
+    
+    const purpose = req.body.purpose
+    console.log(req.file.path)
+
+    return res.status(200).send(req.file)
+
 })
 
 export default router
