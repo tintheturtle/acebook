@@ -10,8 +10,6 @@ import '../styles/CardProfile.css'
 
 const CardProfile = ({data}) => {
 
-    console.log(process.env.PUBLIC_URL)
-
     let history = useHistory()
 
     const dispatch = useDispatch()

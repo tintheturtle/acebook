@@ -51,6 +51,8 @@ export const setUserLoading = () => {
 
 export const logoutUser = () => dispatch => {
     localStorage.removeItem('jwtToken')
+    localStorage.removeItem('persist:auth')
+    localStorage.removeItem('persist:authReducer')
     setAuthToken(false)
     dispatch(setCurrentUser({}))
 }

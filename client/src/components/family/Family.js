@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 
 class Family extends Component {
 
+    // Scoreboard
+    // Component did mount get your family information and remaining families 
+
     render() {
         return(
             <div style={{ height: "75vh" }} className="container">

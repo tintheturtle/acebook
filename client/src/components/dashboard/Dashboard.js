@@ -18,6 +18,10 @@ class Dashboard extends Component {
         this.props.history.push('/upload')
     }
 
+    onFamilyClick = e => {
+        this.props.history.push('/family')
+    }
+
     render() {
         const { user } = this.props.auth
     return (
@@ -57,6 +61,18 @@ class Dashboard extends Component {
                         className="btn btn-large waves-effect waves-light hoverable red accent-3"
                     >
                     Upload
+                    </button>
+                    <button
+                        style={{
+                            width: "150px",
+                            borderRadius: "3px",
+                            letterSpacing: "1.5px",
+                            margin: "1rem"
+                        }}
+                        onClick={this.onFamilyClick}
+                        className="btn btn-large waves-effect waves-light hoverable green accent-3"
+                    >
+                    Family
                     </button>
                 </div>
             </div>
