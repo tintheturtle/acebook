@@ -6,7 +6,6 @@ import passport from 'passport'
 import uniqid from 'uniqid'
 import moment from 'moment'
 import cors from 'cors'
-import multer from 'multer'
 
 import users from './routes/api/users'
 import upload from './routes/api/upload'
@@ -57,6 +56,9 @@ Message.findOne({ people: ['public']}).then( (msg) => {
     newMessage.save().then(
       console.log('Public Group Chat Initialized')
     )
+  }
+  else {
+    console.log('Public Group Chat already initialized')
   }
 })
 

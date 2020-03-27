@@ -156,11 +156,18 @@ router.post("/login", async (req, res) => {
                             }
                         )
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => 
+                        console.log(err)
+                    )
                 }
                 else {
                     return res.status(400).json({ passwordincorrect: "Password incorrect"})
                 }
+        })
+    })
+    .catch(err => {
+        return res.status(400).json({
+            notFound: 'User not found, please register.'
         })
     })
 })
