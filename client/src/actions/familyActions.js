@@ -6,7 +6,7 @@ import {
 
 export const getFamily = email => async dispatch => {
     await axios
-        .get('/api/family', email)
+        .post('/api/family', email)
         .then(res => {
             const { family } = res.data
             dispatch({

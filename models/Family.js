@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 
 const FamilySchema = new Schema({
     name: {
-        default: String,
+        type: String,
         required: true
     },
     member: {

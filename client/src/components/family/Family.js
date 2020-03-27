@@ -14,12 +14,12 @@ class Family extends Component {
     // Scoreboard
     // Component did mount get your family information and remaining families 
     async componentDidMount() {
-        await this.props.getFamily(this.props.auth.user.email)
-        console.log(this.props.family)
+        await this.props.getFamily({
+            email: this.props.auth.user.email
+        })
         this.setState({
             family: this.props.family.family
         })
-        console.log('State has been set')
     }
 
     render() {
@@ -32,13 +32,14 @@ class Family extends Component {
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align">
                         <h4>
-                            <b>Welcome to the Family Dashboard </b>  {this.state.family.toString()}
+                            <b>Welcome to the Family Dashboard </b>  
                             <p className="flow-text grey-text text-darken-1">
                             </p>
                         </h4>
                     </div>
                 </div>
-                <div>
+                <div className="row">
+                    {this.state.family.toString()}
                 </div>
             </div>
         )

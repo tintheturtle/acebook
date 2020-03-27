@@ -94,7 +94,9 @@ class Messages extends Component {
             <div style={{ height: "75vh" }} className="container">
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align">
-                        <img src={ProfileImage} className="match-image" alt="profile" />
+                        <img src={
+                            other.headshotURL ? other.headshotURL  : ProfileImage 
+                            } className="match-image" alt="profile" />
                         <h4>
                             <b>You are messaging: </b>  {other.name.split(" ")[0]}
                             <p className="flow-text grey-text text-darken-1">
