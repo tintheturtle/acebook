@@ -27,14 +27,10 @@ class Login extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.auth.user.ACE === 'eboard')
             if (nextProps.auth.user.ACE === 'eboard') {
-                console.log('here')
                 this.props.history.push("/admin")
             }
             else if (nextProps.auth.isAuthenticated) {
-                console.log('also here')
-
                 this.props.history.push("/dashboard"); // push user to dashboard when they login
             }
             if (nextProps.errors) {

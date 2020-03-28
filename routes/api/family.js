@@ -31,6 +31,7 @@ router.post('/', async (req, res) =>{
 })
 
 router.post('/create', async(req,res) => {
+    console.log(req.body)
     const { errors, isValid } = validateFamilyInput(req.body)
 
     // Valid inputs
@@ -38,17 +39,22 @@ router.post('/create', async(req,res) => {
         return res.status(400).json(errors)
     }
 
-    const { email } = req.body.email
-    const { name } = req.body.name
+    const { email } = req.body
+    const { name } = req.body
 
-    console.log(email)
 
     const newFamily = new Family({
         members: email,
         name: name
     })
-    await newFamily.save().then()
+    await newFamily.save().then(res => {
+        console.log('Successfully added')
+    })
 
+
+    return {
+        status: 'success'
+    }
 
 })
 

@@ -1,5 +1,6 @@
 import {
-    GET_FAMILY
+    GET_FAMILY,
+    CREATE_FAMILY
 } from '../actions/types'
 
 const initialState = {
@@ -12,6 +13,11 @@ const familyReducer = (state = initialState, action) => {
             return {
                 ...state,
                 family: action.payload
+            }
+        case CREATE_FAMILY: 
+            return {
+                ...state,
+                created: action.payload
             }
         default:
             return state
