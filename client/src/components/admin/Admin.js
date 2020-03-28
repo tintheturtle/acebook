@@ -32,20 +32,19 @@ class Admin extends Component {
     }
 
     onSubmitCreate = e => {
-
         const newFamily = {
             email: this.state.email,
             name: this.state.name,
         }
 
         this.props.createFamily(newFamily)
-
     }
 
     render() {
         
         const { user } = this.props.auth
         const { errors } = this.state
+        console.log(this.props)
 
         return(
             <div style={{ height: "100vh" }} className="container">
@@ -126,7 +125,7 @@ class Admin extends Component {
                                 Send Announcement
                             </h5>
                         </div>
-                        <form noValidate onSubmit={this.onSubmitCreate}>
+                        <form noValidate onSubmit={this.onSubmit}>
                             <div className="input-field col s12">
                                 <input
                                 onChange={this.onChange}
@@ -185,6 +184,7 @@ class Admin extends Component {
 
 Admin.propTypes = {
     auth: PropTypes.object.isRequired,
+    family: PropTypes.object.isRequired,
     createFamily: PropTypes.func.isRequired
   }
 const mapStateToProps = state => ({

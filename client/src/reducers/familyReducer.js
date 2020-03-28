@@ -5,6 +5,7 @@ import {
 
 const initialState = {
     family: false,
+    created: ''
 }
 
 const familyReducer = (state = initialState, action) => {
