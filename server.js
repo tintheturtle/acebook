@@ -178,7 +178,7 @@ io.on('connection', (socket) => {
 
   socket.on('family_init', ({ members }) => {
     // Get the last 10 messages from the database.
-    Message.findOne({ people: { $in : [members] }, type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+    Message.findOne({ people: [members], type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
       let emitted = false
       // if first time chatting, create a new message schema 
       if (!messages) {
