@@ -41,14 +41,19 @@ router.post('/create', async (req,res) => {
     // Retrieve email list and properly format them into array
     const { email } = req.body
     const emailList = email.split(', ')
-    console.log(emailList)
 
     // Retrieve users 
     let records = await User.find().where('email').in(emailList).exec()
 
-
-
-
+    // Process members, remove password and other match information
+    let objArray = []
+    records.forEach(user => {
+        let member = user.toObject()
+        delete member.matches
+        delete member.password
+        delete member.matchEmailList
+        objArray.push(member)
+    })
 
     const { name } = req.body
 
@@ -59,7 +64,7 @@ router.post('/create', async (req,res) => {
             const newFamily = new Family({
                 members: emailList,
                 name: name,
-
+                memberObjects: objArray
             })
             newFamily.save().then( () => {
                 success = true

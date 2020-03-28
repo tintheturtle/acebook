@@ -25,7 +25,8 @@ class Family extends Component {
     render() {
         
         const { family } = this.props.family
-        console.log(family)
+        const { memberObjects } = family
+        console.log(memberObjects)
 
         return(
             <div style={{ height: "100vh" }} className="container">
@@ -46,10 +47,10 @@ class Family extends Component {
                             </div>
                         ) : 
                         <div>
-                            { family.members.map((data, indx) => {
-                                if (data !== this.props.auth.user.email) {
+                            { memberObjects.map((data, indx) => {
+                                if (data.email !== this.props.auth.user.email) {
                                     return (
-                                        <h5> {data} </h5> 
+                                        <h5 key={indx}> {data.name} </h5> 
                                     )
                                 }
                                 return ''
