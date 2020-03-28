@@ -178,10 +178,12 @@ io.on('connection', (socket) => {
 
   socket.on('family_init', ({ members }) => {
     // Get the last 10 messages from the database.
-    Message.findOne({ people: [members], type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+    Message.findOne({ people: { $in :[members]}, type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
       let emitted = false
       // if first time chatting, create a new message schema 
       if (!messages) {
+        console.log('here')
+
         // Create new message schema for storing past messages
         const newMessages = new Message({
           uniqueCode: uniqid(),
@@ -235,6 +237,9 @@ io.on('connection', (socket) => {
       // Retrieve socket to receiver 
       const sendTo = connectedUsers[person]
       // Emit private message to frontend 
+      console.log(person, from)
+      console.log(person !==  from)
+      console.log()
       if (sendTo && person !== from) {
         sendTo.emit('family_chat', pushedMessage)
       }

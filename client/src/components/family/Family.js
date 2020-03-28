@@ -34,12 +34,14 @@ class Family extends Component {
     async componentDidMount() {
         await this.props.getFamily({
             email: this.props.auth.user.email
+        }).then( () => {
+            this.setState({
+                family: this.props.family.family
+            })
         })
-        this.setState({
-            family: this.props.family.family
-        })
+        
 
-        await this.socket.emit('family_init', {
+        this.socket.emit('family_init', {
             members: this.props.family.family.members
         })
         this.socket.on('family_start', (msg) => {
@@ -53,6 +55,10 @@ class Family extends Component {
                 chat: [...state.chat, pushedMessage],
             }), this.scrollToBottom)
         }) 
+    }
+
+    componentWillUnmount() {
+        this.socket.close();
     }
 
     onChange = e => {
@@ -104,7 +110,7 @@ class Family extends Component {
                                 <h4>
                                     <b> Hello, </b>  {this.props.auth.user.name}
                                 </h4>
-                                <p className="flow-text grey-text text-darken-1">
+                                <p className=" grey-text text-darken-1">
                                     You have not yet been matched, please check back again later.
                                 </p>
                             </div>
@@ -220,7 +226,6 @@ class Family extends Component {
                             <h4>
                                 <b> Family Group Chat </b>  
                                 <p className="flow-text red-text text-darken-1">
-                                    Still under construction
                                 </p>
                             </h4>
                         </div>
