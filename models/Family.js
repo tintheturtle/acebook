@@ -16,6 +16,9 @@ const FamilySchema = new Schema({
     pictures: {
         type: Array,
         default: []
+    },
+    time: {
+        type: String
     }
 })
 

@@ -1,5 +1,5 @@
 import express from 'express'
-
+import moment from 'moment'
 
 import Family from '../../models/Family'
 import User from '../../models/User'
@@ -17,7 +17,7 @@ router.post('/family', async (req, res) =>{
         .then(family => {
             let object = null
             if (!family) {
-                object = 'You have not been assigned a family.'
+                object = false
             }
             else {
                 object = family
@@ -64,7 +64,8 @@ router.post('/create', async (req,res) => {
             const newFamily = new Family({
                 members: emailList,
                 name: name,
-                memberObjects: objArray
+                memberObjects: objArray,
+                time: moment().format('LL')
             })
             newFamily.save().then( () => {
                 success = true

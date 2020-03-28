@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+
 import { getFamily } from '../../actions/familyActions'
+import '../../styles/Family.css'
 
 class Family extends Component {
     constructor(props){
@@ -26,9 +28,10 @@ class Family extends Component {
         
         const { family } = this.props.family
         const { memberObjects } = family
+        const { user } = this.props.auth
 
         return(
-            <div style={{ height: "100vh" }} className="container">
+            <div style={{  }} className="container">
                 {
                             !family ? 
                     (
@@ -56,13 +59,13 @@ class Family extends Component {
                     <div className="row">
                         
                         <div>
-                            <div className="col m6" style={{ background: '#ffb0cd', height: "50vh"}}>
-                                <div className="col s12 center-align">                                
+                            <div className="col m6 family-div" style={{ height: "50vh"}}>
+                                <div className="col s12 center-align ">                                
                                     <div>
                                         { memberObjects.map((data, indx) => {
                                             if (data.email !== this.props.auth.user.email) {
                                                 return (
-                                                    <h5 key={indx}> {data.name} </h5> 
+                                                    <h5 key={indx}> {data.email} </h5> 
                                                 )
                                             }
                                             return ''
@@ -72,23 +75,80 @@ class Family extends Component {
                                 </div>
                             </div>
                             
-                            <div className="col m6" style={{ background: '#ffb0cd', height: "50vh"}}>
+                            <div className="col m6 family-div" style={{ height: "50vh"}}>
                                 <div className="col s12 center-align">
                                     <div>
+                                        <h4> {family.name}</h4>
+                                    </div>
+                                </div>
+                                <div className="col s12">
+                                    <div className="left-align">
+                                        <h5>Members</h5>
                                         { memberObjects.map((data, indx) => {
                                             if (data.email !== this.props.auth.user.email) {
                                                 return (
-                                                    <h5 key={indx}> {data.name} </h5> 
+                                                    <p key={indx} className="flow-text grey-text text-darken-1"> 
+                                                        {data.name} ({data.ACE})
+                                                    </p> 
                                                 )
                                             }
-                                            return ''
-                                    
+                                            return (
+                                                <p className="flow-text grey-text text-darken-1" key={indx}> 
+                                                    You ({user.ACE})
+                                                </p> 
+                                            )
                                         })}
+                                        <h5>Created on: </h5>
+                                            <p className="flow-text grey-text text-darken-1">
+                                                {family.time}
+                                            </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
+                    </div>
+                    <div className="row">
+                        <div className="col s12 center-align family-picture-container" style={{marginBottom: '30px'}}>
+                            <h4>
+                                <b> ACE Family Pictures </b>  
+                                <p className="flow-text grey-text text-darken-1">
+                                </p>
+                            </h4>
+                        </div>
+                        {   family.pictures.length > 0 ? (
+                            family.pictures.map((data, indx) => {
+                                return (
+                                    <div key={indx} className="family-picture col s6">
+                                        <img src={
+                                            data.filepath 
+                                        } className="family-image" alt="profile" />
+                                        <p className="grey-text text-darken-1">
+                                            {data.caption}
+                                        </p>
+                                        <p className="grey-text text-darken-1">
+                                            <b>From: </b> {data.email} on {data.time}
+                                        </p>
+                                    </div>
+                                )
+                            })) :
+                            <div>
+                                <div className="col s12 center-align">
+                                    <p className="flow-text grey-text text-darken-1">
+                                        No family have been uploaded yet.
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div className="row">
+                        <div className="col s12 center-align family-picture-container" style={{marginBottom: '30px'}}>
+                            <h4>
+                                <b> Family Group Chat </b>  
+                                <p className="flow-text grey-text text-darken-1">
+                                </p>
+                            </h4>
+                        </div>
                     </div>
                 </>) 
                 }
