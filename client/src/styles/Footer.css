@@ -5,12 +5,3 @@
     background: white;
     border-top: 3px solid grey;
 }
-
-.family-image {
-    width: 150px;
-    margin: 0px;
-    border-radius: 50%;
-    align-self: center;
-    padding: 10px;
-    display: inline-block
-}

@@ -176,8 +176,70 @@ io.on('connection', (socket) => {
     }
   })
 
+  socket.on('family_init', ({ members }) => {
+    // Get the last 10 messages from the database.
+    Message.findOne({ people: { $in : [members] }, type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+      let emitted = false
+      // if first time chatting, create a new message schema 
+      if (!messages) {
+        // Create new message schema for storing past messages
+        const newMessages = new Message({
+          uniqueCode: uniqid(),
+          type: 'family',
+          people: members,
+          list: [{
+            content: 'Hello!',
+            name: from,
+            time: moment().format('LT')
+          }]
+        })
+        await newMessages.save((err) => {
+          if (err) return console.error(err)
+        })
+        // Emit the new schema
+        socket.emit('family_start', newMessages)
+        emitted = true
+      } 
+      // Log any errors
+      if (err) return console.error(err)
+      // Send the last messages to the user.
+      if (!emitted) {
+        socket.emit('family_start', messages)
+      }
+    })
+  })
+
 
   // Add groupchat feature
+  socket.on('family', ({ name, content, members, receiver}) => {
+    // Find family groupchat
+    Message.findOne({ people: members }).exec(async (err, message) => {
+      message.list.push({
+        name: name,
+        content: content,
+        time: moment().format('LT')
+      })
+      // Save the message to the database.
+      await message.save((err) => {
+        if (err) return console.error(err)
+      })
+    })
+
+    // Push to frontend for updates
+    const pushedMessage = {
+      name: name,
+      content: content,
+      time: moment().format('LT')
+    }
+    members.forEach( person => {
+      // Retrieve socket to receiver 
+      const sendTo = connectedUsers[person]
+      // Emit private message to frontend 
+      if (sendTo && person !== from) {
+        sendTo.emit('family_chat', pushedMessage)
+      }
+    })
+  })
 })
 
 io.listen(8000)

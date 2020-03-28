@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import io from 'socket.io-client'
+import moment from 'moment'
+import 'whatwg-fetch'
+
 
 import { getFamily } from '../../actions/familyActions'
 import ProfilePicture from '../../images/profile.png'
@@ -10,8 +15,18 @@ class Family extends Component {
     constructor(props){
         super(props)
         this.state = {
-            family: false
+            family: false,
+            chat: [],
+            content: '',
+            name: this.props.auth.user.email
         }
+        this.socket = io('http://localhost:8000', 
+            { query:  
+                {
+                    from: this.state.name,
+                }
+            }
+        )
     }
 
     // Scoreboard
@@ -23,7 +38,55 @@ class Family extends Component {
         this.setState({
             family: this.props.family.family
         })
+
+        await this.socket.emit('family_init', {
+            members: this.props.family.family.members
+        })
+        this.socket.on('family_start', (msg) => {
+            this.setState((state) => ({
+              chat: [...state.chat, ...msg.list],
+            }), this.scrollToBottom)
+          })
+
+        this.socket.on('family_chat', (pushedMessage) => {
+            this.setState((state) => ({
+                chat: [...state.chat, pushedMessage],
+            }), this.scrollToBottom)
+        }) 
     }
+
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value })
+    }
+    
+
+    onSubmit = e => {
+        e.preventDefault()
+            this.setState((state) => {
+                // Send the new message to the server.
+                this.socket.emit('family', {
+                  name: this.state.name,
+                  content: this.state.content,
+                  members: this.props.family.family.members,
+                  from: this.state.name
+                });
+          
+                // Update the chat with the user's message and remove the current message.
+                return {
+                  chat: [...this.state.chat, {
+                    name: this.state.name,
+                    content: this.state.content,
+                    time: moment().format('LT')
+                  }],
+                  content: '',
+                };
+              }, this.scrollToBottom)
+    }
+
+    scrollToBottom() {
+        const chat = document.getElementById('chat');
+        chat.scrollTop = chat.scrollHeight;
+      }
 
     render() {
         
@@ -57,15 +120,29 @@ class Family extends Component {
                             </h4>
                         </div>
                     </div>
-                    <div className="row">
-                        
+                    <div className="row">     
                         <div>
                             <div className="col m6 family-div" style={{ height: "50vh"}}>
                                 <div className="col s12 center-align ">                                
                                     <div style={{ paddingTop: '30px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
-                                        <img src={ProfilePicture} className="family-image" alt="profile" />
-                                        <img src={ProfilePicture} className="family-image" alt="profile" />
-                                        <img src={ProfilePicture} className="family-image" alt="profile" />
+                                        <img 
+                                            src={ProfilePicture} 
+                                            className="family-image" 
+                                            alt="profile" 
+                                            style={{padding: '5px'}}
+                                        />
+                                        <img 
+                                            src={ProfilePicture} 
+                                            className="family-image" 
+                                            alt="profile" 
+                                            style={{padding: '5px'}}
+                                        />
+                                        <img 
+                                            src={ProfilePicture} 
+                                            className="family-image" 
+                                            alt="profile" 
+                                            style={{padding: '5px'}}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -100,8 +177,7 @@ class Family extends Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
+                        </div> 
                     </div>
                     <div className="row">
                         <div className="col s12 center-align family-picture-container" style={{marginBottom: '30px'}}>
@@ -114,16 +190,19 @@ class Family extends Component {
                         {   family.pictures.length > 0 ? (
                             family.pictures.map((data, indx) => {
                                 return (
-                                    <div key={indx} className="family-picture col s6">
-                                        <img src={
-                                            data.filepath 
-                                        } className="ace-image" alt="profile" />
-                                        <p className="grey-text text-darken-1">
-                                            {data.caption}
-                                        </p>
-                                        <p className="grey-text text-darken-1">
-                                            <b>From: </b> {data.email} on {data.time}
-                                        </p>
+                                    <div key={indx} id="family-picture-border" className="col s6">
+                                        <div className="family-picture">
+                                            <img src={
+                                                data.filepath 
+                                            } className="ace-image" alt="profile" />
+                                            <p className="grey-text text-darken-1">
+                                                {data.caption}
+                                            </p>
+                                            <p className="grey-text text-darken-1">
+                                                <b>From: </b> {data.email} on {data.time}
+                                            </p>
+                                        </div>
+                                        
                                     </div>
                                 )
                             })) :
@@ -140,10 +219,52 @@ class Family extends Component {
                         <div className="col s12 center-align family-picture-container" style={{marginBottom: '30px'}}>
                             <h4>
                                 <b> Family Group Chat </b>  
-                                <p className="flow-text grey-text text-darken-1">
+                                <p className="flow-text red-text text-darken-1">
                                     Still under construction
                                 </p>
                             </h4>
+                        </div>
+                        <div>
+                            <div id="chat" elevation={3}>
+                                {this.state.chat.map((data, index) => {
+
+                                    return (
+                                        <div className="chat-class" key={index}>
+                                            <p className="chat-content"> <b>{data.name}</b> : {data.content} </p> 
+                                            <p className="chat-time-stamp"> { data.time }</p>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
+                            <form onSubmit={this.onSubmit}>
+                                <div className="input-field col s12">
+                                                <input
+                                                    onChange={this.onChange}
+                                                    value={this.state.content}
+                                                    id="content"
+                                                    type="text"
+                                                    className={classnames("")}
+                                                />
+                                                <label htmlFor="test">Message</label>
+                                </div>
+                                <div>
+                                        <button
+                                                disabled={!this.state.content}
+                                                style={{
+                                                    width: "150px",
+                                                    borderRadius: "3px",
+                                                    letterSpacing: "1.5px",
+                                                    marginTop: "1rem",
+                                                    marginBottom: "100px"
+                                                }}
+                                                type="submit"
+                                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                            >
+                                            Message
+                                        </button>
+                                </div>
+                            </form>    
                         </div>
                     </div>
                 </>) 

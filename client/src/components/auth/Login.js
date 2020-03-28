@@ -60,7 +60,7 @@ class Login extends Component {
         const { errors } = this.state
 
         return (
-            <div className="container">
+            <div className="container" style={{ height: '100vh'}}>
                 <div style={{ marginTop: "4rem" }} className="row">
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">
