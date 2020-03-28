@@ -102,20 +102,17 @@ io.on('connection', (socket) => {
         content: content,
         time: moment().format('LT')
       })
-
       // Save the message to the database.
       await message.save((err) => {
         if (err) return console.error(err)
       })
     })
-
     // Push to frontend for updates
     const pushedMessage = {
       name: name,
       content: content,
       time: moment().format('LT')
     }
-
     socket.broadcast.emit('public_chat_send', pushedMessage)
   })
 
@@ -125,6 +122,7 @@ io.on('connection', (socket) => {
       let emitted = false
       // if first time chatting, create a new message schema 
       if (!messages) {
+        // Create new message schema for storing past messages
         const newMessages = new Message({
           uniqueCode: uniqid(),
           people: [from, to],
@@ -140,22 +138,18 @@ io.on('connection', (socket) => {
         // Emit the new schema
         socket.emit('init', newMessages)
         emitted = true
-      }
-      
+      } 
       // Log any errors
       if (err) return console.error(err)
-
       // Send the last messages to the user.
       if (!emitted) {
         socket.emit('init', messages)
       }
     })
   })
-  
 
   // Socketing receiving messages from frontend
   socket.on('private', ({name, content, messageID, receiver }) => {
-
     // Create a message with the content and the name of the user.
     Message.findOne({ uniqueCode: messageID }).exec(async (err, message) => {
       message.list.push({
@@ -163,29 +157,27 @@ io.on('connection', (socket) => {
         content: content,
         time: moment().format('LT')
       })
-
       // Save the message to the database.
       await message.save((err) => {
         if (err) return console.error(err)
       })
     })
-
     // Push to frontend for updates
     const pushedMessage = {
       name: name,
       content: content,
       time: moment().format('LT')
     }
-
     // Retrieve socket to receiver 
     const sendTo = connectedUsers[receiver]
-
     // Emit private message to frontend 
     if (sendTo) {
       sendTo.emit('private_chat', pushedMessage)
     }
-
   })
+
+
+  // Add groupchat feature
 })
 
 io.listen(8000)

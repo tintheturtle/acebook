@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { getFamily } from '../../actions/familyActions'
+import ProfilePicture from '../../images/profile.png'
 import '../../styles/Family.css'
 
 class Family extends Component {
@@ -35,7 +36,7 @@ class Family extends Component {
                 {
                             !family ? 
                     (
-                        <div id="message-header" className="message-header-row row">
+                        <div id="message-header" style={{ height: "100vh"  }}className="message-header-row row">
                             <div className="col s12 center-align">
                                 <h4>
                                     <b> Hello, </b>  {this.props.auth.user.name}
@@ -61,16 +62,10 @@ class Family extends Component {
                         <div>
                             <div className="col m6 family-div" style={{ height: "50vh"}}>
                                 <div className="col s12 center-align ">                                
-                                    <div>
-                                        { memberObjects.map((data, indx) => {
-                                            if (data.email !== this.props.auth.user.email) {
-                                                return (
-                                                    <h5 key={indx}> {data.email} </h5> 
-                                                )
-                                            }
-                                            return ''
-                                    
-                                        })}
+                                    <div style={{ paddingTop: '30px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
+                                        <img src={ProfilePicture} className="family-image" alt="profile" />
+                                        <img src={ProfilePicture} className="family-image" alt="profile" />
+                                        <img src={ProfilePicture} className="family-image" alt="profile" />
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +117,7 @@ class Family extends Component {
                                     <div key={indx} className="family-picture col s6">
                                         <img src={
                                             data.filepath 
-                                        } className="family-image" alt="profile" />
+                                        } className="ace-image" alt="profile" />
                                         <p className="grey-text text-darken-1">
                                             {data.caption}
                                         </p>
@@ -146,6 +141,7 @@ class Family extends Component {
                             <h4>
                                 <b> Family Group Chat </b>  
                                 <p className="flow-text grey-text text-darken-1">
+                                    Still under construction
                                 </p>
                             </h4>
                         </div>
