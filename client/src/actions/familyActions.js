@@ -5,9 +5,9 @@ import {
     GET_ERRORS
 } from './types'
 
-export const getFamily = email => dispatch => {
-    axios
-        .post('/api/family', email)
+export const getFamily = email => async dispatch => {
+    await axios
+        .post('/api/family/family', email)
         .then(res => {
             const { family } = res.data
             dispatch({
@@ -22,21 +22,17 @@ export const getFamily = email => dispatch => {
         }))
 }
 
-export const createFamily = params => async dispatch => {
+export const createFamily = newFamily => async dispatch => {
     await axios
-        .post('/api/family/create', params)
+        .post('/api/family/create', newFamily)
         .then(res => {
-            const status  = res.data.sttus
+            const { success }  = res.data
             dispatch({
                 type: CREATE_FAMILY,
-                payload: status
+                payload: success
             })
         })
-        .catch(err => 
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data
-        }))
+        
 }
 
 export const setFamily = (family) => {

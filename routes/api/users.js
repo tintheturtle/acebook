@@ -83,19 +83,21 @@ router.post("/login", async (req, res) => {
                             console.log('find me a big!')
                             if (!user.paired) {
                                 // Checks to see if there are any new users and updates the info of previous matches
-                                if (user.lastUserCount < users.length){
+                                if (user.lastUserCount < users.length) {
                                     // Looping through list of users
                                     for (let i = 0; i < users.length; i++) {
                                         // Turns matches into object 
                                         let other = users[i].toObject()
                                         // Checks whether or match is the opposite type and is not paired
-                                        if (other.ACE === 'big' && !other.paired) {
+                                        if (other.ACE === 'big' && !other.paired && !user.matchEmailList.includes(other.email)) {
                                             // Get percentage match using algorithm
                                             const percentage  = stringComparison(user.description, other.description)
                                             if (percentage > 0.2){
                                                 // Delete other matches to prevent too much data in one user
                                                 delete other.matches
+                                                delete other.matchEmailList
                                                 other.percentage = percentage
+                                                user.matchEmailList.push(other.email)
                                                 user.matches.push(other)
                                             }
                                             
@@ -116,13 +118,15 @@ router.post("/login", async (req, res) => {
                                         // Turns matches into object 
                                         let other = users[i].toObject()
                                         // Checks whether or match is the opposite type and is not paired
-                                        if (other.ACE === 'little' && !other.paired) {
+                                        if (other.ACE === 'little' && !other.paired && !user.matchEmailList.includes(other.email)) {
                                             // Get percentage match using algorithm
                                             const percentage  = stringComparison(user.description, other.description)
                                             if (percentage > 0.2){
                                                 // Delete other matches to prevent too much data in one user
                                                 delete other.matches
+                                                delete other.matchEmailList
                                                 other.percentage = percentage
+                                                user.matchEmailList.push(other.email)
                                                 user.matches.push(other)
                                             }
                                             

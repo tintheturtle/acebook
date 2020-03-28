@@ -39,7 +39,24 @@ class Family extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    {this.state.family.toString()}
+                    {
+                        !family ? (
+                            <div>
+                                You have not been matched with a family yet
+                            </div>
+                        ) : 
+                        <div>
+                            { family.members.map((data, indx) => {
+                                if (data !== this.props.auth.user.email) {
+                                    return (
+                                        <h5> {data} </h5> 
+                                    )
+                                }
+                                return ''
+                           
+                            })}
+                        </div>
+                    }
                 </div>
             </div>
         )

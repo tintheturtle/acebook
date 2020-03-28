@@ -5,6 +5,10 @@ const FamilySchema = new Schema({
         type: String,
         required: true
     },
+    memberObjects: {
+        type: Array,
+        default: []
+    },
     members: {
         type: Array,
         default: []

@@ -13,19 +13,16 @@ class Admin extends Component {
             name: '',
             subject: '',
             message: '',
+            create: '',
             errors: {}
         }
     }
 
-    async componentDidMount() {
-        // Check to see if they have the correct permissions
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.errors !== this.props.errors) {
-            console.log(this.state.errors)
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.errors !== this.props.errors) {
+    //         console.log(this.state.errors)
+    //     }
+    // }
 
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value })
@@ -38,9 +35,15 @@ class Admin extends Component {
         }
 
         this.props.createFamily(newFamily)
+        this.setState({
+            create: this.props.family.created
+        })
     }
 
     render() {
+
+        const { created } = this.props.family
+        console.log(created)
         
         const { user } = this.props.auth
         const { errors } = this.state
@@ -128,14 +131,14 @@ class Admin extends Component {
                         <form noValidate onSubmit={this.onSubmit}>
                             <div className="input-field col s12">
                                 <input
-                                onChange={this.onChange}
-                                value={this.state.subject}
-                                error={errors.subject}
-                                id="subject"
-                                type="text"
-                                className={classnames("", {
-                                    invalid: errors.subject 
-                                  })}
+                                    onChange={this.onChange}
+                                    value={this.state.subject}
+                                    error={errors.subject}
+                                    id="subject"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.subject 
+                                    })}
                                 />
                                 <label htmlFor="email">Subject</label>
                             </div>
@@ -190,6 +193,6 @@ Admin.propTypes = {
 const mapStateToProps = state => ({
     auth: state.auth,
     message: state.message,
-    family: state.family,
+    family: state.family
 })
 export default connect(mapStateToProps, { createFamily })(Admin)
