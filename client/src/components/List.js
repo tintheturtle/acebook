@@ -28,7 +28,7 @@ class List extends Component {
         const { user } = this.props.auth
 
         return(
-            <div style={{ height: "75vh" }} className="container">
+            <div style={{  }} className="container">
                 <div id="dashboard-header" className="row">
                     <div className="col s12 center-align">
                         <h4>
