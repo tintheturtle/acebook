@@ -1,0 +1,25 @@
+import mongoose, { Schema } from 'mongoose'
+
+const FamilySchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    memberObjects: {
+        type: Array,
+        default: []
+    },
+    members: {
+        type: Array,
+        default: []
+    },
+    pictures: {
+        type: Array,
+        default: []
+    },
+    time: {
+        type: String
+    }
+})
+
+export default mongoose.model("Family", FamilySchema);

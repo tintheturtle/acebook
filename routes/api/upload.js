@@ -1,7 +1,9 @@
 import express from 'express'
 import multer from 'multer'
+import moment from 'moment'
 
 import User from '../../models/User'
+import Family from '../../models/Family'
 
 var router = express.Router()
 
@@ -21,20 +23,29 @@ router.post('/', upload.single('file'), async (req, res) => {
     const purpose = req.body.purpose
     const path = req.file.path
     const email = req.body.email
-    console.log(email, purpose, path)
 
     switch (purpose) {
         case 'profilePicture': {
             await User.findOne({ email: email }).then(async (user) => {
                 user.headshotURL = path.substring(13)
                 await user.save()
-                console.log(user.headshotURL)
             })
             break
         }
         case 'points': {
             const caption = req.body.caption
-            console.log(caption)
+            await Family
+                .findOne({ members: { $in : [email] }})
+                .then(family => {
+                    const hangout = {
+                        filepath: path.substring(13),
+                        email: email,
+                        caption: caption,
+                        time: moment().format('LL')
+                    }
+                    family.pictures.push(hangout)
+                    family.save()
+                })
             break
         }
         case 'misc': {

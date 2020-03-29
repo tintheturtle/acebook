@@ -120,7 +120,7 @@ class FileUpload extends Component {
     render() {
 
         return (
-            <div>
+            <div style={{ height: "75vh" }} className="container">
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align">
                         <img src={
@@ -132,66 +132,68 @@ class FileUpload extends Component {
                             </p>
                         </h4>
                     </div>
-                    <div className="col s12 input-field">
-                            <p className="" style={{ color: '#9e9e9e', textAlign: 'center'}}>
-                                Image Upload Purpose
-                            </p>
-                            <div className="radio-btn-container" style={{ display: "flex", textAlign: 'center', margin: 'auto' }}>
-                                <RadioButton 
-                                        changed={ this.radioChangeHandler } 
-                                        id="1" 
-                                        isSelected={ this.state.purpose === "profilePicture" } 
-                                        label="Profile Picture" 
-                                        value="profilePicture" 
-                                />
-                                <RadioButton 
-                                        changed={ this.radioChangeHandler } 
-                                        id="2" 
-                                        isSelected={ this.state.purpose === "points" } 
-                                        label="ACE Points" 
-                                        value="points" 
-                                />
-                                <RadioButton 
-                                        changed={ this.radioChangeHandler } 
-                                        id="3" 
-                                        isSelected={ this.state.purpose === "spotlight" } 
-                                        label="Spotlight" 
-                                        value="spotlight" 
-                                />
-                                <RadioButton 
-                                        changed={ this.radioChangeHandler } 
-                                        id="4" 
-                                        isSelected={ this.state.purpose === "misc" } 
-                                        label="Miscellaneous" 
-                                        value="misc" 
-                                />
+                    <div style={{ padding: '40px'}}>
+                        <div className="col s12 input-field">
+                                <p className="" style={{ color: '#9e9e9e', textAlign: 'center'}}>
+                                    Image Upload Purpose
+                                </p>
+                                <div className="radio-btn-container" style={{ display: "flex", textAlign: 'center', margin: 'auto' }}>
+                                    <RadioButton 
+                                            changed={ this.radioChangeHandler } 
+                                            id="1" 
+                                            isSelected={ this.state.purpose === "profilePicture" } 
+                                            label="Profile Picture" 
+                                            value="profilePicture" 
+                                    />
+                                    <RadioButton 
+                                            changed={ this.radioChangeHandler } 
+                                            id="2" 
+                                            isSelected={ this.state.purpose === "points" } 
+                                            label="ACE Points" 
+                                            value="points" 
+                                    />
+                                    <RadioButton 
+                                            changed={ this.radioChangeHandler } 
+                                            id="3" 
+                                            isSelected={ this.state.purpose === "spotlight" } 
+                                            label="Spotlight" 
+                                            value="spotlight" 
+                                    />
+                                    <RadioButton 
+                                            changed={ this.radioChangeHandler } 
+                                            id="4" 
+                                            isSelected={ this.state.purpose === "misc" } 
+                                            label="Miscellaneous" 
+                                            value="misc" 
+                                    />
+                                </div>
                             </div>
+                            {
+                                this.state.purpose === 'points' ? 
+                                <div className="input-field col s12" style={{ marginTop: '0'}}>
+                                    <input
+                                        onChange={this.onCaptionChange}
+                                        value={this.state.caption}
+                                        id="caption"
+                                        type="text"
+                                        className={classnames("")}
+                                    />
+                                    <label htmlFor="test">Caption</label>
+                                </div> : ''
+                            }
+                            <input className="input"  style={{}} type="file" name="file" onChange={this.onChangeHandler}/>
+                            <button 
+                                type="button" 
+                                className="btn btn-success btn-block" 
+                                onClick={this.onClickHandler}
+                                style={{ marginTop: '20px', marginBottom: '20px'}}
+                                disabled={this.state.errors}
+                            >
+                                Upload
+                            </button> 
+                            <span className="red-text" style={{ }}>{this.state.errors}</span>
+                        </div>
                     </div>
-                    {
-                        this.state.purpose === 'points' ? 
-                        <div className="input-field col s12" style={{ marginTop: '0'}}>
-                            <input
-                                onChange={this.onCaptionChange}
-                                value={this.state.caption}
-                                id="caption"
-                                type="text"
-                                className={classnames("")}
-                            />
-                            <label htmlFor="test">Caption</label>
-                        </div> : ''
-                    }
-                    <input className="input"  style={{}} type="file" name="file" onChange={this.onChangeHandler}/>
-                    <button 
-                        type="button" 
-                        className="btn btn-success btn-block" 
-                        onClick={this.onClickHandler}
-                        style={{ marginTop: '20px', marginBottom: '20px'}}
-                        disabled={this.state.errors}
-                    >
-                        Upload
-                    </button> 
-                    <span className="red-text" style={{ }}>{this.state.errors}</span>
-                </div>
             </div>
         )
     }

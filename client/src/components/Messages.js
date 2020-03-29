@@ -91,10 +91,12 @@ class Messages extends Component {
 
         const { other } = this.props.message
         return (
-            <div style={{ height: "75vh" }} className="container">
+            <div className="container">
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align">
-                        <img src={ProfileImage} className="match-image" alt="profile" />
+                        <img src={
+                            other.headshotURL ? other.headshotURL  : ProfileImage 
+                            } className="match-image" alt="profile" />
                         <h4>
                             <b>You are messaging: </b>  {other.name.split(" ")[0]}
                             <p className="flow-text grey-text text-darken-1">
@@ -134,7 +136,8 @@ class Messages extends Component {
                                             width: "150px",
                                             borderRadius: "3px",
                                             letterSpacing: "1.5px",
-                                            marginTop: "1rem"
+                                            marginTop: "1rem",
+                                            marginBottom: "100px"
                                         }}
                                         type="submit"
                                         className="btn btn-large waves-effect waves-light hoverable blue accent-3"

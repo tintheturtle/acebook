@@ -17,14 +17,20 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        if (this.props.auth.user.ACE === 'eboard') {
+            this.props.history.push("/admin")
+        }
         // If logged in and user navigates to Register page, should redirect them to dashboard
-        if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/dashboard");
+        else if (this.props.auth.isAuthenticated) {
+          this.props.history.push("/dashboard")
         }
     }
 
     componentWillReceiveProps(nextProps) {
-            if (nextProps.auth.isAuthenticated) {
+            if (nextProps.auth.user.ACE === 'eboard') {
+                this.props.history.push("/admin")
+            }
+            else if (nextProps.auth.isAuthenticated) {
                 this.props.history.push("/dashboard"); // push user to dashboard when they login
             }
             if (nextProps.errors) {
@@ -54,7 +60,7 @@ class Login extends Component {
         const { errors } = this.state
 
         return (
-            <div className="container">
+            <div className="container" style={{ height: '100vh'}}>
                 <div style={{ marginTop: "4rem" }} className="row">
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">

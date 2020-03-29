@@ -48,6 +48,10 @@ const UserSchema = new Schema({
     description: {
       type: String,
     },
+    matchEmailList: {
+      type: Array,
+      default: []
+    },
     matches: {
       type: Array,
       default: []

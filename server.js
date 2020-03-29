@@ -9,6 +9,7 @@ import cors from 'cors'
 
 import users from './routes/api/users'
 import upload from './routes/api/upload'
+import family from './routes/api/family'
 
 import Message from './models/Message'
 
@@ -101,20 +102,17 @@ io.on('connection', (socket) => {
         content: content,
         time: moment().format('LT')
       })
-
       // Save the message to the database.
       await message.save((err) => {
         if (err) return console.error(err)
       })
     })
-
     // Push to frontend for updates
     const pushedMessage = {
       name: name,
       content: content,
       time: moment().format('LT')
     }
-
     socket.broadcast.emit('public_chat_send', pushedMessage)
   })
 
@@ -124,6 +122,7 @@ io.on('connection', (socket) => {
       let emitted = false
       // if first time chatting, create a new message schema 
       if (!messages) {
+        // Create new message schema for storing past messages
         const newMessages = new Message({
           uniqueCode: uniqid(),
           people: [from, to],
@@ -139,22 +138,18 @@ io.on('connection', (socket) => {
         // Emit the new schema
         socket.emit('init', newMessages)
         emitted = true
-      }
-      
+      } 
       // Log any errors
       if (err) return console.error(err)
-
       // Send the last messages to the user.
       if (!emitted) {
         socket.emit('init', messages)
       }
     })
   })
-  
 
   // Socketing receiving messages from frontend
   socket.on('private', ({name, content, messageID, receiver }) => {
-
     // Create a message with the content and the name of the user.
     Message.findOne({ uniqueCode: messageID }).exec(async (err, message) => {
       message.list.push({
@@ -162,7 +157,70 @@ io.on('connection', (socket) => {
         content: content,
         time: moment().format('LT')
       })
+      // Save the message to the database.
+      await message.save((err) => {
+        if (err) return console.error(err)
+      })
+    })
+    // Push to frontend for updates
+    const pushedMessage = {
+      name: name,
+      content: content,
+      time: moment().format('LT')
+    }
+    // Retrieve socket to receiver 
+    const sendTo = connectedUsers[receiver]
+    // Emit private message to frontend 
+    if (sendTo) {
+      sendTo.emit('private_chat', pushedMessage)
+    }
+  })
 
+  socket.on('family_init', ({ members }) => {
+    // Get the last 10 messages from the database.
+    Message.findOne({ people: { $in :[members]}, type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+      let emitted = false
+      // if first time chatting, create a new message schema 
+      if (!messages) {
+        console.log('here')
+
+        // Create new message schema for storing past messages
+        const newMessages = new Message({
+          uniqueCode: uniqid(),
+          type: 'family',
+          people: members,
+          list: [{
+            content: 'Hello!',
+            name: from,
+            time: moment().format('LT')
+          }]
+        })
+        await newMessages.save((err) => {
+          if (err) return console.error(err)
+        })
+        // Emit the new schema
+        socket.emit('family_start', newMessages)
+        emitted = true
+      } 
+      // Log any errors
+      if (err) return console.error(err)
+      // Send the last messages to the user.
+      if (!emitted) {
+        socket.emit('family_start', messages)
+      }
+    })
+  })
+
+
+  // Add groupchat feature
+  socket.on('family', ({ name, content, members, receiver}) => {
+    // Find family groupchat
+    Message.findOne({ people: members }).exec(async (err, message) => {
+      message.list.push({
+        name: name,
+        content: content,
+        time: moment().format('LT')
+      })
       // Save the message to the database.
       await message.save((err) => {
         if (err) return console.error(err)
@@ -175,15 +233,17 @@ io.on('connection', (socket) => {
       content: content,
       time: moment().format('LT')
     }
-
-    // Retrieve socket to receiver 
-    const sendTo = connectedUsers[receiver]
-
-    // Emit private message to frontend 
-    if (sendTo) {
-      sendTo.emit('private_chat', pushedMessage)
-    }
-
+    members.forEach( person => {
+      // Retrieve socket to receiver 
+      const sendTo = connectedUsers[person]
+      // Emit private message to frontend 
+      console.log(person, from)
+      console.log(person !==  from)
+      console.log()
+      if (sendTo && person !== from) {
+        sendTo.emit('family_chat', pushedMessage)
+      }
+    })
   })
 })
 
@@ -209,6 +269,7 @@ require("./config/passport")(passport)
 // Routes
 app.use("/api/users", users)
 app.use("/api/upload", upload)
+app.use("/api/family", family)
 
 const port = process.env.PORT || 5000
 

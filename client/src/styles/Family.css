@@ -1,0 +1,30 @@
+.family-div {
+    text-align: center;
+    padding: 30px;
+    border: 3px solid grey;
+}
+
+.family-picture {
+    padding: 20px;
+    border: 3px solid grey
+}
+
+.family-picture-container {
+    overflow: visible
+}
+
+#family-picture-border {
+    padding: 5px;
+}
+
+.family-image {
+    width: 150px;
+    margin: 0px;
+    border-radius: 50%;
+    align-self: center;
+    display: inline-block
+}
+
+.ace-image {
+    max-width: 300px;
+}

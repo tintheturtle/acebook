@@ -4,6 +4,7 @@ import moment from 'moment'
 
 const MessageSchema = new Schema({
     uniqueCode: String,
+    type: String,
     people: {
         type: Array,
     },

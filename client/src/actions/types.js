@@ -3,3 +3,6 @@ export const USER_LOADING = "USER_LOADING"
 export const SET_CURRENT_USER = "SET_CURRENT_USER"
 export const GET_USER_PROFILE = "GET_USER_PROFILE"
 export const SEND_MESSAGE_TO = "SEND_MESSAGE_TO"
+
+export const GET_FAMILY = "GET_FAMILY"
+export const CREATE_FAMILY = "CREATE_FAMILY"

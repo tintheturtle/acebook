@@ -18,10 +18,14 @@ class Dashboard extends Component {
         this.props.history.push('/upload')
     }
 
+    onFamilyClick = e => {
+        this.props.history.push('/family')
+    }
+
     render() {
         const { user } = this.props.auth
     return (
-        <div style={{ height: "75vh" }} className="container">
+        <div className="container">
             <div id="dashboard-header" className="row">
                 <div className="col s12 center-align">
                     <img src={
@@ -39,7 +43,7 @@ class Dashboard extends Component {
                             width: "150px",
                             borderRadius: "3px",
                             letterSpacing: "1.5px",
-                            marginTop: "1rem"
+                            margin: "1rem"
                         }}
                         onClick={this.onLogoutClick}
                         className="btn btn-large waves-effect waves-light hoverable blue accent-3"
@@ -51,12 +55,24 @@ class Dashboard extends Component {
                             width: "150px",
                             borderRadius: "3px",
                             letterSpacing: "1.5px",
-                            marginTop: "1rem"
+                            margin: "1rem"
                         }}
                         onClick={this.onUploadClick}
                         className="btn btn-large waves-effect waves-light hoverable red accent-3"
                     >
                     Upload
+                    </button>
+                    <button
+                        style={{
+                            width: "150px",
+                            borderRadius: "3px",
+                            letterSpacing: "1.5px",
+                            margin: "1rem"
+                        }}
+                        onClick={this.onFamilyClick}
+                        className="btn btn-large waves-effect waves-light hoverable green accent-3"
+                    >
+                    Family
                     </button>
                 </div>
             </div>

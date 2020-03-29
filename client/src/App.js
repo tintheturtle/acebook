@@ -9,15 +9,19 @@ import { Provider } from 'react-redux'
 import { store, persistor } from './store'
 
 import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
 import Landing from './components/layout/Landing'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import PrivateRoute from "./components/private-route/PrivateRoute"
+import AdminRoute from "./components/admin/AdminRoute"
 import Dashboard from "./components/dashboard/Dashboard"
 import Messages from './components/Messages'
 import List from './components/List'
 import PublicChat from './components/PublicChat'
 import FileUpload from './components/FileUpload'
+import Family from './components/family/Family'
+import Admin from './components/admin/Admin'
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -48,12 +52,15 @@ function App() {
               <Route exact path="/login" component={Login}/>
               {/* <Route exact path="/ACE" component={ACE}/> */}
               <Switch>
+                <AdminRoute exact path="/admin" component={Admin} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/messages" component={Messages} />
                 <PrivateRoute exact path="/list" component={List} />
                 <PrivateRoute exact path="/public-chat" component={PublicChat}/>
                 <PrivateRoute exact path="/upload" component={FileUpload} />
+                <PrivateRoute exact path="/family" component={Family} />
               </Switch>
+              <Footer />
             </div>
           </Router> 
         </PersistGate>

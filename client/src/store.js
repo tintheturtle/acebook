@@ -18,7 +18,10 @@ const persistConfig = {
     // Whitelist (Save Specific Reducers)
     whitelist: [
       'auth',
-      'message'
+      'message',
+    ],
+    blacklist: [
+      'family'
     ]
   }
 
