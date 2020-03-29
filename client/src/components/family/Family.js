@@ -90,8 +90,10 @@ class Family extends Component {
     }
 
     scrollToBottom() {
-        const chat = document.getElementById('chat');
-        chat.scrollTop = chat.scrollHeight;
+        if (!this.props.family) {
+            const chat = document.getElementById('chat')
+            chat.scrollTop = chat.scrollHeight
+        }
       }
 
     render() {
