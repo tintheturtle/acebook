@@ -19,6 +19,10 @@ const FamilySchema = new Schema({
     },
     time: {
         type: String
+    },
+    score: {
+        type: Number,
+        default: 0
     }
 })
 

@@ -26,10 +26,10 @@ export const createFamily = newFamily => async dispatch => {
     await axios
         .post('/api/family/create', newFamily)
         .then(res => {
-            const { success }  = res.data
+            const { create }  = res.data
             dispatch({
                 type: CREATE_FAMILY,
-                payload: success
+                payload: create
             })
         })
         
