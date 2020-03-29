@@ -85,7 +85,7 @@ router.get('/score', async (req, res) => {
 
     let familyList = []
 
-    await Family.find().then(families => {
+    await Family.find().sort({ score: 'descending' }).then(families => {
         families.forEach( family => {
             let familyObject = family.toObject()
             delete familyObject.pictures

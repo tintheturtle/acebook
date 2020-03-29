@@ -34,9 +34,26 @@ const Scoreboard = () => {
             {isLoading ? (
                 <div>Loading ...</div>
                     ) : (
-                    <div>
+                    <div >
+                        <div className="row" style={{ display: 'flex', flexWrap: 'wrap' }}> 
+                            <div className="col s3">
+                                <p className="flow-text grey-text text-darken-1">
+                                    Family Name
+                                </p>
+                            </div>
+                            <div className="col s3">
+                                <p className="flow-text grey-text text-darken-1">
+                                    Members
+                                </p>
+                            </div>
+                            <div className="col s3">
+                                <p className="flow-text grey-text text-darken-1">
+                                    Score
+                                </p>
+                            </div>    
+                        </div>
                         {data.list.map( (item, index) => (
-                            <div className="row" key={index} style={{ display: 'flex', flexWrap: 'wrap' }}> 
+                            <div key={index} className="row" style={{ display: 'flex', flexWrap: 'wrap' }}> 
                                 <div className="col s3">
                                     <p className="flow-text grey-text text-darken-1">
                                         {item.name}
