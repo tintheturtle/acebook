@@ -19,8 +19,8 @@ const Scoreboard = () => {
     }, [isLoading])
 
     return (
-        <div className="container" style={{ height: "100vh"  }}>
-            <div id="message-header" className="message-header-row row">
+        <div className="container" style={{ paddingBottom: '200px'  }}>
+            <div id="message-header" className="message-header-row row" style={{ height: "40vh"  }}>
                 <div className="col s12 center-align">
                     <h4>
                         ACE Family Scoreboard
@@ -37,19 +37,19 @@ const Scoreboard = () => {
                     <div >
                         <div className="row" style={{ display: 'flex', flexWrap: 'wrap' }}> 
                             <div className="col s3">
-                                <p className="flow-text grey-text text-darken-1">
+                                <h4>
                                     Family Name
-                                </p>
+                                </h4>
                             </div>
                             <div className="col s3">
-                                <p className="flow-text grey-text text-darken-1">
+                                <h4>
                                     Members
-                                </p>
+                                </h4>
                             </div>
                             <div className="col s3">
-                                <p className="flow-text grey-text text-darken-1">
+                                <h4>
                                     Score
-                                </p>
+                                </h4>
                             </div>    
                         </div>
                         {data.list.map( (item, index) => (
