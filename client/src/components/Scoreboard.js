@@ -35,11 +35,22 @@ const Scoreboard = () => {
                 <div>Loading ...</div>
                     ) : (
                     <div>
-                        {data.list.map(item => (
-                            <li key={item._id}>
-                                {item.members}
-                            </li>
-                            ))
+                        {data.list.map( (item, index) => (
+                            <div key={item._id}> 
+                                <p className="flow-text grey-text text-darken-1">
+                                    {item.name}
+                                </p>
+                                <p className="flow-text grey-text text-darken-1">
+                                    {item.members.map( (member, index) => (
+                                        <h5>
+                                            {member}
+                                        </h5>
+                                    ))}
+                                </p>
+                            </div>
+                            
+                            )
+                        )
                         }
                     </div>
                 )
