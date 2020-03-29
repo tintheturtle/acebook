@@ -209,7 +209,7 @@ class Family extends Component {
                                                 {data.caption}
                                             </p>
                                             <p className="grey-text text-darken-1">
-                                                <b>From: </b> {data.email} on {data.time}
+                                                <b>From: </b> {data.email} <br/> {data.time}
                                             </p>
                                         </div>
                                         
@@ -254,7 +254,7 @@ class Family extends Component {
                                                     id="content"
                                                     type="text"
                                                     className={classnames("")}
-                                                    maxlength="50"
+                                                    maxlength="200"
                                                 />
                                                 <label htmlFor="test">Message</label>
                                 </div>

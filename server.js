@@ -42,9 +42,10 @@ const io = require('socket.io')(http)
 const connectedUsers = {}
 
 // Initialize public group chat
-Message.findOne({ people: ['public']}).then( (msg) => {
+Message.findOne({ people: ['public'], type: 'public'}).then( (msg) => {
   if (!msg) {
     const newMessage = new Message({
+      type: 'public',
       uniqueCode: uniqid(),
       people: ['public'],
       list: [{
@@ -183,8 +184,6 @@ io.on('connection', (socket) => {
       let emitted = false
       // if first time chatting, create a new message schema 
       if (!messages) {
-        console.log('here')
-
         // Create new message schema for storing past messages
         const newMessages = new Message({
           uniqueCode: uniqid(),

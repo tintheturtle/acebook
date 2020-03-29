@@ -43,6 +43,7 @@ router.post('/', upload.single('file'), async (req, res) => {
                         caption: caption,
                         time: moment().format('LL')
                     }
+                    family.score = family.score + 5
                     family.pictures.push(hangout)
                     family.save()
                 })
