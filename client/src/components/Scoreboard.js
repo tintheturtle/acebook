@@ -36,19 +36,25 @@ const Scoreboard = () => {
                     ) : (
                     <div>
                         {data.list.map( (item, index) => (
-                            <div key={item._id}> 
-                                <p className="flow-text grey-text text-darken-1">
-                                    {item.name}
-                                </p>
-                                <p className="flow-text grey-text text-darken-1">
+                            <div className="row" key={index} style={{ display: 'flex', flexWrap: 'wrap' }}> 
+                                <div className="col s3">
+                                    <p className="flow-text grey-text text-darken-1">
+                                        {item.name}
+                                    </p>
+                                </div>
+                                <div className="col s3 ">
                                     {item.members.map( (member, index) => (
-                                        <h5>
+                                        <p  key={index} className="flow-text grey-text text-darken-1">
                                             {member}
-                                        </h5>
+                                        </p>
                                     ))}
-                                </p>
+                                </div>
+                                <div className="col s3 ">
+                                    <p className="flow-text grey-text text-darken-1">
+                                        {item.score}
+                                    </p>
+                                </div>
                             </div>
-                            
                             )
                         )
                         }
