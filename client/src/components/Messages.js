@@ -120,31 +120,31 @@ class Messages extends Component {
 
                     <form onSubmit={this.onSubmit}>
                         <div className="input-field col s12">
-                                        <input
-                                            onChange={this.onChange}
-                                            value={this.state.content}
-                                            id="content"
-                                            type="text"
-                                            className={classnames("")}
-                                            maxlength="50"
-                                        />
-                                        <label htmlFor="test">Message</label>
+                            <input
+                                nChange={this.onChange}
+                                value={this.state.content}
+                                id="content"
+                                type="text"
+                                className={classnames("")}
+                                maxlength="50"
+                            />
+                            <label htmlFor="test">Message</label>
                         </div>
                         <div>
-                                <button
-                                        disabled={!this.state.content}
-                                        style={{
-                                            width: "150px",
-                                            borderRadius: "3px",
-                                            letterSpacing: "1.5px",
-                                            marginTop: "1rem",
-                                            marginBottom: "100px"
-                                        }}
-                                        type="submit"
-                                        className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                                    >
-                                    Message
-                                </button>
+                            <button
+                                disabled={!this.state.content}
+                                style={{
+                                    width: "150px",
+                                    borderRadius: "3px",
+                                    letterSpacing: "1.5px",
+                                    marginTop: "1rem",
+                                    marginBottom: "100px"
+                                    }}
+                                type="submit"
+                                lassName="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                            >
+                                Message
+                            </button>
                         </div>
                     </form>
                     

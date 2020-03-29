@@ -7,7 +7,7 @@ import validateFamilyInput from '../../utils/validation/createFamily'
 
 var router = express.Router()
 
-router.post('/family', async (req, res) =>{
+router.post('/family', async (req, res) => {
 
     // Retrieve email from request
     const email = req.body.email
@@ -73,12 +73,30 @@ router.post('/create', async (req,res) => {
         }
         else {
             success = false
-        }
-        res.json({
-            create: success
-        })
+        } 
+    })
+    res.json({
+        create: success
     })
     
+})
+
+router.get('/score', async (req, res) => {
+
+    let familyList = []
+
+    await Family.find().then(families => {
+        families.forEach( family => {
+            let familyObject = family.toObject()
+            delete familyObject.pictures
+            delete familyObject.memberObjects
+            familyList.push(familyObject)
+        })
+    })
+
+    res.json({
+        list: familyList
+    })
 })
 
 export default router

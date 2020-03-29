@@ -118,12 +118,13 @@ io.on('connection', (socket) => {
 
   socket.on('private_init', () => {
     // Get the last 10 messages from the database.
-    Message.findOne({ people: { $all : [from, to] }}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+    Message.findOne({ people: { $all : [from, to] }, type: 'match'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
       let emitted = false
       // if first time chatting, create a new message schema 
       if (!messages) {
         // Create new message schema for storing past messages
         const newMessages = new Message({
+          type: 'match',
           uniqueCode: uniqid(),
           people: [from, to],
           list: [{
@@ -178,7 +179,7 @@ io.on('connection', (socket) => {
 
   socket.on('family_init', ({ members }) => {
     // Get the last 10 messages from the database.
-    Message.findOne({ people: { $in :[members]}, type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
+    Message.findOne({ people: { $all :[members]}, type: 'family'}).sort({createdAt: -1}).limit(10).exec(async (err, messages) => {
       let emitted = false
       // if first time chatting, create a new message schema 
       if (!messages) {

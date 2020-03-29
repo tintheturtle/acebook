@@ -39,7 +39,6 @@ class Family extends Component {
                 family: this.props.family.family
             })
         })
-        
 
         this.socket.emit('family_init', {
             members: this.props.family.family.members
@@ -133,24 +132,27 @@ class Family extends Component {
                             <div className="col m6 family-div" style={{ height: "50vh"}}>
                                 <div className="col s12 center-align ">                                
                                     <div style={{ paddingTop: '30px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
-                                        <img 
-                                            src={ProfilePicture} 
-                                            className="family-image" 
-                                            alt="profile" 
-                                            style={{padding: '5px'}}
-                                        />
-                                        <img 
-                                            src={ProfilePicture} 
-                                            className="family-image" 
-                                            alt="profile" 
-                                            style={{padding: '5px'}}
-                                        />
-                                        <img 
-                                            src={ProfilePicture} 
-                                            className="family-image" 
-                                            alt="profile" 
-                                            style={{padding: '5px'}}
-                                        />
+                                        { memberObjects.map((data, indx) => {
+                                            return (
+                                                data.headshotURL ? (
+                                                    <img 
+                                                        src={data.headshotURL} 
+                                                        className="family-image" 
+                                                        alt="profile" 
+                                                        style={{padding: '5px'}}
+                                                        key={indx}
+                                                    />
+                                                ) : (
+                                                    <img 
+                                                        src={ProfilePicture} 
+                                                        className="family-image" 
+                                                        alt="profile" 
+                                                        style={{padding: '5px'}}
+                                                        key={indx}
+                                                    />
+                                                )
+                                            )   
+                                        })}
                                     </div>
                                 </div>
                             </div>
@@ -252,6 +254,7 @@ class Family extends Component {
                                                     id="content"
                                                     type="text"
                                                     className={classnames("")}
+                                                    maxlength="50"
                                                 />
                                                 <label htmlFor="test">Message</label>
                                 </div>
@@ -263,7 +266,7 @@ class Family extends Component {
                                                     borderRadius: "3px",
                                                     letterSpacing: "1.5px",
                                                     marginTop: "1rem",
-                                                    marginBottom: "100px"
+                                                    marginBottom: "100px",
                                                 }}
                                                 type="submit"
                                                 className="btn btn-large waves-effect waves-light hoverable blue accent-3"
