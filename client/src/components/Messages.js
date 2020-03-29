@@ -126,7 +126,7 @@ class Messages extends Component {
                                 id="content"
                                 type="text"
                                 className={classnames("")}
-                                maxlength="50"
+                                maxlength="200"
                             />
                             <label htmlFor="test">Message</label>
                         </div>
