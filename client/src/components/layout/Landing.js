@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import BUVSA from '../../images/BUVSA.png'
+
+import '../../styles/Landing.css'
+
 class Landing extends Component {
     render() {
         return (
-            <div style={{ height: "100vh" }} className="container valign-wrapper">
-                <div className="row">
+            <div style={{  }} className="container valign-wrapper">
+                <div className="row" style={{ height: "100vh", paddingTop: '40px'}}>
                     <div className="col s12 center-align">
+                        <img src={BUVSA} className="logo-image" alt="profile" />
                         <h4>
-                        <b>Build</b> a login/auth app with the{" "}
-                        <span style={{ fontFamily: "monospace" }}>MERN</span> stack from
-                        scratch
+                            <b>BUVSA</b> {" "} <br/>
+                            Anh Chi Em Program
                         </h4>
-                        <p className="flow-text grey-text text-darken-1">
-                        Create a (minimal) full-stack app with user authentication via
-                        passport and JWTs
-                        </p>
+                            <p className="flow-text grey-text text-darken-1">
+                            Participate in our ACE Program and get involved! A mentor/mentee program available to all members of Boston University
+                            </p>
                         <br />
                         <div className="col s6">
                             <Link
