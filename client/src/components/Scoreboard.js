@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Scoreboard = () => {
-    const [data, setData] = useState()
+    const [data, setData] = useState({list: []})
+    const [isLoading, setLoading] = useState(false)
 
     useEffect( () => {
-        
-    })
+        setLoading(true)
+        const fetchData = async () => {
+            const result = await axios.get("/api/family/score")
+
+            setData(result.data)
+        }
+
+
+        fetchData()
+        setLoading(false)
+    }, [isLoading])
 
     return (
-        <div className="container">
-            <div id="message-header" style={{ height: "100vh"  }}className="message-header-row row">
+        <div className="container" style={{ height: "100vh"  }}>
+            <div id="message-header" className="message-header-row row">
                 <div className="col s12 center-align">
                     <h4>
                         ACE Family Scoreboard
@@ -18,6 +29,21 @@ const Scoreboard = () => {
                         Keep up to date with family points!
                     </p>
                 </div>
+            </div>
+            <div>
+            {isLoading ? (
+                <div>Loading ...</div>
+                    ) : (
+                    <div>
+                        {data.list.map(item => (
+                            <li key={item._id}>
+                                {item.members}
+                            </li>
+                            ))
+                        }
+                    </div>
+                )
+            }
             </div>
         </div>
     )
