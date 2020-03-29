@@ -19,7 +19,7 @@ class Messages extends Component {
             chat: [],
             content: '',
             name: this.props.auth.user.email,
-            messageID: ''
+            messageID: '',
         }
 
         this.socket = io('http://localhost:8000', 
@@ -121,7 +121,7 @@ class Messages extends Component {
                     <form onSubmit={this.onSubmit}>
                         <div className="input-field col s12">
                             <input
-                                nChange={this.onChange}
+                                onChange={this.onChange}
                                 value={this.state.content}
                                 id="content"
                                 type="text"
@@ -141,7 +141,7 @@ class Messages extends Component {
                                     marginBottom: "100px"
                                     }}
                                 type="submit"
-                                lassName="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                             >
                                 Message
                             </button>

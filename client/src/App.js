@@ -24,6 +24,8 @@ import Family from './components/family/Family'
 import Admin from './components/admin/Admin'
 import Scoreboard from './components/Scoreboard'
 
+import withSplashScreen from './components/withSplashScreen'
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -71,4 +73,4 @@ function App() {
     )
 }
 
-export default App
+export default withSplashScreen(App)
