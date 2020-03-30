@@ -120,7 +120,7 @@ class FileUpload extends Component {
     render() {
 
         return (
-            <div style={{ height: "75vh" }} className="container">
+            <div style={{ height: "100vh" }} className="container">
                 <div id="message-header" className="message-header-row row">
                     <div className="col s12 center-align">
                         <img src={
