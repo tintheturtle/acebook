@@ -59,7 +59,7 @@ class Register extends Component {
             password2: this.state.password2,
             description: concatDesc,
             ACE: this.state.ACE,
-            introversion: this.state.introversion
+            algorithm: this.state.algorithm
         }
 
 

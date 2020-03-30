@@ -8,7 +8,6 @@ import validateLoginInput from '../../utils/validation/login'
 import stringComparison from '../../utils/comparisons/StringSimilarity'
 
 import User from '../../models/User'
-import Upload from '../../models/Upload'
 
 var router = express.Router()
 
@@ -31,7 +30,8 @@ router.post("/register", (req, res) => {
                 email: req.body.email,
                 password: req.body.password,
                 ACE: req.body.ACE,
-                description: req.body.description
+                description: req.body.description,
+                algorithm: req.body.algorithm
             })
             
             // Hash password 
