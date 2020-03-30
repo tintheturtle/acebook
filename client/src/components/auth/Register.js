@@ -153,7 +153,7 @@ class Register extends Component {
                                             />
                                             <RadioButton 
                                                 changed={ this.algorithmChangeHandler } 
-                                                id="9" 
+                                                id="10" 
                                                 error={errors.algorithm}
                                                 isSelected={ this.state.algorithm === "dictionary" } 
                                                 label="Dictionary" 

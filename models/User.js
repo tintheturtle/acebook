@@ -63,6 +63,10 @@ const UserSchema = new Schema({
     headshotURL: {
       type: String,
       default: ''
+    },
+    algorithm: {
+      type: String,
+      required: true
     }
   });
 
