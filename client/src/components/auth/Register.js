@@ -106,8 +106,8 @@ class Register extends Component {
 
         if (!this.state.proceed) {
             return ( 
-                <div className="container">
-                    <div className="row" style={{ height: "100vh"}}>
+                <div className="container" style={{ height: '100vh'}}>
+                    <div className="row" style={{ marginTop: '4rem'}}>
                         <div className="col s8 offset-s2">
                             <Link to="/" className="btn-flat waves-effect">
                                 <i className="material-icons left">keyboard_backspace</i> Back to
@@ -196,7 +196,7 @@ class Register extends Component {
 
         return (
             <div className="container">
-                <div className="row">
+                <div className="row" style={{ marginTop: '4rem'}}>
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i> Back to
