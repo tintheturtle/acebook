@@ -327,7 +327,7 @@ class Register extends Component {
                                 </div>
                                 <span className="red-text">{errors.introversion}</span>
                             </div>
-                            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                            <div className="col s12" style={{ paddingLeft: "11.250px", marginBottom: '10px'  }}>
                                 <button
                                     style={{
                                         width: "150px",

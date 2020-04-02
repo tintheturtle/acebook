@@ -17,6 +17,8 @@ class FileUpload extends Component {
             url: '',
             purpose: 'profilePicture',
             caption: '',
+            spotlightPerson: '',
+            spotlightCaption: '',
             errors: ''
           }
       }
@@ -180,6 +182,32 @@ class FileUpload extends Component {
                                     />
                                     <label htmlFor="test">Caption</label>
                                 </div> : ''
+                            }
+                            {
+                                this.state.purpose === 'spotlight' ? 
+                                <div> 
+                                    <div className="input-field col s12" style={{ marginTop: '0'}}>
+                                        <input
+                                            onChange={this.onCaptionChange}
+                                            value={this.state.spotlightPerson}
+                                            id="spotlightPerson"
+                                            type="text"
+                                            className={classnames("")}
+                                        />
+                                        <label htmlFor="test">Who is this?</label>
+                                    </div>
+                                    <div className="input-field col s12" style={{ marginTop: '0'}}>
+                                        <input
+                                            onChange={this.onCaptionChange}
+                                            value={this.state.spotlightCaption}
+                                            id="spotlightCaption"
+                                            type="text"
+                                            className={classnames("")}
+                                        />
+                                        <label htmlFor="test">Reason</label>
+                                    </div>
+                                </div>
+                                 : ''
                             }
                             <input className="input"  style={{}} type="file" name="file" onChange={this.onChangeHandler}/>
                             <button 
