@@ -8,6 +8,8 @@ import _ from 'lodash'
 
 import RadioButton from '../Radio/RadioButton'
 
+import '../../styles/Register.css'
+
 class Register extends Component {
     constructor() {
         super()
@@ -162,11 +164,14 @@ class Register extends Component {
                                         </div>
                                     <span className="red-text">{errors.algorithm}</span>
                                 </div>
-                                <div className="algorithm-about" style={{ paddingBottom: '30px' }}>
-                                    <p style={{ color: '#9e9e9e'}}> <b>About this algorithm:</b> </p> <br/>
-                                    <p style={{ color: '#9e9e9e'}}>
-                                        {this.renderSwitch()}
-                                    </p>
+                                <div  style={{ paddingBottom: '30px' }}>
+                                    <p style={{ color: 'white'}}> <b>About this algorithm:</b> </p> 
+                                    <div className="algorithm-about">
+                                        <p style={{ color: '#9e9e9e'}}> <b>About this algorithm:</b> </p>
+                                        <p style={{ color: '#9e9e9e'}}>
+                                            {this.renderSwitch()}
+                                        </p>
+                                    </div>      
                                 </div>
                                 <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                     <button
