@@ -3,8 +3,6 @@ import isEmpty from 'is-empty'
 
 const validateRegisterInput = (data) => {
     let errors = {}
-
-    console.log(data.description)
     
     data.name = !isEmpty(data.name) ? data.name : ""
     data.email = !isEmpty(data.email) ? data.email : ""
@@ -12,7 +10,6 @@ const validateRegisterInput = (data) => {
     data.password2 = !isEmpty(data.password2) ? data.password2 : ""
     data.ACE = !isEmpty(data.ACE) ? data.ACE : ""
     data.description = !isEmpty(data.description) ? data.description : ""
-    data.introversion = !isEmpty(data.introversion) ? data.introversion : ""
 
     // Name Checks
     if (Validator.isEmpty(data.name)) {
@@ -46,9 +43,6 @@ const validateRegisterInput = (data) => {
     }
     if (Validator.isEmpty(data.ACE)) {
         errors.ACE = "Must declare status as big or little.";
-    }
-    if (Validator.isEmpty(data.introversion)) {
-        errors.introversion = "Please choose one.";
     }
     return {
         errors,

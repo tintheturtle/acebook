@@ -76,7 +76,7 @@ class Dashboard extends Component {
                     </button>
                 </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ paddingBottom: '150px'}}>
                 <div className="center-align">
                     <h5> Message your matches! </h5>
                 </div>

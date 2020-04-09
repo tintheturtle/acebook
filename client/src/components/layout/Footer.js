@@ -19,7 +19,7 @@ class Footer extends Component {
                         <li><a href="http://scanfcode.com/category/c-language/">ACE</a></li>
                         <li><a href="http://scanfcode.com/category/front-end-development/">Culture Show</a></li>
                         <li><a href="http://scanfcode.com/category/back-end-development/">Events</a></li>
-                        <li><a href="http://scanfcode.com/category/java-programming-language/">Execute Board</a></li>
+                        <li><a href="http://scanfcode.com/category/java-programming-language/">Executive Board</a></li>
                         </ul>
                     </div>
 
