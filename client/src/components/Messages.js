@@ -92,7 +92,7 @@ class Messages extends Component {
         const { other } = this.props.message
         return (
             <div className="container">
-                <div id="message-header" className="message-header-row row">
+                <div id="message-header" className="message-header-row row message-shadow">
                     <div className="col s12 center-align">
                         <img src={
                             other.headshotURL ? other.headshotURL  : ProfileImage 

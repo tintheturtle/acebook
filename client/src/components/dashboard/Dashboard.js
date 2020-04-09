@@ -77,7 +77,7 @@ class Dashboard extends Component {
                 </div>
             </div>
             <div className="row" style={{ paddingBottom: '150px'}}>
-                <div className="center-align">
+                <div className="messages-message center-align">
                     <h5> Message your matches! </h5>
                 </div>
                 <div className="card-container">
