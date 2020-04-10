@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import CardProfile from '../CardProfile'
+import Event from '../events/Event'
 import Pagination from '../pagination/Pagination'
 import { logoutUser } from '../../actions/authActions'
 import ProfileImage from '../../images/profile.png'
@@ -99,6 +100,7 @@ class Dashboard extends Component {
                     <h4>
                         Upcoming Events
                     </h4>
+                    <Event />
                 </div>
             </div>
             <div className="row dash-match-container" style={{ paddingBottom: '150px'}}>

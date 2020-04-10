@@ -1,0 +1,16 @@
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #E8E8E8;
+}
+
+.event-image {
+    width: 300px;
+    margin: auto;
+    display: block;
+}
+
+.event-content {
+    padding-top: 30px;
+    padding-left: 20px;
+}
