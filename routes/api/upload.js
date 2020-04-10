@@ -4,6 +4,7 @@ import moment from 'moment'
 
 import User from '../../models/User'
 import Family from '../../models/Family'
+import Event from '../../models/Event'
 
 var router = express.Router()
 
@@ -55,6 +56,17 @@ router.post('/', upload.single('file'), async (req, res) => {
         }
         case 'spotlight': {
             console.log('Spotlight')
+            break
+        }
+        case 'event': {
+            const newEvent = new Event({
+                title: req.body.title,
+                time: req.body.time,
+                description: req.body.description,
+                banner: path,
+            })
+
+            await newEvent.save()
             break
         }
         default: {

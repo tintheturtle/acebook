@@ -35,6 +35,10 @@ class Dashboard extends Component {
         this.props.history.push('/family')
     }
 
+    onAdminClick = e => {
+        this.props.history.push('/admin')
+    }
+
     onPageChanged = data => {
         const allMatches  = this.props.auth.user.matches
         const { currentPage, totalPages, pageLimit } = data
@@ -124,6 +128,32 @@ class Dashboard extends Component {
                     ))}
                 </div>
             </div>
+            {
+                this.props.auth.user.email === 'familyChair@tin.com' ? (
+                    <div className="admin-container row">
+                        <h4>
+                            Admin Functions
+                        </h4>
+                        <p styles={{padding: '20px'}}>
+                            Go to the admin page to make announcements and pair families together. To create an event hit the red upload button above.
+                        </p>
+                        <div className="center-align">
+                            <button
+                                style={{
+                                    width: "150px",
+                                    borderRadius: "3px",
+                                    letterSpacing: "1.5px",
+                                    margin: "1rem"
+                                }}
+                                onClick={this.onAdminClick}
+                                className="btn btn-large waves-effect waves-light hoverable accent-3"
+                            >
+                                Go
+                            </button>
+                        </div>
+                    </div>
+                ) : 
+            (
             <div className="row dash-match-container" style={{ paddingBottom: '50px'}}>
                 <div className="messages-message center-align">
                     <h4> Message your matches! </h4>
@@ -137,6 +167,7 @@ class Dashboard extends Component {
                     ))}
                 </div>        
             </div>
+            )}
             <div className="row">
                 <div className="spotlights-container">
                     <h4>
