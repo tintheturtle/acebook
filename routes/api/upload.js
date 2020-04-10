@@ -67,7 +67,6 @@ router.post('/', upload.single('file'), async (req, res) => {
             })
 
             await newEvent.save()
-
             break
         }
         default: {

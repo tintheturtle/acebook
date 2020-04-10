@@ -19,7 +19,10 @@ class FileUpload extends Component {
             caption: '',
             spotlightPerson: '',
             spotlightCaption: '',
-            errors: ''
+            errors: '',
+            title: '',
+            time: '',
+            description: ''
           }
       }
 
@@ -147,13 +150,25 @@ class FileUpload extends Component {
                                             label="Profile Picture" 
                                             value="profilePicture" 
                                     />
-                                    <RadioButton 
+                                    {
+                                        this.props.auth.user.email === 'familyChair@tin.com' ? (
+                                            <RadioButton 
+                                                changed={ this.radioChangeHandler } 
+                                                id="2" 
+                                                isSelected={ this.state.purpose === "event" } 
+                                                label="Event" 
+                                                value="event" 
+                                            />
+                                        ) : (
+                                            <RadioButton 
                                             changed={ this.radioChangeHandler } 
                                             id="2" 
                                             isSelected={ this.state.purpose === "points" } 
                                             label="ACE Points" 
                                             value="points" 
-                                    />
+                                            />
+                                        )
+                                    }
                                     <RadioButton 
                                             changed={ this.radioChangeHandler } 
                                             id="3" 
@@ -207,6 +222,43 @@ class FileUpload extends Component {
                                         <label htmlFor="test">Reason</label>
                                     </div>
                                 </div>
+                                 : ''
+                            }
+                            {
+                                this.state.purpose === 'event' ? (
+                                    <div>
+                                        <div className="input-field col s12" style={{ marginTop: '0'}}>
+                                            <input
+                                                onChange={this.onCaptionChange}
+                                                value={this.state.title}
+                                                id="title"
+                                                type="text"
+                                                className={classnames("")}
+                                            />
+                                            <label htmlFor="test">Event Name</label>
+                                        </div>
+                                        <div className="input-field col s12" style={{ marginTop: '0'}}>
+                                            <input
+                                                onChange={this.onCaptionChange}
+                                                value={this.state.time}
+                                                id="time"
+                                                type="text"
+                                                className={classnames("")}
+                                            />
+                                            <label htmlFor="test">Time</label>
+                                        </div>
+                                        <div className="input-field col s12" style={{ marginTop: '0'}}>
+                                            <input
+                                                onChange={this.onCaptionChange}
+                                                value={this.state.description}
+                                                id="description"
+                                                type="text"
+                                                className={classnames("")}
+                                            />
+                                            <label htmlFor="test">Description</label>
+                                        </div>
+                                    </div>
+                                )
                                  : ''
                             }
                             <input className="input"  style={{}} type="file" name="file" onChange={this.onChangeHandler}/>
