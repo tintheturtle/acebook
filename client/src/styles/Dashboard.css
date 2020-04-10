@@ -1,3 +1,43 @@
 #dashboard-header {
-    padding: 100px;
+    margin-top: 40px;
+    padding: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.messages-message {
+    padding: 30px;
+}
+
+.events-container {
+    margin: 60px 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 30px;
+}
+
+.spotlights-container {
+    margin: 60px 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 30px;
+}
+
+.dash-match-container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.scoreboard-container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#scoreboard-header {
+    padding: 50px 50px 20px 50px;
+}
+
+.scorelist {
+    padding-bottom: 20px;
 }

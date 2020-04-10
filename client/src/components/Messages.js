@@ -91,64 +91,67 @@ class Messages extends Component {
 
         const { other } = this.props.message
         return (
-            <div className="container">
-                <div id="message-header" className="message-header-row row">
-                    <div className="col s12 center-align">
-                        <img src={
-                            other.headshotURL ? other.headshotURL  : ProfileImage 
-                            } className="match-image" alt="profile" />
-                        <h4>
-                            <b>You are messaging: </b>  {other.name.split(" ")[0]}
-                            <p className="flow-text grey-text text-darken-1">
-                                Who is a <b>{other.ACE}</b> and whose email is <b>{other.email}</b>
-                            </p>
-                        </h4>
+            <div className="container" style={{paddingBottom: '50px'}}>
+                <div className="message-container">
+                    <div id="message-header" className="message-header-row row message-shadow">
+                        <div className="col s12 center-align">
+                            <img src={
+                                other.headshotURL ? other.headshotURL  : ProfileImage 
+                                } className="match-image" alt="profile" />
+                            <h4>
+                                <b>You are messaging: </b>  {other.name.split(" ")[0]}
+                                <p className="flow-text grey-text text-darken-1">
+                                    Who is a <b>{other.ACE}</b> and whose email is <b>{other.email}</b>
+                                </p>
+                            </h4>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="chat" elevation={3}>
+                            {this.state.chat.map((data, index) => {
+
+                                return (
+                                    <div className="chat-class" key={index}>
+                                        <p className="chat-content"> <b>{data.name}</b> : {data.content} </p> 
+                                        <p className="chat-time-stamp"> { data.time }</p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+                        <form onSubmit={this.onSubmit} className="message-form">
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.content}
+                                    id="content"
+                                    type="text"
+                                    className={classnames("")}
+                                    maxlength="200"
+                                />
+                                <label htmlFor="test">Message</label>
+                            </div>
+                            <div>
+                                <button
+                                    disabled={!this.state.content}
+                                    style={{
+                                        width: "150px",
+                                        borderRadius: "3px",
+                                        letterSpacing: "1.5px",
+                                        marginTop: "1rem",
+                                        marginBottom: "100px"
+                                        }}
+                                    type="submit"
+                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                >
+                                    Message
+                                </button>
+                            </div>
+                        </form>
+                        
                     </div>
                 </div>
-                <div>
-                    <div id="chat" elevation={3}>
-                        {this.state.chat.map((data, index) => {
-
-                            return (
-                                <div className="chat-class" key={index}>
-                                    <p className="chat-content"> <b>{data.name}</b> : {data.content} </p> 
-                                    <p className="chat-time-stamp"> { data.time }</p>
-                                </div>
-                            )
-                        })}
-                    </div>
-
-                    <form onSubmit={this.onSubmit}>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.content}
-                                id="content"
-                                type="text"
-                                className={classnames("")}
-                                maxlength="200"
-                            />
-                            <label htmlFor="test">Message</label>
-                        </div>
-                        <div>
-                            <button
-                                disabled={!this.state.content}
-                                style={{
-                                    width: "150px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem",
-                                    marginBottom: "100px"
-                                    }}
-                                type="submit"
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                            >
-                                Message
-                            </button>
-                        </div>
-                    </form>
-                    
-                </div>
+                
             </div>
 
         )

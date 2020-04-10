@@ -10,7 +10,7 @@ class Footer extends Component {
                     <div className="row">
                     <div className="col s6 col md3">
                         <h6>About BUVSA</h6>
-                        <p className="text-justify"> <i> Boston University’s Vietnamese Student Association (BUVSA)  </i>  is a student-run organization at Boston University that provides an opportunity for exploring, sharing, and preserving Vietnamese history, culture, and experiences. It also promotes friendship and awareness both among club members and within the Boston University campus. The Association works to advocate unity among the Vietnamese community as well as connecting ourselves with other communities as a whole. We aim to reflect this goal through cultural, educational, and social events.</p>
+                        <p className="text-justify"> <i> Boston University’s Vietnamese Student Association (BUVSA)  </i>  is a student-run organization at Boston University that provides an opportunity for exploring, sharing, and preserving Vietnamese history, culture, and experiences. It also promotes friendship and awareness both among club members and within the Boston University campus. </p>
                     </div>
 
                     <div className="col s3 col md3">
