@@ -1,18 +1,10 @@
 import React from 'react'
 
-import FirstEvent from '../../images/generalMeeting.png'
 import '../../styles/Event.css'
 
-const data = {
-    image: FirstEvent,
-    title: 'General Meeting',
-    time: 'Time',
-    description: 'Lorem ipsum sum oil soaked chili.'
-}
+const Event = ({data}) => {
 
-const Event = () => {
-
-    if (!data) {
+    if (data) {
         return (
             <div className="row">
                 No upcoming events, check out our <a href="https://www.facebook.com/buvsa/">Facebook</a> page to stay connected with BUVSA! 

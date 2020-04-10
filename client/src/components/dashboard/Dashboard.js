@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import FirstEvent from '../../images/generalMeeting.png'
 import CardProfile from '../CardProfile'
 import Event from '../events/Event'
 import Pagination from '../pagination/Pagination'
@@ -43,6 +44,14 @@ class Dashboard extends Component {
 
     render() {
         const { user } = this.props.auth
+
+        const eventData = [{
+            image: FirstEvent,
+            title: 'General Meeting',
+            time: 'Time',
+            description: 'Lorem ipsum sum oil soaked chili.'
+        }]
+        
     return (
         <div className="container">
             <div id="dashboard-header" className="row">
@@ -100,7 +109,9 @@ class Dashboard extends Component {
                     <h4>
                         Upcoming Events
                     </h4>
-                    <Event/>
+                    { eventData.map((data, indx) => (
+                        <Event data={data} key={indx}/>
+                    ))}
                 </div>
             </div>
             <div className="row dash-match-container" style={{ paddingBottom: '150px'}}>
