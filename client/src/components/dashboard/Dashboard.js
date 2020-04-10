@@ -130,7 +130,7 @@ class Dashboard extends Component {
             </div>
             {
                 this.props.auth.user.email === 'familyChair@tin.com' ? (
-                    <div className="events-container row">
+                    <div className="admin-container row">
                         <h4>
                             Admin Functions
                         </h4>
