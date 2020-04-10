@@ -100,7 +100,7 @@ class Dashboard extends Component {
                     <h4>
                         Upcoming Events
                     </h4>
-                    <Event />
+                    <Event/>
                 </div>
             </div>
             <div className="row dash-match-container" style={{ paddingBottom: '150px'}}>
