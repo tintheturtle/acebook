@@ -76,7 +76,14 @@ class Dashboard extends Component {
                     </button>
                 </div>
             </div>
-            <div className="row" style={{ paddingBottom: '150px'}}>
+            <div className="row">
+                <div className="events-container">
+                    <h4>
+                        Upcoming Events
+                    </h4>
+                </div>
+            </div>
+            <div className="row dash-match-container" style={{ paddingBottom: '150px'}}>
                 <div className="messages-message center-align">
                     <h5> Message your matches! </h5>
                 </div>
@@ -85,6 +92,13 @@ class Dashboard extends Component {
                         <CardProfile data={data} key={indx}/>
                     ))}
                 </div>        
+            </div>
+            <div className="row">
+                <div className="events-container">
+                    <h4>
+                        Community Spotlight
+                    </h4>
+                </div>
             </div>
         </div>
         )
