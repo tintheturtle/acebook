@@ -71,7 +71,7 @@ class Dashboard extends Component {
                     <b>Hey there,</b> {user.name.split(" ")[0]}
                     <p className="flow-text grey-text text-darken-1">
                         You are logged into a full-stack{" "}
-                        <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
+                        <span style={{ fontFamily: "monospace" }}>ACEBOOK</span> app 👏
                     </p>
                     </h4>
                     <button
@@ -122,7 +122,7 @@ class Dashboard extends Component {
                     ))}
                 </div>
             </div>
-            <div className="row dash-match-container" style={{ paddingBottom: '150px'}}>
+            <div className="row dash-match-container" style={{ paddingBottom: '50px'}}>
                 <div className="messages-message center-align">
                     <h4> Message your matches! </h4>
                 </div>
@@ -136,7 +136,7 @@ class Dashboard extends Component {
                 </div>        
             </div>
             <div className="row">
-                <div className="events-container">
+                <div className="spotlights-container">
                     <h4>
                         Community Spotlight
                     </h4>

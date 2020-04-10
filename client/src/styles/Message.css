@@ -10,6 +10,9 @@
 
 .message-header-row {
   margin: 40px 0px;
+}
+
+.message-container {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
   
@@ -23,7 +26,7 @@
 
 .chat-class {
   display: flex;
-  padding: 5px 0px;
+  padding: 5px 10px;
 }
 
 .chat-time-stamp {
@@ -37,4 +40,8 @@
   margin: 0px;
   border-radius: 50%;
   align-self: center;
+}
+
+.message-form {
+  padding: 0px 20px;
 }
