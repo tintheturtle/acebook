@@ -124,6 +124,9 @@ class Dashboard extends Component {
                     ))}
                 </div>
             </div>
+            {
+                this.props.auth.user.email === 'familyChair@tin.com' ? '' : 
+            (
             <div className="row dash-match-container" style={{ paddingBottom: '50px'}}>
                 <div className="messages-message center-align">
                     <h4> Message your matches! </h4>
@@ -137,6 +140,7 @@ class Dashboard extends Component {
                     ))}
                 </div>        
             </div>
+            )}
             <div className="row">
                 <div className="spotlights-container">
                     <h4>
