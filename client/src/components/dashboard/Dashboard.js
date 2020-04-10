@@ -16,7 +16,9 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
             this.state = {
-                currentMatches: []
+                currentMatches: [],
+                currentPage: null, 
+                totalPages: null
             }
     }
 
