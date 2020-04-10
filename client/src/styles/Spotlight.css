@@ -1,0 +1,13 @@
+.spotlight-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.spotlight-image {
+   margin: auto;
+}
+
+.spotlight-content {
+    padding-top: 30px;
+    padding-left: 50px;
+}

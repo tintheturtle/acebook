@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import FirstEvent from '../../images/generalMeeting.png'
 import CardProfile from '../CardProfile'
+import Spotlight from '../Spotlight'
 import Event from '../events/Event'
 import Pagination from '../pagination/Pagination'
 import { logoutUser } from '../../actions/authActions'
 import ProfileImage from '../../images/profile.png'
+import FirstEvent from '../../images/generalMeeting.png'
 
 import '../../styles/Dashboard.css'
 
@@ -50,6 +51,13 @@ class Dashboard extends Component {
             title: 'General Meeting',
             time: 'Time',
             description: 'Lorem ipsum sum oil soaked chili.'
+        }]
+
+        const spotlightData = [{
+            image: ProfileImage,
+            name: 'First Spotlight',
+            major: 'MERN',
+            description: 'I built a full stack app.'
         }]
         
     return (
@@ -116,7 +124,7 @@ class Dashboard extends Component {
             </div>
             <div className="row dash-match-container" style={{ paddingBottom: '150px'}}>
                 <div className="messages-message center-align">
-                    <h5> Message your matches! </h5>
+                    <h4> Message your matches! </h4>
                 </div>
                 <div className="pagination-container">
                     <Pagination totalRecords={user.matches.length} pageLimit={3} pageNeighbours={1} onPageChanged={this.onPageChanged} />
@@ -132,6 +140,9 @@ class Dashboard extends Component {
                     <h4>
                         Community Spotlight
                     </h4>
+                    { spotlightData.map((data, indx) => (
+                        <Spotlight data={data} key={indx}/>
+                    ))}
                 </div>
             </div>
         </div>
