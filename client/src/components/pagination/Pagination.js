@@ -157,25 +157,25 @@ class Pagination extends Component {
 
               if (page === LEFT_PAGE) return (
                 <li key={index} className="page-item">
-                  <a className="page-link" href="#" aria-label="Previous" onClick={this.handleMoveLeft}>
+                  <button className="page-link" aria-label="Previous" onClick={this.handleMoveLeft}>
                     <span aria-hidden="true">&laquo </span>
                     <span className="sr-only">Previous</span>
-                  </a>
+                  </button>
                 </li>
               ) 
 
               if (page === RIGHT_PAGE) return (
                 <li key={index} className="page-item">
-                  <a className="page-link" href="#" aria-label="Next" onClick={this.handleMoveRight}>
+                  <button className="page-link" aria-label="Next" onClick={this.handleMoveRight}>
                     <span aria-hidden="true">&raquo </span>
                     <span className="sr-only">Next</span>
-                  </a>
+                  </button>
                 </li>
               ) 
 
               return (
                 <li key={index} className={`page-item${ currentPage === page ? ' active' : ''}`}>
-                  <a className="page-link" href="#" onClick={ this.handleClick(page) }>{ page }</a>
+                  <button className="page-link" onClick={ this.handleClick(page) }>{ page }</button>
                 </li>
               ) 
 
