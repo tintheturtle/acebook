@@ -3,12 +3,20 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import CardProfile from '../CardProfile'
+import Pagination from '../pagination/Pagination'
 import { logoutUser } from '../../actions/authActions'
 import ProfileImage from '../../images/profile.png'
 
 import '../../styles/Dashboard.css'
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props)
+            this.state = {
+                currentMatches: []
+            }
+    }
+
     onLogoutClick = e => {
         e.preventDefault()
         this.props.logoutUser()
@@ -21,6 +29,16 @@ class Dashboard extends Component {
     onFamilyClick = e => {
         this.props.history.push('/family')
     }
+
+    onPageChanged = data => {
+        const allMatches  = this.props.auth.user.matches
+        const { currentPage, totalPages, pageLimit } = data
+    
+        const offset = (currentPage - 1) * pageLimit;
+        const currentMatches = allMatches.slice(offset, offset + pageLimit)
+    
+        this.setState({ currentPage, currentMatches, totalPages })
+      }
 
     render() {
         const { user } = this.props.auth
@@ -87,8 +105,11 @@ class Dashboard extends Component {
                 <div className="messages-message center-align">
                     <h5> Message your matches! </h5>
                 </div>
+                <div className="">
+                    <Pagination totalRecords={user.matches.length} pageLimit={3} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+                </div>
                 <div className="card-container">
-                    { user.matches.map((data, indx) => (
+                    { this.state.currentMatches.map((data, indx) => (
                         <CardProfile data={data} key={indx}/>
                     ))}
                 </div>        
