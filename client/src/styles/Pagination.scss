@@ -9,35 +9,24 @@ $light-background: lighten(desaturate($base-color, 50%), 12.5%);
 
 .pagination-nav {
     background: white;
+    background-color: white;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
 }
 
-.country-card-container {
-  height: 60px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.country-name {
-  font-size: 0.9rem;
-}
-
-.country-region {
-  font-size: 0.7rem;
-}
-
-.current-page,
-.country-name,
-.country-region {
+.current-page {
   line-height: 1;
 }
+
+
 
 // Override some Bootstrap pagination styles
 ul.pagination {
   margin-top: 0;
   margin-bottom: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
   li.page-item.active {
+    background-color: white;
     a.page-link {
       color: saturate(darken($base-color, 50%), 5%) !important;
       background-color: saturate(lighten($base-color, 7.5%), 2.5%) !important;

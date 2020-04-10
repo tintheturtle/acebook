@@ -105,7 +105,7 @@ class Dashboard extends Component {
                 <div className="messages-message center-align">
                     <h5> Message your matches! </h5>
                 </div>
-                <div className="">
+                <div className="center-align">
                     <Pagination totalRecords={user.matches.length} pageLimit={3} pageNeighbours={1} onPageChanged={this.onPageChanged} />
                 </div>
                 <div className="card-container">
