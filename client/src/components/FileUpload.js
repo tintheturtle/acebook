@@ -110,6 +110,10 @@ class FileUpload extends Component {
             data.append('time', this.state.time)
             data.append('description', this.state.description)
         }
+        if (this.state.purpose === 'spotlight') {
+            data.append('spotlightPerson', this.state.spotlightPerson)
+            data.append('spotlightCaption', this.state.spotlightCaption)
+        }
         axios
             .post("/api/upload", data)
             .then(res => { 
