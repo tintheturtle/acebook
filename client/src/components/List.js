@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import Pagination from './pagination/Pagination'
 import { getUsers } from '../actions/listActions'
 import CardProfile from './CardProfile'
 
@@ -10,22 +11,37 @@ class List extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: []
+            userList: [],
+            currentUsersList: [],
+            currentPage: null,
+            totalPages: null
         }
     }
 
     async componentDidMount() {
         await getUsers().then(data => {
             this.setState({
-                list: data.userList
+                userList: data.userList
             })
         })
+    }
+
+    // Pagination method for calculating current page of scoreboard
+    onPageChanged = data => {
+        const allUsers  = this.state.userList
+        const { currentPage, totalPages, pageLimit } = data    
+        // Pagination calculations
+        const offset = (currentPage - 1) * pageLimit;
+        const currentUsersList = allUsers.slice(offset, offset + pageLimit)
+        // Setting states for pagination 
+        this.setState({ currentPage,  currentUsersList, totalPages })
     }
     
 
     render() {
-
+        const { userList, currentUsersList } = this.state
         const { user } = this.props.auth
+        if(userList.length === 0) return null
 
         return(
             <div style={{  }} className="container">
@@ -41,8 +57,11 @@ class List extends Component {
                     </div>
                 </div>
                 <div className="row">
+                    <div className="pagination-container">
+                        <Pagination totalRecords={userList.length} pageLimit={6} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+                    </div>
                     <div className="card-container">
-                        { this.state.list.map((data, indx) => {
+                        { currentUsersList.map((data, indx) => {
                             if (data.email !== user.email) {
                                 return (
                                     <CardProfile data={data} key={indx}/>
