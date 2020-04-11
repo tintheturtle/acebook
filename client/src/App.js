@@ -22,7 +22,7 @@ import PublicChat from './components/PublicChat'
 import FileUpload from './components/FileUpload'
 import Family from './components/family/Family'
 import Admin from './components/admin/Admin'
-import Scoreboard from './components/Scoreboard'
+import Scoreboard from './components/ComponentScoreboard'
 
 import withSplashScreen from './components/withSplashScreen'
 
