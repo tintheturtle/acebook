@@ -1,5 +1,4 @@
-import mongoose from 'mongoose'
-import { Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import moment from 'moment'
 
 const MessageSchema = new Schema({
@@ -22,4 +21,4 @@ const MessageSchema = new Schema({
     }
 )
 
-export default mongoose.model("Message", MessageSchema);
+export default mongoose.model("Message", MessageSchema)

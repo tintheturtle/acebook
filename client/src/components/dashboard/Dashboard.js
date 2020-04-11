@@ -9,7 +9,6 @@ import Event from '../events/Event'
 import Pagination from '../pagination/Pagination'
 import { logoutUser } from '../../actions/authActions'
 import ProfileImage from '../../images/profile.png'
-import FirstEvent from '../../images/generalMeeting.png'
 
 import '../../styles/Dashboard.css'
 
@@ -64,21 +63,12 @@ class Dashboard extends Component {
     render() {
         const { user } = this.props.auth
 
-        const eventData = [{
-            image: FirstEvent,
-            title: 'General Meeting',
-            time: 'Time',
-            description: 'Lorem ipsum sum oil soaked chili.'
-        }]
-
         const spotlightData = [{
             image: ProfileImage,
             name: 'First Spotlight',
             major: 'MERN',
             description: 'I built a full stack app.'
         }]
-
-    console.log(this.state.events)
         
     return (
         <div className="container">
