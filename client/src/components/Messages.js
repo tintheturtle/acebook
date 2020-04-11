@@ -94,16 +94,20 @@ class Messages extends Component {
             <div className="container" style={{paddingBottom: '50px'}}>
                 <div className="message-container">
                     <div id="message-header" className="message-header-row row message-shadow">
-                        <div className="col s12 center-align">
+                        <div className="other-profile-container">
                             <img src={
                                 other.headshotURL ? other.headshotURL  : ProfileImage 
                                 } className="match-image" alt="profile" />
-                            <h4>
-                                <b>You are messaging: </b>  {other.name.split(" ")[0]}
-                                <p className="flow-text grey-text text-darken-1">
+                            <div className="match-profile">
+                                <h5>
+                                    <b>You are messaging: </b>  {other.name.split(" ")[0]}
+                                </h5>
+                                <b>Major: </b> {other.name} <br/>
+                                <b>Year: </b> {other.name}
+                                <p className="grey-text text-darken-1">
                                     Who is a <b>{other.ACE}</b> and whose email is <b>{other.email}</b>
                                 </p>
-                            </h4>
+                            </div>
                         </div>
                     </div>
                     <div>

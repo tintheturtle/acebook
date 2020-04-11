@@ -5,7 +5,7 @@
   }
 
 #message-header {
-  padding: 100px 100px 20px 100px;
+  padding: 50px 100px 20px 100px;
 }
 
 .message-header-row {
@@ -44,4 +44,12 @@
 
 .message-form {
   padding: 0px 20px;
+}
+
+.other-profile-container {
+  display: flex;
+}
+
+.match-profile {
+  padding: 40px;
 }
