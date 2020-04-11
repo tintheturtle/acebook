@@ -3,14 +3,19 @@ import moment from 'moment'
 
 const SpotlightSchema = new Schema({
     user: {
-        type: Object,
-        required: true
-    },
-    questions: {
         type: String,
         required: true
     },
-    date: {
+    picture: {
+        type: String,
+        required: true
+    },
+    questions: {
+        type: Array,
+        default: []
+    },
+    published: {
+        type: String,
         default: moment().format('LL')
     }
 })
