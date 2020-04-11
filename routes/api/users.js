@@ -9,6 +9,7 @@ import stringComparison from '../../utils/comparisons/StringSimilarity'
 
 import User from '../../models/User'
 import Event from '../../models/Event'
+import Spotlight from '../../models/Spotlight'
 
 var router = express.Router()
 
@@ -218,6 +219,17 @@ router.get("/events", async (req, res) => {
         }
         else {
             return res.status(200).json({ events: "none"})
+        }
+    })
+})
+
+router.get("/spotlight", async (req, res) => {
+    await Spotlight.find().sort({$natural:-1}).limit(1).exec(function(err, person) { 
+        if (person) {
+            return res.status(200).json({ spotlightee: person})
+        }
+        else {
+            return res.status(200).json({ spotlightee: "none"})
         }
     })
 })

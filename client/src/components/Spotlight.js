@@ -4,17 +4,10 @@ import '../styles/Spotlight.css'
 
 const Spotlight = ({data}) => {
 
-    if (!data) {
-        return (
-            <div className="row">
-                Not available at the moment, check out our <a href="https://www.facebook.com/buvsa/">Facebook</a> page to stay connected with BUVSA! 
-            </div>
-        )
-    }
     return (
         <div className="spotlight-container">
             <div className="spotlight-image-container">
-                <img src={data.image} 
+                <img src={data.picture} 
                     className="match-image spotlight-image" 
                     alt="profile" />
             </div>

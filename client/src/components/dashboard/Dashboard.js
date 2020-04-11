@@ -9,7 +9,6 @@ import Event from '../events/Event'
 import Pagination from '../pagination/Pagination'
 import { logoutUser } from '../../actions/authActions'
 import ProfileImage from '../../images/profile.png'
-import FirstEvent from '../../images/generalMeeting.png'
 
 import '../../styles/Dashboard.css'
 
@@ -18,6 +17,7 @@ class Dashboard extends Component {
         super(props)
             this.state = {
                 events: [],
+                spotlight: [],
                 currentMatches: [],
                 currentPage: null, 
                 totalPages: null
@@ -30,6 +30,13 @@ class Dashboard extends Component {
                 .then(res => {
                     this.setState({
                         events: res.data.events
+                    })
+                })
+        await axios
+                .get('/api/users/spotlight')
+                .then(res => {
+                    this.setState({
+                        spotlight: res.data.spotlightee
                     })
                 })
     }
@@ -64,13 +71,6 @@ class Dashboard extends Component {
     render() {
         const { user } = this.props.auth
 
-        const eventData = [{
-            image: FirstEvent,
-            title: 'General Meeting',
-            time: 'Time',
-            description: 'Lorem ipsum sum oil soaked chili.'
-        }]
-
         const spotlightData = [{
             image: ProfileImage,
             name: 'First Spotlight',
@@ -78,7 +78,7 @@ class Dashboard extends Component {
             description: 'I built a full stack app.'
         }]
 
-    console.log(this.state.events)
+    console.log(this.state.spotlight)
         
     return (
         <div className="container">
@@ -196,9 +196,18 @@ class Dashboard extends Component {
                     <h4>
                         Community Spotlight
                     </h4>
-                    { spotlightData.map((data, indx) => (
-                        <Spotlight data={data} key={indx}/>
-                    ))}
+                    { 
+                        this.state.spotlight.length > 0 ? (
+                            this.state.spotlight.map((data, indx) => (
+                            <Spotlight data={data} key={indx}/>
+                            ))
+                        ) : (
+                            
+                            <div className="row">
+                                Not available at the moment, check out our <a href="https://www.facebook.com/buvsa/">Facebook</a> page to stay connected with BUVSA! 
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </div>
