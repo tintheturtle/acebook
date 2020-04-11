@@ -3,20 +3,12 @@ import React from 'react'
 import '../../styles/Event.css'
 
 const Event = ({data}) => {
-
-    if (data) {
-        return (
-            <div className="row">
-                No upcoming events, check out our <a href="https://www.facebook.com/buvsa/">Facebook</a> page to stay connected with BUVSA! 
-            </div>
-        )
-    }
     return (
         <div className="event-container">
             <div className="event-image-container">
                 <img 
                     className="event-image"
-                    src={data.image} 
+                    src={data.banner} 
                         alt="eventPicture" 
                     />
             </div>

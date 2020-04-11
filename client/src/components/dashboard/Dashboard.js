@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 import CardProfile from '../CardProfile'
 import Spotlight from '../Spotlight'
@@ -16,10 +17,21 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
             this.state = {
+                events: [],
                 currentMatches: [],
                 currentPage: null, 
                 totalPages: null
             }
+    }
+
+    async componentDidMount() {
+        await axios
+                .get('/api/users/events')
+                .then(res => {
+                    this.setState({
+                        events: res.data.events
+                    })
+                })
     }
 
     onLogoutClick = e => {
@@ -65,6 +77,8 @@ class Dashboard extends Component {
             major: 'MERN',
             description: 'I built a full stack app.'
         }]
+
+    console.log(this.state.events)
         
     return (
         <div className="container">
@@ -123,9 +137,18 @@ class Dashboard extends Component {
                     <h4>
                         Upcoming Events
                     </h4>
-                    { eventData.map((data, indx) => (
-                        <Event data={data} key={indx}/>
-                    ))}
+                    { 
+                        this.state.events.length > 0 ? (
+                            this.state.events.map((data, indx) => (
+                            <Event data={data} key={indx}/>
+                            ))
+                        ) :
+                        (
+                            <div className="row">
+                                No upcoming events, check out our <a href="https://www.facebook.com/buvsa/">Facebook</a> page to stay connected with BUVSA! 
+                            </div>
+                        )
+                    }
                 </div>
             </div>
             {
