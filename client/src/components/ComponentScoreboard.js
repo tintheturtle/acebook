@@ -7,38 +7,41 @@ class Scoreboard extends Component {
     constructor(props){
         super(props)
         this.state = {
-            list: [],
+            familyList: [],
             isLoading: false,
-            currentMatches: [],
-            leng: 0,
+            currentFamilies: [],
+            listLength: 0,
             currentPage: null, 
             totalPages: null
         }
     }
 
     async componentDidMount() {
+        // Axios call to get list of scores from backend
         await axios
                 .get('/api/family/score')
                 .then(res => {
                     this.setState({
-                        list: res.data.list,
-                        leng: res.data.list.length
+                        familyList: res.data.list,
+                        listLength: res.data.list.length
                     })
                 })
     }
 
+    // Pagination method for calculating current page of scoreboard
     onPageChanged = data => {
-        const allMatches  = this.state.list
+        const allFamilies  = this.state.familyList
         const { currentPage, totalPages, pageLimit } = data    
+        // Pagination calculations
         const offset = (currentPage - 1) * pageLimit;
-        const currentMatches = allMatches.slice(offset, offset + pageLimit)
-    
-        this.setState({ currentPage, currentMatches, totalPages })
+        const  currentFamilies = allFamilies.slice(offset, offset + pageLimit)
+        // Setting states for pagination 
+        this.setState({ currentPage,  currentFamilies, totalPages })
     }
 
     render() {
-        const { currentMatches, currentPage, totalPages, list } = this.state
-        const familyLength = list.length
+        const { currentFamilies, familyList } = this.state
+        const familyLength = familyList.length
 
         if (familyLength === 0) return null
 
@@ -80,7 +83,7 @@ class Scoreboard extends Component {
                                         </h4>
                                     </div>    
                                 </div>
-                                {currentMatches.map( (item, index) => (
+                                { currentFamilies.map( (item, index) => (
                                     <div key={index} className="row" style={{ display: 'flex', flexWrap: 'wrap' }}> 
                                         <div className="col s3">
                                             <p className="flow-text grey-text text-darken-1">
