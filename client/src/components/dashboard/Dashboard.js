@@ -66,20 +66,10 @@ class Dashboard extends Component {
         const currentMatches = allMatches.slice(offset, offset + pageLimit)
     
         this.setState({ currentPage, currentMatches, totalPages })
-      }
+    }
 
     render() {
-        const { user } = this.props.auth
-
-        const spotlightData = [{
-            image: ProfileImage,
-            name: 'First Spotlight',
-            major: 'MERN',
-            description: 'I built a full stack app.'
-        }]
-
-    console.log(this.state.spotlight)
-        
+        const { user } = this.props.auth   
     return (
         <div className="container">
             <div id="dashboard-header" className="row">
