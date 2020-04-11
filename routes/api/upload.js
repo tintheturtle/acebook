@@ -56,7 +56,6 @@ router.post('/', upload.single('file'), async (req, res) => {
             break
         }
         case 'spotlight': {
-            
             const newSpotlight = new Spotlight({
                 user: req.body.spotlight,
                 picture: path.substring(13),
