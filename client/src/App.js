@@ -22,7 +22,9 @@ import PublicChat from './components/PublicChat'
 import FileUpload from './components/FileUpload'
 import Family from './components/family/Family'
 import Admin from './components/admin/Admin'
+
 import Scoreboard from './components/Scoreboard'
+import ComponentScoreboard from './components/ComponentScoreboard'
 
 import withSplashScreen from './components/withSplashScreen'
 
@@ -62,7 +64,7 @@ function App() {
                 <PrivateRoute exact path="/public-chat" component={PublicChat}/>
                 <PrivateRoute exact path="/upload" component={FileUpload} />
                 <PrivateRoute exact path="/family" component={Family} />
-                <PrivateRoute exact path="/scoreboard" component={Scoreboard} />
+                <PrivateRoute exact path="/scoreboard" component={ComponentScoreboard} />
               </Switch>
               <Footer />
             </div>
