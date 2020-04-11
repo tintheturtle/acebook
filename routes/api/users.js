@@ -8,6 +8,7 @@ import validateLoginInput from '../../utils/validation/login'
 import stringComparison from '../../utils/comparisons/StringSimilarity'
 
 import User from '../../models/User'
+import Event from '../../models/Event'
 
 var router = express.Router()
 
@@ -210,5 +211,15 @@ router.get("/list",  (req, res) => {
 
 })
 
+router.get("/events", async (req, res) => {
+    await Event.find().sort({$natural:-1}).limit(3).exec(function(err, event) { 
+        if (event) {
+            return res.status(200).json({ events: event})
+        }
+        else {
+            return res.status(200).json({ events: "none"})
+        }
+    })
+})
 
 export default router

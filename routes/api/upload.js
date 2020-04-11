@@ -63,7 +63,7 @@ router.post('/', upload.single('file'), async (req, res) => {
                 title: req.body.title,
                 time: req.body.time,
                 description: req.body.description,
-                banner: path,
+                banner: path.substring(13),
             })
 
             await newEvent.save()
