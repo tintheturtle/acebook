@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import Pagination from './pagination/Pagination'
 import ProfilePicture from './posts/ProfilePicture'
+import SpotlightPost from './posts/SpotlightPost'
 
 import './posts/Posts.css'
 
@@ -105,7 +106,7 @@ class Scoreboard extends Component {
             case 'points':
                 return 'points'
             case 'spotlight':
-                return 'spotlight'
+                return <SpotlightPost data={props} />
             default:
                 return 'No purpose detected'
         }
