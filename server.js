@@ -10,6 +10,7 @@ import cors from 'cors'
 import users from './routes/api/users'
 import upload from './routes/api/upload'
 import family from './routes/api/family'
+import feed from './routes/api/feed'
 
 import Message from './models/Message'
 
@@ -270,6 +271,7 @@ require("./config/passport")(passport)
 app.use("/api/users", users)
 app.use("/api/upload", upload)
 app.use("/api/family", family)
+app.use("/api/feed", feed)
 
 const port = process.env.PORT || 5000
 

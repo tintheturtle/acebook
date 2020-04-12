@@ -111,6 +111,11 @@ class Scoreboard extends Component {
                     }
                     </div>
                 </div>
+                <div className="scoreboard-container" style={{ padding: '30px 0px', margin: '50px 0px'}}>
+                    <div>
+                        Hull world
+                    </div>
+                </div>
                 
             </div>
         )
