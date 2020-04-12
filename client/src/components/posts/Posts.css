@@ -1,0 +1,18 @@
+.postscontainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.post-container {
+}
+
+.profilepic-container {
+    display: inline-block;
+    border: 1px solid black;
+    text-align: center;
+    padding: 30px;
+}
+
+.post-info {
+}

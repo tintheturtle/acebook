@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 import Pagination from './pagination/Pagination'
+import ProfilePicture from './posts/ProfilePicture'
+
+import './posts/Posts.css'
 
 class Scoreboard extends Component {
     constructor(props){
@@ -85,11 +88,26 @@ class Scoreboard extends Component {
       }
 
     handleScroll = () => { 
-        var lastChild = document.querySelector("#postscontainer > div.post-container:last-child")
+        var lastChild = document.querySelector("div.postscontainer > div.post-container:last-child")
         var lastChildOffset = lastChild.offsetTop + lastChild.clientHeight
         var pageOffset = window.pageYOffset + window.innerHeight
         if (pageOffset > lastChildOffset) {
              this.loadMore()
+        }
+    }
+
+    renderSwitch(props) {
+        switch(props.purpose) {
+            case 'profilePicture':
+                return <ProfilePicture data={props} />
+            case 'event':
+                return 'events'
+            case 'points':
+                return 'points'
+            case 'spotlight':
+                return 'spotlight'
+            default:
+                return 'No purpose detected'
         }
     }
 
@@ -166,24 +184,12 @@ class Scoreboard extends Component {
                     </div>
                 </div>
                 <div className="scoreboard-container" style={{ padding: '30px 0px', margin: '50px 0px'}}>
-                    <div id="postscontainer">
+                    <div className="postscontainer">
                         {
                             this.state.posts.map( (post, index ) => (
                                 <div key={index} className="post-container" style={{ padding: '30px'}}>
-                                    <div className="single-post">
-
-                                        <p className="flow-text grey-text text-darken-1">
-                                            {post.purpose}
-                                        </p>
-                                        <p className="flow-text grey-text text-darken-1">
-                                            {post.uploader}
-                                        </p>
-                                        <p className="flow-text grey-text text-darken-1">
-                                            {post.timestamp}
-                                        </p>
-                                    </div>
+                                    {this.renderSwitch(post)}
                                 </div>
-                                
                                 )
                             )
                         }
