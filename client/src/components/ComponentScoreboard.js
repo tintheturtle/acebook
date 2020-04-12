@@ -4,6 +4,8 @@ import axios from 'axios'
 import Pagination from './pagination/Pagination'
 import ProfilePicture from './posts/ProfilePicture'
 import SpotlightPost from './posts/SpotlightPost'
+import EventPost from './posts/EventPost'
+import PointPost from './posts/PointPost'
 
 import './posts/Posts.css'
 
@@ -102,9 +104,9 @@ class Scoreboard extends Component {
             case 'profilePicture':
                 return <ProfilePicture data={props} />
             case 'event':
-                return 'events'
+                return <EventPost data={props} />
             case 'points':
-                return 'points'
+                return <PointPost data={props} />
             case 'spotlight':
                 return <SpotlightPost data={props} />
             default:
