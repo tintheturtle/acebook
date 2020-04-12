@@ -6,6 +6,7 @@ import User from '../../models/User'
 import Family from '../../models/Family'
 import Event from '../../models/Event'
 import Spotlight from '../../models/Spotlight'
+import Media from '../../models/Media'
 
 var router = express.Router()
 
@@ -82,6 +83,14 @@ router.post('/', upload.single('file'), async (req, res) => {
         }
     }
 
+    const newPost = new Media({
+        purpose: purpose,
+        imagePath: path.substring(13),
+        uploader: email,
+        information: purpose,
+    })
+
+    await newPost.save()
 
     return res.status(200).send(req.file)
 

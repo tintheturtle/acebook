@@ -59,7 +59,7 @@ class Navbar extends Component {
                                         Scoreboard
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link
                                         to="/public-chat"
                                         style={{ 
@@ -71,7 +71,7 @@ class Navbar extends Component {
                                     >
                                         Public Chat
                                     </Link>
-                                </li>
+                                </li> */}
                                 <li>
                                     <Link
                                         to="/list"
