@@ -118,17 +118,17 @@ class Family extends Component {
                         </div>
                      ) : 
                 (<>
-                    <div id="message-header" className="message-header-row row">
-                        <div className="col s12 center-align">
-                            <h4>
-                                <b>Welcome to your Family Dashboard </b>  
-                                <p className="flow-text grey-text text-darken-1">
-                                </p>
-                            </h4>
-                        </div>
-                    </div>
                     <div className="row">     
                         <div>
+                            <div id="message-header" className="message-header-row picture-container row">
+                                <div className="col s12 center-align">
+                                    <h4>
+                                        <b>Welcome to your Family Dashboard </b>  
+                                        <p className="flow-text grey-text text-darken-1">
+                                        </p>
+                                    </h4>
+                                </div>
+                            </div>
                             <div className="col m6 family-div" style={{ height: "50vh"}}>
                                 <div className="col s12 center-align ">                                
                                     <div style={{ paddingTop: '30px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
@@ -189,7 +189,7 @@ class Family extends Component {
                             </div>
                         </div> 
                     </div>
-                    <div className="row">
+                    <div className="row picture-container">
                         <div className="col s12 center-align family-picture-container" style={{marginBottom: '30px'}}>
                             <h4>
                                 <b> ACE Family Pictures </b>  
