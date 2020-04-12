@@ -86,7 +86,7 @@ router.post('/', upload.single('file'), async (req, res) => {
     const newPost = new Media({
         purpose: purpose,
         imagePath: path.substring(13),
-        upload: email,
+        uploader: email,
         information: purpose,
     })
 

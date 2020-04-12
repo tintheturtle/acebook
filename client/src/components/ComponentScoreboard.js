@@ -12,7 +12,8 @@ class Scoreboard extends Component {
             currentFamilies: [],
             listLength: 0,
             currentPage: null, 
-            totalPages: null
+            totalPages: null,
+            posts: []
         }
     }
 
@@ -24,6 +25,13 @@ class Scoreboard extends Component {
                     this.setState({
                         familyList: res.data.list,
                         listLength: res.data.list.length
+                    })
+                })
+        await axios
+                .get('/api/feed/posts')
+                .then(res => {
+                    this.setState({
+                        posts: res.data.posts,
                     })
                 })
     }
@@ -113,7 +121,14 @@ class Scoreboard extends Component {
                 </div>
                 <div className="scoreboard-container" style={{ padding: '30px 0px', margin: '50px 0px'}}>
                     <div>
-                        Hull world
+                        {
+                            this.state.posts.map( (post, index ) => (
+                                <p  key={index} className="flow-text grey-text text-darken-1">
+                                        {post.purpose}
+                                </p>
+                                )
+                            )
+                        }
                     </div>
                 </div>
                 
