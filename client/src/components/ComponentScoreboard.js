@@ -13,7 +13,9 @@ class Scoreboard extends Component {
             listLength: 0,
             currentPage: null, 
             totalPages: null,
-            posts: []
+            posts: [],
+            postPer: 1,
+            postPage: 1,
         }
     }
 
@@ -27,13 +29,17 @@ class Scoreboard extends Component {
                         listLength: res.data.list.length
                     })
                 })
+        const { postPer } = this.state
         await axios
-                .get('/api/feed/posts')
+                .get('/api/feed/posts', postPer)
                 .then(res => {
                     this.setState({
                         posts: res.data.posts,
                     })
                 })
+        this.scrollListener = window.addEventListener("scroll", e => {
+            this.handleScroll(e);
+        })
     }
 
     // Pagination method for calculating current page of scoreboard
@@ -45,6 +51,38 @@ class Scoreboard extends Component {
         const  currentFamilies = allFamilies.slice(offset, offset + pageLimit)
         // Setting states for pagination 
         this.setState({ currentPage,  currentFamilies, totalPages })
+    }
+
+    loadPosts = async () => {
+        const { postPer } = this.state
+        console.log(postPer)
+        await axios
+                .get('/api/feed/posts', postPer)
+                .then(res => {
+                    this.setState({
+                        posts: res.data.posts,
+                        scrolling: false,
+                    })
+                })
+    }
+
+    loadMore = async () => {
+        this.setState({
+            postPage: this.state.postPage + 1,
+            postPer: this.state.postPer + 1,
+            scrolling: true
+        })
+        this.loadPosts()
+      }
+
+    handleScroll = () => { 
+        var lastLi = document.querySelector("#postscontainer > div.post-container:last-child")
+        var lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
+        var pageOffset = window.pageYOffset + window.innerHeight
+        console.log(lastLiOffset, pageOffset)
+        if (pageOffset > lastLiOffset) {
+             this.loadMore()
+        }
     }
 
     render() {
@@ -120,12 +158,24 @@ class Scoreboard extends Component {
                     </div>
                 </div>
                 <div className="scoreboard-container" style={{ padding: '30px 0px', margin: '50px 0px'}}>
-                    <div>
+                    <div id="postscontainer">
                         {
                             this.state.posts.map( (post, index ) => (
-                                <p  key={index} className="flow-text grey-text text-darken-1">
-                                        {post.purpose}
-                                </p>
+                                <div key={index} className="post-container" style={{ padding: '30px'}}>
+                                    <div className="single-post">
+
+                                        <p className="flow-text grey-text text-darken-1">
+                                            {post.purpose}
+                                        </p>
+                                        <p className="flow-text grey-text text-darken-1">
+                                            {post.uploader}
+                                        </p>
+                                        <p className="flow-text grey-text text-darken-1">
+                                            {post.timestamp}
+                                        </p>
+                                    </div>
+                                </div>
+                                
                                 )
                             )
                         }
