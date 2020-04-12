@@ -29,9 +29,12 @@ class Scoreboard extends Component {
                         listLength: res.data.list.length
                     })
                 })
-        const { postPer } = this.state
         await axios
-                .get('/api/feed/posts', postPer)
+                .get('/api/feed/posts', {
+                    params: {
+                      postPer: this.state.postPer
+                    }
+                  })
                 .then(res => {
                     this.setState({
                         posts: res.data.posts,
@@ -54,10 +57,12 @@ class Scoreboard extends Component {
     }
 
     loadPosts = async () => {
-        const { postPer } = this.state
-        console.log(postPer)
         await axios
-                .get('/api/feed/posts', postPer)
+                .get('/api/feed/posts', {
+                    params: {
+                      postPer: this.state.postPer
+                    }
+                  })
                 .then(res => {
                     this.setState({
                         posts: res.data.posts,
@@ -76,11 +81,10 @@ class Scoreboard extends Component {
       }
 
     handleScroll = () => { 
-        var lastLi = document.querySelector("#postscontainer > div.post-container:last-child")
-        var lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
+        var lastChild = document.querySelector("#postscontainer > div.post-container:last-child")
+        var lastChildOffset = lastChild.offsetTop + lastChild.clientHeight
         var pageOffset = window.pageYOffset + window.innerHeight
-        console.log(lastLiOffset, pageOffset)
-        if (pageOffset > lastLiOffset) {
+        if (pageOffset > lastChildOffset) {
              this.loadMore()
         }
     }
