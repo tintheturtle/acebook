@@ -17,6 +17,7 @@ class Scoreboard extends Component {
             postPer: 1,
             postPage: 1,
         }
+        this.handleScroll = this.handleScroll.bind(this)
     }
 
     async componentDidMount() {
@@ -40,9 +41,12 @@ class Scoreboard extends Component {
                         posts: res.data.posts,
                     })
                 })
-        this.scrollListener = window.addEventListener("scroll", e => {
-            this.handleScroll(e);
-        })
+        window.addEventListener("scroll", this.handleScroll, false)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", 
+            this.handleScroll, false)
     }
 
     // Pagination method for calculating current page of scoreboard
@@ -96,7 +100,7 @@ class Scoreboard extends Component {
         if (familyLength === 0) return null
 
         return (
-            <div className="container" style={{ paddingBottom: '100px', paddingTop: '50px'  }}>
+            <div id="outerPostContainer" className="container" style={{ paddingBottom: '100px', paddingTop: '50px'  }}>
                 <div className="scoreboard-container">
                     <div id="scoreboard-header" className=" row" >
                         <div className="col s12 center-align">
