@@ -94,7 +94,7 @@ router.post("/login", async (req, res) => {
                                         // Checks whether or match is the opposite type and is not paired
                                         if (other.ACE === 'big' && !other.paired && !user.matchEmailList.includes(other.email)) {
                                             // Get percentage match using algorithm
-                                            const percentage  = stringComparison(user.description.split('separatorString')[1], other.description.split('separatorString')[1])
+                                            const percentage  = stringComparison(user.description.split('separatorString')[1], other.description.split('separatorString')[1], user.algorithm)
                                             if (percentage > 0.2){
                                                 // Delete other matches to prevent too much data in one user
                                                 delete other.matches
