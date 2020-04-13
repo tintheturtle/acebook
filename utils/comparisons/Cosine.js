@@ -27,7 +27,7 @@ const Cosine = (user, match) => {
     const vectorDotProduct = (vectorA, vectorB) => {
         let product = 0
         for (let i = 0; i < vectorA.length; i++) {
-            product += vecA[i] * vecB[i]
+            product += vectorA[i] * vectorB[i]
         }
         return product
     }
@@ -35,7 +35,7 @@ const Cosine = (user, match) => {
     const magnitude = (vector) => {
         let sum = 0
         for (let i = 0; i < vector.length; i++){
-            sum += vec[i] * vec[i]
+            sum += vector[i] * vector[i]
         }
         return Math.sqrt(sum)
     }
@@ -52,7 +52,7 @@ const Cosine = (user, match) => {
     addKeysToDictioanry(termFrequencyMatch, dictionary)
 
     const userVector = termFreqMapToVector(termFrequencyUser, dictionary)
-    const matchVector = termFreqMapToVector(termFrequencyMtch, dictionary)
+    const matchVector = termFreqMapToVector(termFrequencyMatch, dictionary)
 
     return cosineSimilarity(userVector, matchVector)
 
