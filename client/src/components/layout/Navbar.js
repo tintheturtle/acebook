@@ -82,7 +82,7 @@ class Navbar extends Component {
                                         }}
                                         className="black-text"
                                     >
-                                        ACE Members
+                                        Message
                                     </Link>
                                 </li>
                             </ul>

@@ -1,44 +1,22 @@
 
+import Dice from './Dice'
+import Cosine from './Cosine'
+import Trigrams from './Trigrams'
 
-const sorensonDice = (stringOne, stringTwo) => {
-
-    const splitPairs = (string) => {
-        let pairs = []
-        for (let i = 0; i < string.length - 1; i++) {
-            pairs[i] = string.slice(i, i+2)
-        }
-        return pairs
+const StringSimilarity = (stringOne, stringTwo, algorithm) => {
+    switch (algorithm) {
+        case 'cosine': 
+            return Cosine(stringOne, stringTwo)
+        case 'sorensonDice':
+            return Dice(stringOne, stringTwo)
+        case 'dictionary':
+            return Dice(stringOne, stringTwo)
+        case 'trigrams':
+            return Trigrams(stringOne, stringTwo)
+        default: 
+            return Dice(stringOne, stringTwo)
     }
-
-    const stringSimilarity = (first, second) => {
-        let similarities = []
-        let dictObject = {}
-        const length = second.length
-        let tempObject
-
-        for(let i = 0; i < length; i++) {
-            dictObject[second[i]] = true
-        }
-
-        for(let i = 0; i < length; i++) {
-            tempObject = first[i]
-            if (tempObject in dictObject) {
-                similarities.push(tempObject)
-            }
-        }
-
-        return similarities
-    }
-
-    const splitStringOne = splitPairs(stringOne)
-    const splitStringTwo = splitPairs(stringTwo)
-
-    const similarityscore = 2 * stringSimilarity(splitStringOne, splitStringTwo).length
-    const stringLengths = splitStringOne.length + splitStringTwo.length
-    return similarityscore / stringLengths
-
-
 }
 
-export default sorensonDice
+export default StringSimilarity
 
