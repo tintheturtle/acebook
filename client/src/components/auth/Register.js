@@ -25,7 +25,7 @@ class Register extends Component {
             introversion: "",
             major: "",
             algorithm: "cosine",
-            proceed: true,
+            proceed: false,
             hometown: "",
             socials: "",
             music: "",
@@ -133,7 +133,7 @@ class Register extends Component {
                                 </p>
                             </div>
                             <div className="col s12" style={{ paddingTop: '30px'}} >
-                                <div className="col s12 input-field center-align">
+                                <div className="col s12 input-field center-align" style={{textAlign: 'center'}}>
                                     <p className="" style={{ color: '#9e9e9e'}}>
                                         Please select a matching algorithm
                                     </p>
