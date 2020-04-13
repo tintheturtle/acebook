@@ -4,12 +4,12 @@ import './Posts.css'
 
 const PointPost = ({data}) => {
     return (
-        <div className="profilepic-container" style={{alignContent: 'center '}}>
+        <div className="profilepic-container" style={{alignContent: 'center', display: 'inline-block'}}>
             <div>
                 <img 
                     src={data.imagePath} 
-                    alt="profile"
-                    className="match-image"
+                    alt="familypicture"
+                    className="ace-image"
                 />
             </div>
             <span className="grey-text">{data.timestamp}</span>
