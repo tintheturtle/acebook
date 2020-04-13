@@ -63,10 +63,7 @@ function App() {
                 <PrivateRoute exact path="/family" component={Family} />
                 <PrivateRoute exact path="/scoreboard" component={Scoreboard} />
               </Switch>
-              <Route path="/" render={(props) => (props.location.pathname !== "/list") && 
-                <Footer />}>
-            </Route>
-            </div>
+              <Route path="/" render={(props) => (props.location.pathname !== "/list" && props.location.pathname !== "/messages") && <Footer />}/>            </div>
           </Router> 
         </PersistGate>
       </Provider>

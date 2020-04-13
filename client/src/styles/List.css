@@ -17,6 +17,20 @@
 }
 
 .sticky {
-    background-color: pink;
+    background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.recent-title {
+    padding: 10px;
+}
+
+.recent-block {
+    padding: 10px;
+    border-top: 2px solid #D3D3D3;
+    border-bottom: 2px solid #D3D3D3;
+}
+
+.recent-timestamp {
+    color: #A9A9A9
 }

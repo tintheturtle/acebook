@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 import Pagination from './pagination/Pagination'
 import { getUsers } from '../actions/listActions'
@@ -77,7 +78,22 @@ class List extends Component {
             </div>
             <div id="sticky-left">
                     <div className="sticky">
-                        I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.
+                        <p className="recent-title"> Recently Messaged:
+                        </p>
+                        <div className="recent-block">
+                            <b>Euphoria</b> 
+                            <br/>
+                            <p className="recent-timestamp">
+                                {moment().format('LLL')}
+                            </p>
+                        </div>
+                        <div className="recent-block">
+                            <b>Euphoria</b> 
+                            <br/>
+                            <p className="recent-timestamp">
+                                {moment().format('LLL')}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
