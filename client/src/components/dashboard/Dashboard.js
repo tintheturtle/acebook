@@ -172,7 +172,7 @@ class Dashboard extends Component {
                     <h4> Message your matches! </h4>
                 </div>
                 {
-                    user.matches.length < 0 ? (
+                    user.matches.length > 0 ? (
                         <div>
                             <div className="pagination-container">
                                 <Pagination totalRecords={user.matches.length} pageLimit={3} pageNeighbours={1} onPageChanged={this.onPageChanged} />
