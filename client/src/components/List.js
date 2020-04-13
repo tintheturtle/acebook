@@ -6,6 +6,7 @@ import Pagination from './pagination/Pagination'
 import { getUsers } from '../actions/listActions'
 import CardProfile from './CardProfile'
 
+import '../styles/List.css'
 
 class List extends Component {
     constructor(props) {
@@ -44,8 +45,9 @@ class List extends Component {
         if(userList.length === 0) return null
 
         return(
-            <div style={{  }} className="container">
-                <div id="dashboard-header" className="row">
+            <div>
+            <div className="container">
+                <div id="list-header" className="row">
                     <div className="col s12 center-align">
                         <h4>
                         <b>Welcome,</b> {user.name.split(" ")[0]}
@@ -71,7 +73,15 @@ class List extends Component {
                         })}
                     </div>
                 </div>
+                
             </div>
+            <div id="sticky-left">
+                    <div className="sticky">
+                        I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.I am sticky.
+                    </div>
+                </div>
+            </div>
+
         )
     }
 }

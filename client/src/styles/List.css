@@ -1,0 +1,22 @@
+#list-header {
+    margin-top: 40px;
+    padding: 40px;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#sticky-left {
+    position: -webkit-sticky;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    z-index: 20;
+    padding: 20px;
+}
+
+.sticky {
+    background-color: pink;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
