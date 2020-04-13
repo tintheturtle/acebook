@@ -21,9 +21,15 @@ class Register extends Component {
             description: "",
             ACE: "",
             errors: {},
+            year: "",
             introversion: "",
+            major: "",
             algorithm: "cosine",
-            proceed: false
+            proceed: true,
+            hometown: "",
+            socials: "",
+            music: "",
+            interests: ""
         }
     }
 
@@ -43,6 +49,7 @@ class Register extends Component {
       }
 
     onChange = e => {
+        console.log(this.state)
         this.setState({ [e.target.id]: e.target.value })
     }
 
@@ -69,9 +76,14 @@ class Register extends Component {
     }
 
     radioChangeHandler = (event) => {
-
         this.setState({
             introversion: event.target.value
+        });
+    }
+
+    yearChangeHandler = (event) => {
+        this.setState({
+            year: event.target.value
         });
     }
 
@@ -283,7 +295,7 @@ class Register extends Component {
                                         invalid: errors.description
                                     })}
                                 />
-                                <label htmlFor="description"> Describe Yourself </label>
+                                <label htmlFor="description"> What do you hope to gain from this program? </label>
                                 <span className="red-text">{errors.description}</span>
                             </div>
                             <div className="col s12 input-field">
@@ -312,6 +324,96 @@ class Register extends Component {
                             </div>
                             <div className="col s12 input-field">
                                 <p className="" style={{ color: '#9e9e9e'}}>
+                                    Year
+                                </p>
+                                <div className="radio-btn-container" style={{ display: "flex", textAlign: 'center' }}>
+                                    <RadioButton 
+                                        changed={ this.yearChangeHandler } 
+                                        id="21" 
+                                        error={errors.ACE}
+                                        isSelected={ this.state.year === "2021" } 
+                                        label="2021" 
+                                        value="2021" 
+                                    />
+                                    <RadioButton 
+                                        changed={ this.yearChangeHandler } 
+                                        id="22" 
+                                        error={errors.ACE}
+                                        isSelected={ this.state.year === "2022" } 
+                                        label="2022" 
+                                        value="2022" 
+                                    />
+                                    <RadioButton 
+                                        changed={ this.yearChangeHandler } 
+                                        id="23" 
+                                        error={errors.ACE}
+                                        isSelected={ this.state.year === "2023" } 
+                                        label="2023" 
+                                        value="2023" 
+                                    />
+                                    <RadioButton 
+                                        changed={ this.yearChangeHandler } 
+                                        id="24" 
+                                        error={errors.ACE}
+                                        isSelected={ this.state.year === "2024" } 
+                                        label="2024" 
+                                        value="2024" 
+                                    />
+                                    <RadioButton 
+                                        changed={ this.yearChangeHandler } 
+                                        id="25" 
+                                        error={errors.ACE}
+                                        isSelected={ this.state.year === "Other" } 
+                                        label="Other" 
+                                        value="Other" 
+                                    />
+                                </div>
+                                <span className="red-text">{errors.introversion}</span>
+                            </div>
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.major}
+                                    error={errors.description}
+                                    id="major"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.description
+                                    })}
+                                />
+                                <label htmlFor="description"> Major </label>
+                                <span className="red-text">{errors.description}</span>
+                            </div>
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.hometown}
+                                    error={errors.description}
+                                    id="hometown"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.description
+                                    })}
+                                />
+                                <label htmlFor="hometown"> Where are you from? </label>
+                                <span className="red-text">{errors.description}</span>
+                            </div>
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.socials}
+                                    error={errors.description}
+                                    id="socials"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.description
+                                    })}
+                                />
+                                <label htmlFor="socials"> Please list your social media handles (e.g. Instagram: @buvsa) </label>
+                                <span className="red-text">{errors.description}</span>
+                            </div>
+                            <div className="col s12 input-field">
+                                <p className="" style={{ color: '#9e9e9e'}}>
                                     Introvert/Extrovert
                                 </p>
                                 <div className="radio-btn-container" style={{ display: "flex", textAlign: 'center' }}>
@@ -331,6 +433,34 @@ class Register extends Component {
                                     />
                                 </div>
                                 <span className="red-text">{errors.introversion}</span>
+                            </div>
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.interests}
+                                    error={errors.description}
+                                    id="interests"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.description
+                                    })}
+                                />
+                                <label htmlFor="interests"> Please list your interests. </label>
+                                <span className="red-text">{errors.description}</span>
+                            </div>
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.music}
+                                    error={errors.description}
+                                    id="music"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.description
+                                    })}
+                                />
+                                <label htmlFor="music"> What kind of music do you listen to? </label>
+                                <span className="red-text">{errors.description}</span>
                             </div>
                             <div className="col s12" style={{ paddingLeft: "11.250px", marginBottom: '10px'  }}>
                                 <button

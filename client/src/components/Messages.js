@@ -133,7 +133,7 @@ class Messages extends Component {
                                     className={classnames("")}
                                     maxlength="200"
                                 />
-                                <label htmlFor="test">Message</label>
+                                <label htmlFor="content">Message</label>
                             </div>
                             <div>
                                 <button
