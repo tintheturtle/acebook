@@ -13,6 +13,7 @@ import family from './routes/api/family'
 import feed from './routes/api/feed'
 
 import Message from './models/Message'
+import User from './models/User'
 
 const func = name => {
   return `Welcome back ${name}`
@@ -173,6 +174,20 @@ io.on('connection', (socket) => {
     }
     // Retrieve socket to receiver 
     const sendTo = connectedUsers[receiver]
+    User.find({ $or: [{email: receiver}, {email: from}] }).exec(async (err, users) => {
+      let first = users[0]
+      let second = users[1]
+      if (first.recents[first.recents.length-1] !== second.email) {
+        first.recents.push(second.email)
+        await first.save()
+      }
+      if (second.recents[second.recents.length-1] !== first.email) {
+        second.recents.push(first.email)
+        await second.save()
+      }
+    })
+
+
     // Emit private message to frontend 
     if (sendTo) {
       sendTo.emit('private_chat', pushedMessage)
