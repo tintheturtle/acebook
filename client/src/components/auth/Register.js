@@ -212,8 +212,8 @@ class Register extends Component {
 
         return (
             <div className="container">
-                <div className="row" style={{ marginTop: '4rem'}}>
-                    <div className="col s8 offset-s2">
+                <div className="row" style={{ marginTop: '4rem', marginBottom: '4rem'}}>
+                    <div className="col s8 offset-s2 registration-container" style={{ paddingTop: '30px', paddingBottom: '30px'}}>
                         <Link to="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i> Back to
                             home
