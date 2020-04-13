@@ -25,12 +25,29 @@
     padding: 10px;
 }
 
-.recent-block {
+#recent-block {
     padding: 10px;
     border-top: 2px solid #D3D3D3;
     border-bottom: 2px solid #D3D3D3;
 }
 
-.recent-timestamp {
+#recent-timestamp {
     color: #A9A9A9
+}
+
+#recent-button {
+    background: white;
+    width: 100%;
+    border: none;
+    text-align: left;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#recent-button:hover {
+    background-color: white;
+}
+
+#recent-button:hover {
+    background-color: white;
 }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import moment from 'moment'
 
 import Pagination from './pagination/Pagination'
 import { getUsers } from '../actions/listActions'
 import CardProfile from './CardProfile'
+import Sticky from './Sticky'
 
 import '../styles/List.css'
 
@@ -21,29 +21,29 @@ class List extends Component {
     }
 
     async componentDidMount() {
-        await getUsers().then(data => {
-            this.setState({
-                userList: data.userList
-            })
-        })
+        // await getUsers().then(data => {
+        //     this.setState({
+        //         userList: data.userList
+        //     })
+        // })
     }
 
-    // Pagination method for calculating current page of scoreboard
-    onPageChanged = data => {
-        const allUsers  = this.state.userList
-        const { currentPage, totalPages, pageLimit } = data    
-        // Pagination calculations
-        const offset = (currentPage - 1) * pageLimit;
-        const currentUsersList = allUsers.slice(offset, offset + pageLimit)
-        // Setting states for pagination 
-        this.setState({ currentPage,  currentUsersList, totalPages })
-    }
+    // // Pagination method for calculating current page of scoreboard
+    // onPageChanged = data => {
+    //     const allUsers  = this.state.userList
+    //     const { currentPage, totalPages, pageLimit } = data    
+    //     // Pagination calculations
+    //     const offset = (currentPage - 1) * pageLimit;
+    //     const currentUsersList = allUsers.slice(offset, offset + pageLimit)
+    //     // Setting states for pagination 
+    //     this.setState({ currentPage,  currentUsersList, totalPages })
+    // }
     
 
     render() {
-        const { userList, currentUsersList } = this.state
+        // const { userList, currentUsersList } = this.state
         const { user } = this.props.auth
-        if(userList.length === 0) return null
+        // if(userList.length === 0) return null
 
         return(
             <div>
@@ -59,7 +59,7 @@ class List extends Component {
                         
                     </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                     <div className="pagination-container">
                         <Pagination totalRecords={userList.length} pageLimit={6} pageNeighbours={1} onPageChanged={this.onPageChanged} />
                     </div>
@@ -73,29 +73,10 @@ class List extends Component {
                             return ""
                         })}
                     </div>
-                </div>
+                </div> */}
                 
             </div>
-            <div id="sticky-left">
-                    <div className="sticky">
-                        <p className="recent-title"> Recently Messaged:
-                        </p>
-                        <div className="recent-block">
-                            <b>Euphoria</b> 
-                            <br/>
-                            <p className="recent-timestamp">
-                                {moment().format('LLL')}
-                            </p>
-                        </div>
-                        <div className="recent-block">
-                            <b>Euphoria</b> 
-                            <br/>
-                            <p className="recent-timestamp">
-                                {moment().format('LLL')}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <Sticky />
             </div>
 
         )
