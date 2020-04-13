@@ -1,16 +1,21 @@
 .family-div {
     text-align: center;
     padding: 30px;
-    border: 3px solid grey;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .family-picture {
     padding: 20px;
-    border: 3px solid grey
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.picture-container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 50px;
 }
 
 .family-picture-container {
-    overflow: visible
+    overflow: visible;
 }
 
 #family-picture-border {
