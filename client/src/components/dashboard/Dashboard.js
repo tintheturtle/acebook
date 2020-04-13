@@ -171,14 +171,25 @@ class Dashboard extends Component {
                 <div className="messages-message center-align">
                     <h4> Message your matches! </h4>
                 </div>
-                <div className="pagination-container">
-                    <Pagination totalRecords={user.matches.length} pageLimit={3} pageNeighbours={1} onPageChanged={this.onPageChanged} />
-                </div>
-                <div className="card-container">
-                    { this.state.currentMatches.map((data, indx) => (
-                        <CardProfile data={data} key={indx}/>
-                    ))}
-                </div>        
+                {
+                    user.matches.length > 0 ? (
+                        <div>
+                            <div className="pagination-container">
+                                <Pagination totalRecords={user.matches.length} pageLimit={3} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+                            </div>
+                            <div className="card-container">
+                                { this.state.currentMatches.map((data, indx) => (
+                                    <CardProfile data={data} key={indx}/>
+                                ))}
+                            </div> 
+                        </div>  
+                    ) : (
+                        <div className="pagination-container">
+                            No current matches at the moment, please check back later for updates. 
+                        </div>
+                    )
+                    
+                }
             </div>
             )}
             <div className="row">

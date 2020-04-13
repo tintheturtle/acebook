@@ -107,7 +107,7 @@ class Family extends Component {
                             !family ? 
                     (
                         <div id="message-header" style={{ height: "100vh"  }}className="message-header-row row">
-                            <div className="col s12 center-align">
+                            <div className="col s12 center-align picture-container" style={{padding: '30px'}}>
                                 <h4>
                                     <b> Hello, </b>  {this.props.auth.user.name}
                                 </h4>
@@ -200,7 +200,7 @@ class Family extends Component {
                         {   family.pictures.length > 0 ? (
                             family.pictures.map((data, indx) => {
                                 return (
-                                    <div key={indx} id="family-picture-border" className="col s6">
+                                    <div key={indx} id="family-picture-border" style={{display: 'inline-block'}}>
                                         <div className="family-picture">
                                             <img src={
                                                 data.filepath 
@@ -219,7 +219,7 @@ class Family extends Component {
                             <div>
                                 <div className="col s12 center-align">
                                     <p className="flow-text grey-text text-darken-1">
-                                        No family have been uploaded yet.
+                                        No family pictures have been uploaded yet.
                                     </p>
                                 </div>
                             </div>

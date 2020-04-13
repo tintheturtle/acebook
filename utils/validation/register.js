@@ -39,7 +39,7 @@ const validateRegisterInput = (data) => {
 
     // ACE Application Checks
     if (Validator.isEmpty(data.description)) {
-        errors.description = "Please describe yourself.";
+        errors.description = "This field is required.";
     }
     if (Validator.isEmpty(data.ACE)) {
         errors.ACE = "Must declare status as big or little.";
