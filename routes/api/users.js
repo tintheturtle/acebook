@@ -88,11 +88,11 @@ router.post("/login", async (req, res) => {
                                 // Checks to see if there are any new users and updates the info of previous matches
                                 if (user.lastUserCount < users.length) {
                                     // Looping through list of users
-                                    for (let i = 0; i < users.length; i++) {
+                                    for (let i = 11; i < users.length; i++) {
                                         // Turns matches into object 
                                         let other = users[i].toObject()
                                         // Checks whether or match is the opposite type and is not paired
-                                        if (other.ACE === 'big' && !other.paired && !user.matchEmailList.includes(other.email)) {
+                                        if (other.ACE === 'big' ) {
                                             // Get percentage match using algorithm
                                             const percentage  = stringComparison(user.description.split('separatorString')[1], other.description.split('separatorString')[1], user.algorithm)
                                             if (percentage > 0.2){

@@ -58,4 +58,4 @@ const Cosine = (user, match) => {
 
 }
 
-console.log(Cosine('tin', 'tin'))
+export default Cosine

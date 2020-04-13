@@ -101,13 +101,11 @@ class Register extends Component {
     renderSwitch() {
         switch(this.state.algorithm) {
             case 'cosine':
-                return 'This is the cosine similarity algorithm'
+                return 'This is the cosine similarity algorithm.'
             case 'trigrams':
                 return 'Trigrams'
             case 'sorensonDice':
                 return 'Sorenson Dice'
-            case 'dictionary':
-                return 'Dictionary'
             default:
                 return 'Select an algorithm to continue'
         }
@@ -163,14 +161,6 @@ class Register extends Component {
                                                 isSelected={ this.state.algorithm === "sorensonDice" } 
                                                 label="Sorenson-Dice" 
                                                 value="sorensonDice" 
-                                            />
-                                            <RadioButton 
-                                                changed={ this.algorithmChangeHandler } 
-                                                id="10" 
-                                                error={errors.algorithm}
-                                                isSelected={ this.state.algorithm === "dictionary" } 
-                                                label="Dictionary" 
-                                                value="dictionary" 
                                             />
                                         </div>
                                     <span className="red-text">{errors.algorithm}</span>
