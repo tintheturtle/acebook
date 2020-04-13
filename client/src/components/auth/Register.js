@@ -49,7 +49,6 @@ class Register extends Component {
       }
 
     onChange = e => {
-        console.log(this.state)
         this.setState({ [e.target.id]: e.target.value })
     }
 
@@ -58,7 +57,7 @@ class Register extends Component {
 
         let concatDesc = ''
         if (this.state.description && this.state.introversion) {
-            concatDesc = this.state.introversion + ' ' + this.state.description
+            concatDesc = this.state.hometown + ' ' + this.state.socials + 'separatorString' + this.state.introversion + ' ' + this.state.year + ' ' + this.state.major + ' ' + this.state.algorithm + ' ' + this.state.music + ' ' + this.state.interests + ' ' + this.state.description
         }
 
         const newUser = {
