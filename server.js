@@ -187,7 +187,6 @@ io.on('connection', (socket) => {
       }
     })
 
-
     // Emit private message to frontend 
     if (sendTo) {
       sendTo.emit('private_chat', pushedMessage)

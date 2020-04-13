@@ -234,4 +234,15 @@ router.get("/spotlight", async (req, res) => {
     })
 })
 
+router.get("/update", async (req, res) => {
+    await User.findOne({ email: req.query.email }).exec(function(err, person) { 
+        if (person) {
+            return res.status(200).json({ user: person.recents})
+        }
+        else {
+            return res.status(400).json({ error: "User not found."})
+        }
+    })
+})
+
 export default router
