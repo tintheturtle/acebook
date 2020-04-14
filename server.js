@@ -13,6 +13,7 @@ import family from './routes/api/family'
 import feed from './routes/api/feed'
 
 import Message from './models/Message'
+import User from './models/User'
 
 const func = name => {
   return `Welcome back ${name}`
@@ -173,6 +174,42 @@ io.on('connection', (socket) => {
     }
     // Retrieve socket to receiver 
     const sendTo = connectedUsers[receiver]
+    // Update recent message list
+    User.find({ $or: [{email: receiver}, {email: from}] }).exec(async (err, users) => {
+      let first = users[0]
+      let second = users[1]
+
+
+      if(first.recents.length === 0) {
+        first.recents.push(second.email + '|' + second.name + '|' + moment().format('LLL'))
+      }
+
+      if (second.recents.length === 0) {
+        second.recents.push(first.email + '|' + first.name + '|' + moment().format('LLL'))
+      }
+
+      let firstRecent = first.recents[first.recents.length-1].split('|')[0]
+      let secondRecent = second.recents[second.recents.length-1].split('|')[0]
+
+      if (firstRecent !== second.email) {
+        first.recents.push(second.email + '|' + second.name + '|' + moment().format('LLL'))
+      }
+      else {
+        first.recents.pop()
+        first.recents.push(second.email + '|' + second.name + '|' + moment().format('LLL'))
+      }
+      if (secondRecent !== first.email) {
+        second.recents.push(first.email + '|' + first.name + '|' + moment().format('LLL'))
+      }
+      else {
+        second.recents.pop()
+        second.recents.push(first.email + '|' + first.name + '|' + moment().format('LLL'))
+      }
+      await first.save()
+      await second.save()
+
+    })
+
     // Emit private message to frontend 
     if (sendTo) {
       sendTo.emit('private_chat', pushedMessage)

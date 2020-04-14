@@ -4,8 +4,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 import moment from 'moment'
+import axios from 'axios'
+import ExtractInfo from '../utils/ExtractInfo'
 import 'whatwg-fetch'
 
+import { sendMessageTo } from '../actions/messageActions'
 import ProfileImage from '../images/profile.png'
 import '../styles/Message.css'
 
@@ -20,6 +23,8 @@ class Messages extends Component {
             content: '',
             name: this.props.auth.user.email,
             messageID: '',
+            recentsList: [],
+            userList: []
         }
 
         this.socket = io('http://localhost:8000', 
@@ -32,7 +37,7 @@ class Messages extends Component {
         )
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.socket.emit('private_init')
         this.socket.on('init', (msg) => {
             this.setState((state) => ({
@@ -46,10 +51,38 @@ class Messages extends Component {
                 chat: [...state.chat, pushedMessage],
             }), this.scrollToBottom)
         }) 
+
+        await axios
+            .get('/api/users/update', {
+                params: {
+                  email: this.props.auth.user.email
+                }
+              })
+            .then(res => {
+                this.setState({
+                    recentsList: res.data.list.reverse()
+                })
+            })
+        await axios
+            .get('/api/users/list')
+            .then(res => {
+                this.setState({
+                    userList: res.data.userList
+                })
+            })
+
     }
 
     componentWillUnmount() {
         this.socket.close();
+    }
+
+    onClick = email => {
+        const other = this.state.userList.find(user => user.email === email)
+
+        this.props.sendMessageTo(other)
+        let path = '/messages'
+        this.props.history.push(path)
     }
     
 
@@ -90,8 +123,12 @@ class Messages extends Component {
     render() {
 
         const { other } = this.props.message
+
+        const otherInfo = ExtractInfo(other.description)
+        console.log(otherInfo)
+
         return (
-            <div className="container" style={{paddingBottom: '50px'}}>
+            <div className="container" style={{marginBottom: '10px', paddingLeft: '100px'}}>
                 <div className="message-container">
                     <div id="message-header" className="message-header-row row message-shadow">
                         <div className="other-profile-container">
@@ -102,24 +139,29 @@ class Messages extends Component {
                                 <h5>
                                     <b>You are messaging: </b>  {other.name.split(" ")[0]}
                                 </h5>
-                                <b>Major: </b> {other.name} <br/>
-                                <b>Year: </b> {other.name}
-                                <p className="grey-text text-darken-1">
-                                    Who is a <b>{other.ACE}</b> and whose email is <b>{other.email}</b>
-                                </p>
+                                <b>Major: </b> {otherInfo[1][2]} <br/>
+                                <b>Year: </b> {otherInfo[1][1]} <br/>
+                                <b>Music Taste: </b> {otherInfo[1][4]} <br/>
+                                <b>Interests: </b> {otherInfo[1][5]} <br/>
+                                <b>What they are looking for as a: </b> {otherInfo[1][6]} <br/>
                             </div>
                         </div>
                     </div>
                     <div>
                         <div id="chat" elevation={3}>
                             {this.state.chat.map((data, index) => {
-
-                                return (
+                                
+                                return ( data.name === this.props.auth.user.email ? (
                                     <div className="chat-class" key={index}>
-                                        <p className="chat-content"> <b>{data.name}</b> : {data.content} </p> 
+                                        <p className="chat-time-stamp-user"> { data.time }</p>
+                                        <p className="chat-content-user" >  {data.content} </p> 
+                                    </div>
+                                ) : (
+                                    <div className="chat-class" key={index}>
+                                        <p className="chat-content-match"> {data.content} </p> 
                                         <p className="chat-time-stamp"> { data.time }</p>
                                     </div>
-                                )
+                                ))
                             })}
                         </div>
 
@@ -143,7 +185,7 @@ class Messages extends Component {
                                         borderRadius: "3px",
                                         letterSpacing: "1.5px",
                                         marginTop: "1rem",
-                                        marginBottom: "100px"
+                                        marginBottom: "10px"
                                         }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
@@ -153,6 +195,28 @@ class Messages extends Component {
                             </div>
                         </form>
                         
+                    </div>
+                </div>
+                <div id="sticky-left">
+                    <div className="sticky">
+                    <p className="recent-title"> Recently Messaged:
+                    </p>
+                    { this.state.recentsList.slice(0,8).map((data, indx) => {
+                                    let string = data.split('|')
+                                    return (
+                                            <button key={indx} id="recent-button" onClick={e => this.onClick(string[0])} style={{ backgroundColor: 'white'}}>
+                                                <div id="recent-block" style={{ left: '0' }}>
+                                                    <b>{string[1]}</b> 
+                                                    <br/>
+                                                    <p id="recent-timestamp">
+                                                        {string[2]}
+                                                        </p>
+                                                </div>
+                                            </button>
+                                    )
+                                
+                            })
+                    }
                     </div>
                 </div>
                 
@@ -170,4 +234,4 @@ Messages.propTypes = {
     auth: state.auth,
     message: state.message
   })
-export default connect(mapStateToProps)(Messages)
+export default connect(mapStateToProps, { sendMessageTo })(Messages)

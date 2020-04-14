@@ -53,7 +53,6 @@ function App() {
               <Route exact path="/" component={Landing}/>
               <Route exact path="/register" component={Register}/>
               <Route exact path="/login" component={Login}/>
-              {/* <Route exact path="/ACE" component={ACE}/> */}
               <Switch>
                 <AdminRoute exact path="/admin" component={Admin} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
@@ -64,8 +63,7 @@ function App() {
                 <PrivateRoute exact path="/family" component={Family} />
                 <PrivateRoute exact path="/scoreboard" component={Scoreboard} />
               </Switch>
-              <Footer />
-            </div>
+              <Route path="/" render={(props) => (props.location.pathname !== "/list" && props.location.pathname !== "/messages") && <Footer />}/>            </div>
           </Router> 
         </PersistGate>
       </Provider>

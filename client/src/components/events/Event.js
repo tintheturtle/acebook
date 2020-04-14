@@ -9,8 +9,8 @@ const Event = ({data}) => {
                 <img 
                     className="event-image"
                     src={data.banner} 
-                        alt="eventPicture" 
-                    />
+                    alt="eventPicture" 
+                />
             </div>
             <div className="event-content">
                 <p className="event-title">

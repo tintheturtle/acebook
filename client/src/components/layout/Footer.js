@@ -16,21 +16,21 @@ class Footer extends Component {
                     <div className="col s3 col md3">
                         <h6>Categories</h6>
                         <ul className="footer-links">
-                        <li><a href="http://scanfcode.com/category/c-language/">ACE</a></li>
-                        <li><a href="http://scanfcode.com/category/front-end-development/">Culture Show</a></li>
-                        <li><a href="http://scanfcode.com/category/back-end-development/">Events</a></li>
-                        <li><a href="http://scanfcode.com/category/java-programming-language/">Executive Board</a></li>
+                        <li><a href="/">ACE</a></li>
+                        <li><a href="/">Culture Show</a></li>
+                        <li><a href="/">Events</a></li>
+                        <li><a href="/">Executive Board</a></li>
                         </ul>
                     </div>
 
                     <div className="col s3 col md3">
                         <h6>Quick Links</h6>
                         <ul className="footer-links">
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/contact">Contact Us</a></li>
-                        <li><a href="/contribute">Contribute</a></li>
-                        <li><a href="/privacy-policy">Privacy Policy</a></li>
-                        <li><a href="/sitemap">Sitemap</a></li>
+                        <li><a href="/">About Us</a></li>
+                        <li><a href="/">Contact Us</a></li>
+                        <li><a href="/">Contribute</a></li>
+                        <li><a href="/">Privacy Policy</a></li>
+                        <li><a href="/">Sitemap</a></li>
                         </ul>
                     </div>
                     

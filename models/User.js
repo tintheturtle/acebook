@@ -1,25 +1,6 @@
 import mongoose from 'mongoose'
 import { Schema } from 'mongoose'
 
-const ACESchema = new Schema({
-    paired: { 
-      type: Boolean,
-      default: false
-    },
-    type: {
-      type: String,
-      required: true
-    },
-    lastUserCount: {
-      type: Number,
-      default: 0
-    },
-    characteristics: {
-      type: String,
-      required: true
-    }
-})
-
 const UserSchema = new Schema({
     name: {
       type: String,
@@ -67,6 +48,10 @@ const UserSchema = new Schema({
     algorithm: {
       type: String,
       required: true
+    },
+    recents: {
+      type: Array,
+      default: []
     }
   });
 
