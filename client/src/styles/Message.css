@@ -16,13 +16,13 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
   
-  .name {
+.name {
     color: rgba(0, 0, 0, 0.54);
-  }
+}
   
-  .content {
+.content {
     margin-bottom: 8px;
-  }
+}
 
 .chat-class {
   display: flex;
@@ -32,6 +32,12 @@
 .chat-time-stamp {
   flex-grow: 1;
   text-align: right;
+  color: grey
+}
+
+.chat-time-stamp-user {
+  flex-grow: 1;
+  text-align: left;
   color: grey
 }
 
@@ -52,4 +58,17 @@
 
 .match-profile {
   padding: 40px;
+}
+
+.chat-content-user {
+  background-color: #66CCFF;
+  color: white;
+  padding: 5px;
+  border-radius: 25px;
+}
+
+.chat-content-match {
+  background-color: #C0C0C0;
+  padding: 5px;
+  border-radius: 25px;
 }

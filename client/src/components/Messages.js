@@ -145,13 +145,18 @@ class Messages extends Component {
                     <div>
                         <div id="chat" elevation={3}>
                             {this.state.chat.map((data, index) => {
-
-                                return (
+                                
+                                return ( data.name === this.props.auth.user.email ? (
                                     <div className="chat-class" key={index}>
-                                        <p className="chat-content"> <b>{data.name}</b> : {data.content} </p> 
+                                        <p className="chat-time-stamp-user"> { data.time }</p>
+                                        <p className="chat-content-user" >  {data.content} </p> 
+                                    </div>
+                                ) : (
+                                    <div className="chat-class" key={index}>
+                                        <p className="chat-content-match"> {data.content} </p> 
                                         <p className="chat-time-stamp"> { data.time }</p>
                                     </div>
-                                )
+                                ))
                             })}
                         </div>
 
