@@ -6,7 +6,6 @@ import axios from 'axios'
 import Pagination from './pagination/Pagination'
 import { getUsers } from '../actions/listActions'
 import { sendMessageTo } from '../actions/messageActions'
-import { SEND_MESSAGE_TO } from '../actions/types'
 import CardProfile from './CardProfile'
 
 import '../styles/List.css'
