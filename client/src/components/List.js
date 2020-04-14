@@ -104,7 +104,7 @@ class List extends Component {
                     <div className="sticky">
                     <p className="recent-title"> Recently Messaged:
                     </p>
-                    { this.state.recentsList.slice(0,10).map((data, indx) => {
+                    { this.state.recentsList.slice(0,8).map((data, indx) => {
                                     let string = data.split('|')
                                     return (
                                             <button key={indx} id="recent-button" onClick={e => this.onClick(string[0])} style={{ backgroundColor: 'white'}}>
