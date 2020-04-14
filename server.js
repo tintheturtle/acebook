@@ -14,6 +14,7 @@ import feed from './routes/api/feed'
 
 import Message from './models/Message'
 import User from './models/User'
+import path from 'path'
 
 const func = name => {
   return `Welcome back ${name}`
@@ -30,7 +31,7 @@ app.use(
     })
   );
 app.use(bodyParser.json())
-
+app.use(express.static(path.join(__dirname, "client/build")))
 app.use(cors())
 
 // DB Config
