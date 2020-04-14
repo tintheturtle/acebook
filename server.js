@@ -179,6 +179,15 @@ io.on('connection', (socket) => {
       let first = users[0]
       let second = users[1]
 
+
+      if(first.recents.length === 0) {
+        first.recents.push(second.email + '|' + second.name + '|' + moment().format('LLL'))
+      }
+
+      if (second.recents.length === 0) {
+        second.recents.push(first.email + '|' + first.name + '|' + moment().format('LLL'))
+      }
+
       let firstRecent = first.recents[first.recents.length-1].split('|')[0]
       let secondRecent = second.recents[second.recents.length-1].split('|')[0]
 

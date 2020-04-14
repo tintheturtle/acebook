@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import classnames from 'classnames'
 import moment from 'moment'
 import axios from 'axios'
+import ExtractInfo from '../utils/ExtractInfo'
 import 'whatwg-fetch'
 
 import { sendMessageTo } from '../actions/messageActions'
@@ -122,8 +123,12 @@ class Messages extends Component {
     render() {
 
         const { other } = this.props.message
+
+        const otherInfo = ExtractInfo(other.description)
+        console.log(otherInfo)
+
         return (
-            <div className="container" style={{paddingBottom: '50px', paddingLeft: '100px'}}>
+            <div className="container" style={{marginBottom: '10px', paddingLeft: '100px'}}>
                 <div className="message-container">
                     <div id="message-header" className="message-header-row row message-shadow">
                         <div className="other-profile-container">
@@ -134,11 +139,11 @@ class Messages extends Component {
                                 <h5>
                                     <b>You are messaging: </b>  {other.name.split(" ")[0]}
                                 </h5>
-                                <b>Major: </b> {other.name} <br/>
-                                <b>Year: </b> {other.name}
-                                <p className="grey-text text-darken-1">
-                                    Who is a <b>{other.ACE}</b> and whose email is <b>{other.email}</b>
-                                </p>
+                                <b>Major: </b> {otherInfo[1][2]} <br/>
+                                <b>Year: </b> {otherInfo[1][1]} <br/>
+                                <b>Music Taste: </b> {otherInfo[1][4]} <br/>
+                                <b>Interests: </b> {otherInfo[1][5]} <br/>
+                                <b>What they are looking for as a: </b> {otherInfo[1][6]} <br/>
                             </div>
                         </div>
                     </div>
@@ -180,7 +185,7 @@ class Messages extends Component {
                                         borderRadius: "3px",
                                         letterSpacing: "1.5px",
                                         marginTop: "1rem",
-                                        marginBottom: "100px"
+                                        marginBottom: "10px"
                                         }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"

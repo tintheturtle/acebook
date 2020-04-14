@@ -57,7 +57,7 @@ class Register extends Component {
 
         let concatDesc = ''
         if (this.state.description && this.state.introversion) {
-            concatDesc = this.state.hometown + ' ' + this.state.socials + 'separatorString' + this.state.introversion + ' ' + this.state.year + ' ' + this.state.major + ' ' + this.state.algorithm + ' ' + this.state.music + ' ' + this.state.interests + ' ' + this.state.description
+            concatDesc = this.state.hometown + ' ' + this.state.socials + ' separatorString ' + this.state.introversion + '_' + this.state.year + '_' + this.state.major + '_' + this.state.algorithm + '_' + this.state.music + '_' + this.state.interests + '_' + this.state.description
         }
 
         const newUser = {
