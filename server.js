@@ -174,17 +174,36 @@ io.on('connection', (socket) => {
     }
     // Retrieve socket to receiver 
     const sendTo = connectedUsers[receiver]
+    // Update recent message list
     User.find({ $or: [{email: receiver}, {email: from}] }).exec(async (err, users) => {
       let first = users[0]
       let second = users[1]
-      if (first.recents[first.recents.length-1] !== second.email) {
-        first.recents.push(second.email)
-        await first.save()
+
+      let firstRecent = first.recents[first.recents.length-1].split('|')[0]
+      let secondRecent = second.recents[second.recents.length-1].split('|')[0]
+
+      if (firstRecent !== second.email) {
+        console.log('here')
+        first.recents.push(second.email + '|' + second.name + '|' + moment().format('LLL'))
       }
-      if (second.recents[second.recents.length-1] !== first.email) {
-        second.recents.push(first.email)
-        await second.save()
+      else {
+        console.log('here!')
+        first.recents.pop()
+        first.recents.push(second.email + '|' + second.name + '|' + moment().format('LLL'))
       }
+      if (secondRecent !== first.email) {
+        console.log('whoops')
+        second.recents.push(first.email + '|' + first.name + '|' + moment().format('LLL'))
+      }
+      else {
+        console.log('whooops')
+        second.recents.pop()
+        console.log(second.recents)
+        second.recents.push(first.email + '|' + first.name + '|' + moment().format('LLL'))
+      }
+      await first.save()
+      await second.save()
+
     })
 
     // Emit private message to frontend 

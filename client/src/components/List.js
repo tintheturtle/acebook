@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import axios from 'axios'
 
 import Pagination from './pagination/Pagination'
 import { getUsers } from '../actions/listActions'
@@ -16,7 +17,8 @@ class List extends Component {
             userList: [],
             currentUsersList: [],
             currentPage: null,
-            totalPages: null
+            totalPages: null,
+            recentsList: []
         }
     }
 
@@ -26,6 +28,19 @@ class List extends Component {
                 userList: data.userList
             })
         })
+
+        await axios
+            .get('/api/users/update', {
+                params: {
+                  email: this.props.auth.user.email
+                }
+              })
+            .then(res => {
+                this.setState({
+                    recentsList: res.data.list.reverse()
+                })
+            })
+
     }
 
     // Pagination method for calculating current page of scoreboard
@@ -39,8 +54,8 @@ class List extends Component {
         this.setState({ currentPage,  currentUsersList, totalPages })
     }
 
-    onClick = e => {
-        console.log('Ive been clicked')
+    onClick = email => {
+        console.log('Ive been clicked', email)
     }
     
 
@@ -48,6 +63,8 @@ class List extends Component {
         const { userList, currentUsersList } = this.state
         const { user } = this.props.auth
         if(userList.length === 0) return null
+
+        console.log(this.state.recentsList)
 
         return(
             <div>
@@ -84,22 +101,22 @@ class List extends Component {
                     <div className="sticky">
                     <p className="recent-title"> Recently Messaged:
                     </p>
-                    { currentUsersList.map((data, indx) => {
-                                if (data.email !== user.email) {
+                    { this.state.recentsList.slice(0,10).map((data, indx) => {
+                                    let string = data.split('|')
                                     return (
-                                            <button key={indx} id="recent-button" onClick={this.onClick} style={{ backgroundColor: 'white'}}>
+                                            <button key={indx} id="recent-button" onSubmit={this.onClick(string[0])} style={{ backgroundColor: 'white'}}>
                                                 <div id="recent-block" style={{ left: '0' }}>
-                                                    <b>{data.name}</b> 
+                                                    <b>{string[1]}</b> 
                                                     <br/>
                                                     <p id="recent-timestamp">
-                                                        {moment().format('LLL')}
+                                                        {string[2]}
                                                         </p>
                                                 </div>
                                             </button>
                                     )
-                                }
-                                return null
-                            })}
+                                
+                            })
+                    }
                     </div>
                 </div>
             </div>
