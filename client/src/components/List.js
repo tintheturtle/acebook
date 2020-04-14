@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import axios from 'axios'
 
 import Pagination from './pagination/Pagination'
 import { getUsers } from '../actions/listActions'
+import { sendMessageTo } from '../actions/messageActions'
+import { SEND_MESSAGE_TO } from '../actions/types'
 import CardProfile from './CardProfile'
 
 import '../styles/List.css'
@@ -55,7 +56,11 @@ class List extends Component {
     }
 
     onClick = email => {
-        console.log('Ive been clicked', email)
+        const other = this.state.userList.find(user => user.email === email)
+
+        this.props.sendMessageTo(other)
+        let path = '/messages'
+        this.props.history.push(path)
     }
     
 
@@ -64,7 +69,6 @@ class List extends Component {
         const { user } = this.props.auth
         if(userList.length === 0) return null
 
-        console.log(this.state.recentsList)
 
         return(
             <div>
@@ -104,7 +108,7 @@ class List extends Component {
                     { this.state.recentsList.slice(0,10).map((data, indx) => {
                                     let string = data.split('|')
                                     return (
-                                            <button key={indx} id="recent-button" onSubmit={this.onClick(string[0])} style={{ backgroundColor: 'white'}}>
+                                            <button key={indx} id="recent-button" onClick={e => this.onClick(string[0])} style={{ backgroundColor: 'white'}}>
                                                 <div id="recent-block" style={{ left: '0' }}>
                                                     <b>{string[1]}</b> 
                                                     <br/>
@@ -128,7 +132,8 @@ class List extends Component {
 List.propTypes = {
     auth: PropTypes.object.isRequired,
   }
-  const mapStateToProps = state => ({
+const mapStateToProps = state => ({
     auth: state.auth
-  })
-export default connect(mapStateToProps)(List)
+})
+
+export default connect(mapStateToProps, { sendMessageTo })(List)
