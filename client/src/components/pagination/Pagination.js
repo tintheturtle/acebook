@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react' 
 import PropTypes from 'prop-types' 
 
-import '../../styles/Pagination.scss'
+import '../../styles/Pagination.css'
 
 const LEFT_PAGE = 'LEFT' 
 const RIGHT_PAGE = 'RIGHT' 
