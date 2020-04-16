@@ -35,7 +35,11 @@ app.use(express.static(path.join(__dirname, "client/build")))
 app.use(cors())
 
 // DB Config
-const uri = process.env.MONGO_URI
+let uri = process.env.MONGO_URI
+
+if (!uri) {
+  uri = 'mongodb://127.0.0.1:27017/tests'
+}
 
 // Socket.io Config
 const http = require('http').Server(app);
