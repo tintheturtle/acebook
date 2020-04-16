@@ -1,5 +1,5 @@
 import React from "react";
-import "./RadioButton.scss";
+import "./RadioButton.css";
 
 const RadioButton = (props) => {
     return (
