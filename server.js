@@ -31,8 +31,28 @@ app.use(
     })
   );
 app.use(bodyParser.json())
-app.use(express.static(path.join(__dirname, "client/build")))
+
+// CORS
 app.use(cors())
+
+// Passport middelware
+app.use(passport.initialize())
+app.use(passport.session())
+
+// Passport config
+require("./config/passport")(passport)
+
+// Routes
+app.use("/api/users", users)
+app.use("/api/upload", upload)
+app.use("/api/family", family)
+app.use("/api/feed", feed)
+
+// Serving frontend from backend
+app.use(express.static(path.join(__dirname, "client/build")))
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+})
 
 // DB Config
 let uri = process.env.MONGO_URI
@@ -40,6 +60,15 @@ let uri = process.env.MONGO_URI
 if (!uri) {
   uri = 'mongodb://127.0.0.1:27017/tests'
 }
+
+// Connect to MongoDB
+mongoose
+   .connect(
+    uri,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+   .then(() => console.log("MongoDB successfully connected"))
+   .catch(err => console.log(err))
 
 // Socket.io Config
 const http = require('http').Server(app);
@@ -291,29 +320,6 @@ io.on('connection', (socket) => {
 })
 
 io.listen(8000)
-
-
-// Connect to MongoDB
-mongoose
-   .connect(
-    uri,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-   .then(() => console.log("MongoDB successfully connected"))
-   .catch(err => console.log(err));
-
-// Passport middelware
-app.use(passport.initialize())
-app.use(passport.session())
-
-// Passport config
-require("./config/passport")(passport)
-
-// Routes
-app.use("/api/users", users)
-app.use("/api/upload", upload)
-app.use("/api/family", family)
-app.use("/api/feed", feed)
 
 const port = process.env.PORT || 5000
 
