@@ -12,7 +12,7 @@ var router = express.Router()
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-    cb(null, 'client/build/img')
+    cb(null, 'client/public/img')
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' +file.originalname )
@@ -25,7 +25,6 @@ router.post('/', upload.single('file'), async (req, res) => {
     
     const purpose = req.body.purpose
     const path = req.file.path
-    console.log(path)
     const email = req.body.email
 
     switch (purpose) {

@@ -49,6 +49,7 @@ app.use("/api/family", family)
 app.use("/api/feed", feed)
 
 // Serving frontend from backend
+app.use(express.static(path.join(__dirname, "client/public")))
 app.use(express.static(path.join(__dirname, "client/build")))
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
