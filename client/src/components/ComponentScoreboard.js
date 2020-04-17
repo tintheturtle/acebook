@@ -82,12 +82,15 @@ class Scoreboard extends Component {
     }
 
     loadMore = async () => {
-        this.setState({
-            postPage: this.state.postPage + 1,
-            postPer: this.state.postPer + 1,
-            scrolling: true
-        })
-        this.loadPosts()
+
+        if (this.state.postPer < 5) {
+            this.setState({
+                postPage: this.state.postPage + 1,
+                postPer: this.state.postPer + 1,
+                scrolling: true
+            })
+            this.loadPosts()
+        }
       }
 
     handleScroll = () => { 

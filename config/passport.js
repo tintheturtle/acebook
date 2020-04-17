@@ -7,7 +7,7 @@ const ExtractJWT = passportJWT.ExtractJwt
 
 const opts = {}
 opts.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken()
-opts.secretOrKey = process.env.secretOrKey
+opts.secretOrKey = process.env.HASH
 
 module.exports = passport => {
     passport.use(
