@@ -152,7 +152,7 @@ router.post("/login", async (req, res) => {
 
                         jwt.sign(
                             payload,
-                            'process.env.secretOrKey',
+                            process.env.HASH,
                             {
                                 expiresIn: 31556926
                             },
