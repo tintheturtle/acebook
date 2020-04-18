@@ -27,7 +27,7 @@ class Messages extends Component {
             userList: []
         }
 
-        this.socket = io('http://localhost:8000', 
+        this.socket = io.connect('http://localhost:5000', 
             { query:  
                 {
                     from: this.state.name,
