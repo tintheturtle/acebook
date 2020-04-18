@@ -22,10 +22,12 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 router.post('/', upload.single('file'), async (req, res) => {
+
     
     const purpose = req.body.purpose
     const path = req.file.path
     const email = req.body.email
+    const name = req.body.name
 
     switch (purpose) {
         case 'profilePicture': {
@@ -78,12 +80,13 @@ router.post('/', upload.single('file'), async (req, res) => {
             break
         }
         default: {
-            console.log('Default case activated')
+            console.log('Default case for file upload activated')
             break
         }
     }
 
     const newPost = new Media({
+        name: name,
         purpose: purpose,
         imagePath: path.substring(13),
         uploader: email,

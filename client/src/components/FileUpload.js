@@ -62,7 +62,7 @@ class FileUpload extends Component {
     // File size checker
     checkFileSize= (event) => {
         let files = event.target.files
-        let size = 40000 
+        let size = 10*1024*1024 
         let err = ""; 
         if (files[0].size > size) {
             err += files[0].type + ' is too large, please pick a smaller file\n';
@@ -102,6 +102,7 @@ class FileUpload extends Component {
         data.append('file', this.state.selectedFile)
         data.append('purpose', this.state.purpose)
         data.append('email', this.props.auth.user.email)
+        data.append('name', this.props.auth.user.name)
         if (this.state.purpose === 'points') {
             data.append('caption', this.state.caption)
         }

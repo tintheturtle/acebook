@@ -41,13 +41,9 @@ class Admin extends Component {
     }
 
     render() {
-
-        const { created } = this.props.family
-        console.log(created)
         
         const { user } = this.props.auth
         const { errors } = this.state
-        console.log(this.props)
 
         return(
             <div style={{ height: "100vh" }} className="container">

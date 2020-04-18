@@ -27,7 +27,6 @@ router.post("/register", (req, res) => {
             return res.status(400).json({ email: "Email already exists" })
         }
         else {
-            console.log(req.body.algorithm)
             const newUser = new User({
                 name: req.body.name,
                 email: req.body.email,
@@ -83,7 +82,6 @@ router.post("/login", async (req, res) => {
 
                     switch (user.ACE) {
                         case 'little':
-                            console.log('find me a big!')
                             if (!user.paired) {
                                 // Checks to see if there are any new users and updates the info of previous matches
                                 if (user.lastUserCount < users.length) {
@@ -112,7 +110,6 @@ router.post("/login", async (req, res) => {
                             }
                             break
                         case 'big':
-                            console.log('find me a little!')
                             if (!user.paired) {
                                 // Checks to see if there are any new users and updates the info of previous matches
                                 if (user.lastUserCount < users.length){

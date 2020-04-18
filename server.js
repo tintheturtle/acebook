@@ -6,6 +6,7 @@ import passport from 'passport'
 import uniqid from 'uniqid'
 import moment from 'moment'
 import cors from 'cors'
+import path from 'path'
 
 import users from './routes/api/users'
 import upload from './routes/api/upload'
@@ -14,7 +15,7 @@ import feed from './routes/api/feed'
 
 import Message from './models/Message'
 import User from './models/User'
-import path from 'path'
+import Media from './models/Media'
 
 const func = name => {
   return `Welcome back ${name}`
@@ -98,6 +99,12 @@ Message.findOne({ people: ['public'], type: 'public'}).then( (msg) => {
   }
   else {
     console.log('Public Group Chat already initialized')
+  }
+})
+
+Media.find().then(post => {
+  if (post.length < 1) {
+    // Create new post
   }
 })
 
@@ -310,9 +317,6 @@ io.on('connection', (socket) => {
       // Retrieve socket to receiver 
       const sendTo = connectedUsers[person]
       // Emit private message to frontend 
-      console.log(person, from)
-      console.log(person !==  from)
-      console.log()
       if (sendTo && person !== from) {
         sendTo.emit('family_chat', pushedMessage)
       }

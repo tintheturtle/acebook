@@ -136,11 +136,11 @@ class Scoreboard extends Component {
                             </p>
                         </div>
                     </div>
-                    <div>
+                    <div className=" row" >
                     {this.state.isLoading ? (
                         <div>Loading ...</div>
                             ) : (
-                            <div className="scorelist" style={{height: '60vh'}}>
+                            <div className="scorelist">
                                 <div className="pagination-container">
                                     <Pagination totalRecords={familyLength} pageLimit={3} pageNeighbours={1} onPageChanged={this.onPageChanged} />
                                 </div>
