@@ -14,7 +14,7 @@ const ProfilePicture = ({data}) => {
             </div>
             <span className="grey-text">{data.timestamp}</span>
             <div className="post-info">
-                {data.uploader} has updated their profile picture
+                <b>{data.name}</b> has updated their profile picture
             </div>
         </div>
     )

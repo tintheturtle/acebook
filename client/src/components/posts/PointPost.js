@@ -14,7 +14,7 @@ const PointPost = ({data}) => {
             </div>
             <span className="grey-text">{data.timestamp}</span>
             <div className="post-info">
-                The {data.uploader} family has received +5 points!
+                <b>{data.name}</b>'s family has received +5 points!
             </div>
         </div>
     )

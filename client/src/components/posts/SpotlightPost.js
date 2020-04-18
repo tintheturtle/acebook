@@ -14,7 +14,7 @@ const SpotlightPost = ({data}) => {
             </div>
             <span className="grey-text">{data.timestamp}</span>
             <div className="post-info">
-                {data.uploader} is on the spotlight for {data.information}, go check out the latest spotlight post!
+                <b>{data.name}</b> is on the spotlight for {data.information}, go check out the latest spotlight post!
             </div>
         </div>
     )

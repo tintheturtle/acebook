@@ -102,6 +102,7 @@ class FileUpload extends Component {
         data.append('file', this.state.selectedFile)
         data.append('purpose', this.state.purpose)
         data.append('email', this.props.auth.user.email)
+        data.append('name', this.props.auth.user.name)
         if (this.state.purpose === 'points') {
             data.append('caption', this.state.caption)
         }

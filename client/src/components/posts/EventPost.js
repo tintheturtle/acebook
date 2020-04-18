@@ -14,7 +14,7 @@ const EventPost = ({data}) => {
             </div>
             <span className="grey-text">{data.timestamp}</span>
             <div className="post-info">
-                {data.uploader} has created an event
+            <b>{data.name}</b> has created an event
             </div>
         </div>
     )

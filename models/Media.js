@@ -2,6 +2,9 @@ import mongoose, { Schema } from 'mongoose'
 import moment from 'moment'
 
 const MediaSchema = new Schema({
+    name: {
+        type: String
+    },
     purpose: {
         type: String,
         required: true
