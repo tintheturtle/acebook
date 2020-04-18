@@ -2,7 +2,6 @@
 
 const sorensonDice = (stringOne, stringTwo) => {
 
-    console.log(stringOne, stringTwo)
 
     const splitPairs = (string) => {
         let pairs = []

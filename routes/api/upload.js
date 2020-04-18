@@ -23,7 +23,6 @@ var upload = multer({ storage: storage })
 
 router.post('/', upload.single('file'), async (req, res) => {
 
-    console.log(req.body)
     
     const purpose = req.body.purpose
     const path = req.file.path

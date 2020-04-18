@@ -317,9 +317,6 @@ io.on('connection', (socket) => {
       // Retrieve socket to receiver 
       const sendTo = connectedUsers[person]
       // Emit private message to frontend 
-      console.log(person, from)
-      console.log(person !==  from)
-      console.log()
       if (sendTo && person !== from) {
         sendTo.emit('family_chat', pushedMessage)
       }
