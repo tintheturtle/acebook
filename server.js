@@ -72,8 +72,8 @@ mongoose
    .catch(err => console.log(err))
 
 // Socket.io Config
-const http = require('http').Server(app);
-const io = require('socket.io')(http)
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server)
 
 // Collection of sockets of connected users
 const connectedUsers = {}
@@ -320,8 +320,6 @@ io.on('connection', (socket) => {
   })
 })
 
-io.listen(8000)
-
 const port = process.env.PORT || 5000
 
-app.listen(port, () => console.log(`Server up and running on port ${port} !`))
+server.listen(port, () => console.log(`Server up and running on port ${port} !`))
