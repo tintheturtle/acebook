@@ -142,7 +142,7 @@ class Messages extends Component {
                                 <b>Year: </b> {otherInfo[1][1]} <br/>
                                 <b>Music Taste: </b> {otherInfo[1][4]} <br/>
                                 <b>Interests: </b> {otherInfo[1][5]} <br/>
-                                <b>What they are looking for as a: </b> {otherInfo[1][6]} <br/>
+                                <b>What they are looking for as a {other.ACE}: </b> {otherInfo[1][6]} <br/>
                             </div>
                         </div>
                     </div>

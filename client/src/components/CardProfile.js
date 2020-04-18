@@ -33,7 +33,7 @@ const CardProfile = ({data}) => {
                             data.headshotURL ? data.headshotURL  : ProfileImage 
                             } className="match-image" alt="profile" />
                 <p className="match-name match-info"> <b>{data.name}</b> </p>
-                <p className="match-email match-info"> Studies {otherInfo[1][2]}, <br/> Class of {otherInfo[1][1]}</p> 
+                <p className="match-email match-info"> <b>Major:</b><br/> {otherInfo[1][2]}, <br/> Class of {otherInfo[1][1]}</p> 
                 <p className="match-percentage match-info"> {
                     (data.percentage) ?
                     ((data.percentage.toPrecision(4) * 100).toString().substring(0,5) + '% match') : "" }
