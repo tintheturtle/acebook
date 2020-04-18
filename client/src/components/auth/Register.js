@@ -101,11 +101,11 @@ class Register extends Component {
     renderSwitch() {
         switch(this.state.algorithm) {
             case 'cosine':
-                return 'This is the cosine similarity algorithm.'
+                return 'This is the Cosine Similarity algorithm. Create a key-pair dictionary from both strings. Iterate through both strings and count the occurrences of each word. There will be two vectors, one from each string iterated. Using those vectors, calculate the cosine of the angle between them. '
             case 'trigrams':
-                return 'This is the trigrams algorithm.'
+                return 'This is the Trigrams algorithm. One string is broken into a groups of three(trigrams). Then the other string is also broken up in the same way. Then count the number of similar trigrams in both strings and divide by the number of unique trigrams (unique meaning out of all trigrams from both strings).'
             case 'sorensonDice':
-                return 'This is the Sorenson Dice algorithm'
+                return 'This is the Sorenson Dice algorithm. It is similar to the trigrams algorithm, except instead of groups of threes the string is grouped into groups of two.'
             default:
                 return 'Select an algorithm to continue'
         }
@@ -168,10 +168,12 @@ class Register extends Component {
                                 <div  style={{ paddingBottom: '30px' }}>
                                     <p style={{ color: 'white'}}> <b>About this algorithm:</b> </p> 
                                     <div className="algorithm-about">
-                                        <p style={{ color: '#9e9e9e'}}> <b>About this algorithm:</b> </p>
-                                        <p style={{ color: '#9e9e9e'}}>
+                                        <p> <b>About this algorithm:</b> </p>
+                                        <p>
                                             {this.renderSwitch()}
                                         </p>
+                                        <br/>
+                                        <p> For more information, check out <a href="https://medium.com/@sumn2u/string-similarity-comparision-in-js-with-examples-4bae35f13968">this</a> Medium article.</p>
                                     </div>      
                                 </div>
                                 <div className="col s12" style={{ paddingLeft: "11.250px" }}>
