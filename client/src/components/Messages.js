@@ -125,7 +125,6 @@ class Messages extends Component {
         const { other } = this.props.message
 
         const otherInfo = ExtractInfo(other.description)
-        console.log(otherInfo)
 
         return (
             <div className="container" style={{marginBottom: '10px', paddingLeft: '100px'}}>
