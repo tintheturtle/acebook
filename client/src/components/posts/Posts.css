@@ -8,6 +8,14 @@
 .profilepic-container {
     display: inline-block;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    text-align: center;
+}
+
+.profilepic-content {
     padding: 30px;
+}
+
+.post-type {
+    padding: 5px;
+    text-align: left;
+    color: white;
 }
