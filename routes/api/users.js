@@ -86,6 +86,8 @@ router.post("/login", async (req, res) => {
                                 // Checks to see if there are any new users and updates the info of previous matches
                                 if (user.lastUserCount < users.length) {
                                     // Looping through list of users
+                                    let matchArray = []
+                                    let emailArray = []
                                     for (let i = 0; i < users.length; i++) {
                                         // Turns matches into object 
                                         let other = users[i].toObject()
@@ -98,12 +100,14 @@ router.post("/login", async (req, res) => {
                                                 delete other.matches
                                                 delete other.matchEmailList
                                                 other.percentage = percentage
-                                                user.matchEmailList.push(other.email)
-                                                user.matches.push(other)
+                                                emailArray.push(other.email)
+                                                matchArray.push(other)
                                             }
                                             
                                         }
                                     }
+                                    user.matchEmailList = emailArray
+                                    user.matches = matchArray
                                 }
                                 // Update latest count
                                 user.lastUserCount = users.length
@@ -114,6 +118,8 @@ router.post("/login", async (req, res) => {
                                 // Checks to see if there are any new users and updates the info of previous matches
                                 if (user.lastUserCount < users.length){
                                     // Looping through list of users
+                                    let matchArray = []
+                                    let emailArray = []
                                     for (let i = 0; i < users.length; i++) {
                                         // Turns matches into object 
                                         let other = users[i].toObject()
@@ -126,12 +132,14 @@ router.post("/login", async (req, res) => {
                                                 delete other.matches
                                                 delete other.matchEmailList
                                                 other.percentage = percentage
-                                                user.matchEmailList.push(other.email)
-                                                user.matches.push(other)
+                                                emailArray.push(other.email)
+                                                matchArray.push(other)
                                             }
                                             
                                         }
                                     }
+                                    user.matchEmailList = emailArray
+                                    user.matches = matchArray
                                 }
                                 // Update latest count
                                 user.lastUserCount = users.length
