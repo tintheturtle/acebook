@@ -81,8 +81,7 @@ class Messages extends Component {
         const other = this.state.userList.find(user => user.email === email)
 
         this.props.sendMessageTo(other)
-        let path = '/messages'
-        this.props.history.push(path)
+        window.location.href = window.location.href
     }
     
 
